@@ -54,6 +54,20 @@ quantum/
     └── server.js
 ```
 
+## Testing & Development Tools
+
+### REST Client (VS Code)
+API endpoints are tested using the [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) VS Code extension. Test requests are documented in `server/requests.http`.
+All test requests are version-controlled alongside the codebase in `server/requests.http`.
+
+### Morgan
+HTTP request logging is handled by [morgan](https://github.com/expressjs/morgan) middleware. Every incoming request is logged to the terminal in `dev` format:
+
+```
+POST /api/auth/register 201 45ms
+GET /api/projects 401 3ms
+```
+
 ## Environment Variables
 
 Create a `.env` file inside `server/` using `.env.example` as a template:
@@ -66,13 +80,25 @@ Create a `.env` file inside `server/` using `.env.example` as a template:
 
 ## References
 
+**Core Stack**
 - [MongoDB Atlas](https://www.mongodb.com/atlas)
 - [Mongoose Documentation](https://mongoosejs.com/docs/)
 - [Express 5 Documentation](https://expressjs.com/)
 - [JSON Web Tokens — jwt.io](https://jwt.io/)
+
+**Standards**
 - [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+**Development Tools**
+- [REST Client — VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+- [Morgan — HTTP Request Logger](https://github.com/expressjs/morgan)
 - [Chrome DevTools Documentation](https://developer.chrome.com/docs/devtools/)
 - [ExplainShell — Unix Command Reference](https://explainshell.com/)
 - [shields.io — README Badges](https://shields.io/)
+
+**Deployment**
+- [Render Documentation](https://render.com/docs)
+- [Render — Deploying a Node.js App](https://render.com/docs/node-express)
+- [Render — Static Site Deployment](https://render.com/docs/static-sites)
 
 > 🚧 Work in progress

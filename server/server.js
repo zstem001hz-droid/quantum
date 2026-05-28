@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const connectDB = require("./config/connection");
+const authRoutes = require("./routes/authRoutes");
 
 // Connect to MongoDB
 connectDB();
@@ -20,13 +21,17 @@ app.use(
 app.use(express.json());
 app.use(morgan("dev"));
 
+// Routes
+app.use("/api/auth", authRoutes);
+
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "ok", message: "Quantum API is running" });
 });
 
+// PORT and listen
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Quantum is running on port ${PORT}`);
 });

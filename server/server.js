@@ -5,6 +5,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const connectDB = require("./config/connection");
 const authRoutes = require("./routes/authRoutes");
+const projectRoutes = require("./routes/projectRoutes");
 
 // Connect to MongoDB
 connectDB();
@@ -23,6 +24,7 @@ app.use(morgan("dev"));
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/projects", projectRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

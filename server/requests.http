@@ -1,3 +1,5 @@
+# @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMTdjMDlkOWFkN2U1YzQyODUxODgwMSIsImlhdCI6MTc4MDAwOTg5OSwiZXhwIjoxNzgyNjAxODk5fQ.FLm4pyU_Gmq8uuWPPJuySeFW-yRfsJ31sasXPhI8eJo
+
 ### Health Check
 GET http://localhost:3001/api/health
 
@@ -20,3 +22,7 @@ Content-Type: application/json
   "email": "narcissus@goldmund.com",
   "password": "password888"
 }
+
+### Get All Projects
+GET http://localhost:3001/api/projects
+Authorization: Bearer {{token}}

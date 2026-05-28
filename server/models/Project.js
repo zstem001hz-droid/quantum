@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 // Project Schema
-const projectSchema = new mongoose.Schema(
+const projectSchema = new Schema(
   {
     name: {
       type: String,
@@ -21,14 +21,14 @@ const projectSchema = new mongoose.Schema(
     },
     owner: {
       // References the User who created the project — drives authorization
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
     members: [
       {
         // Collaborators invited by the owner — stretch goal
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User",
       },
     ],
@@ -39,6 +39,5 @@ const projectSchema = new mongoose.Schema(
 );
 
 // Model Export
-const Project = mongoose.model("Project", projectSchema);
-
+const Project = model("Project", projectSchema);
 module.exports = Project;

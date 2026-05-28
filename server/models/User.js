@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 // User Schema Definition
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     name: {
       // Display Name
@@ -54,6 +54,6 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 };
 
 // Model Export
-const User = mongoose.model("User", userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;

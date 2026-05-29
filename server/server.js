@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const connectDB = require("./config/connection");
 const authRoutes = require("./routes/authRoutes");
 const projectRoutes = require("./routes/projectRoutes");
+const taskRoutes = require("./routes/taskRoutes");
 
 // Connect to MongoDB
 connectDB();
@@ -25,6 +26,7 @@ app.use(morgan("dev"));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/projects/:projectId/tasks", taskRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

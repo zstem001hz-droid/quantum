@@ -55,3 +55,11 @@ Content-Type: application/json
 ### Delete Project
 DELETE http://localhost:3001/api/projects/6a18d3514e26b7c194eb6205
 Authorization: Bearer {{token}}
+
+### Get All Tasks
+GET http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks
+Authorization: Bearer {{token}}
+
+### Get Single Task
+GET http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks/:id
+Authorization: Bearer {{token}}

@@ -109,4 +109,30 @@ router.put("/:id", protect, async (req, res) => {
   }
 });
 
+// DELETE /api/projects/:projectId/tasks/:id — delete task
+router.delete("/:id", protect, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.projectId);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    if (project.owner.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    const task = await Task.findById(req.params.id);
+
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    await task.deleteOne();
+    res.status(200).json({ message: "Task deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

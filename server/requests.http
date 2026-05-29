@@ -85,3 +85,7 @@ Content-Type: application/json
   "description": "Define safe operating temp range and thermal cutoff thresholds",
   "status": "In Progress"
 }
+
+### Delete Task
+DELETE http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks/6a18dee941f867c819d56857
+Authorization: Bearer {{token}}

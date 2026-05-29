@@ -74,3 +74,14 @@ Content-Type: application/json
   "description": "Define safe operating temp range",
   "status": "To Do"
 }
+
+### Update Task
+PUT http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks/6a18dee941f867c819d56857
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Thermal regulation spec",
+  "description": "Define safe operating temp range and thermal cutoff thresholds",
+  "status": "In Progress"
+}

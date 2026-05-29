@@ -40,3 +40,14 @@ Content-Type: application/json
 ### Get Single Project
 GET http://localhost:3001/api/projects/6a18d3514e26b7c194eb6205
 Authorization: Bearer {{token}}
+
+### Update Project
+PUT http://localhost:3001/api/projects/6a18d3514e26b7c194eb6205
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "MicroCell Hardware",
+  "description": "Portable micro-battery unit with embedded display, call routing, and thermal management",
+  "status": "active"
+}

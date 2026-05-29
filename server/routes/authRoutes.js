@@ -16,6 +16,15 @@ const generateToken = (id) => {
 router.post("/register", async (req, res) => {
   const { name, username, email, password } = req.body;
 
+  // Password strength validation
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({
+      message:
+        "Password must contain at least one uppercase letter, one number, and one special character",
+    });
+  }
+
   try {
     // Check if user already exists
     const userExists = await User.findOne({ email });

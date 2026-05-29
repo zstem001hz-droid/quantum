@@ -61,5 +61,16 @@ GET http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks
 Authorization: Bearer {{token}}
 
 ### Get Single Task
-GET http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks/:id
+GET http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks/6a18dee941f867c819d56857
 Authorization: Bearer {{token}}
+
+### Create Task
+POST http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Thermal regulation spec",
+  "description": "Define safe operating temp range",
+  "status": "To Do"
+}

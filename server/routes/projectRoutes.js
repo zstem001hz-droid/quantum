@@ -34,4 +34,21 @@ router.get("/:id", protect, async (req, res) => {
   }
 });
 
+// POST /api/projects — create new project
+router.post("/", protect, async (req, res) => {
+  const { name, description } = req.body;
+
+  try {
+    const project = await Project.create({
+      name,
+      description,
+      owner: req.user._id,
+    });
+
+    res.status(201).json(project);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 module.exports = router;

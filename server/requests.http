@@ -1,4 +1,4 @@
-# @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMTdjMDlkOWFkN2U1YzQyODUxODgwMSIsImlhdCI6MTc4MDAwOTg5OSwiZXhwIjoxNzgyNjAxODk5fQ.FLm4pyU_Gmq8uuWPPJuySeFW-yRfsJ31sasXPhI8eJo
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMTdjMDlkOWFkN2U1YzQyODUxODgwMSIsImlhdCI6MTc4MDAwOTg5OSwiZXhwIjoxNzgyNjAxODk5fQ.FLm4pyU_Gmq8uuWPPJuySeFW-yRfsJ31sasXPhI8eJo
 
 ### Health Check
 GET http://localhost:3001/api/health
@@ -25,4 +25,18 @@ Content-Type: application/json
 
 ### Get All Projects
 GET http://localhost:3001/api/projects
+Authorization: Bearer {{token}}
+
+### Create Project
+POST http://localhost:3001/api/projects
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "MicroCell Hardware",
+  "description": "Portable micro-battery unit with embedded display and call routing"
+}
+
+### Get Single Project
+GET http://localhost:3001/api/projects/6a18d3514e26b7c194eb6205
 Authorization: Bearer {{token}}

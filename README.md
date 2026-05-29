@@ -13,6 +13,7 @@
 ![Morgan](https://img.shields.io/badge/Morgan-Logger-lightgrey)
 ![CORS](https://img.shields.io/badge/CORS-Enabled-blue)
 ![dotenv](https://img.shields.io/badge/dotenv-Config-yellow)
+![Postman](https://img.shields.io/badge/Postman-Testing-orange)
 
 Quantum is a modern, full-stack MERN project management application built for individuals and small teams. It features secure JWT-based authentication, ownership-based authorization, and a RESTful API for managing projects and tasks — deployed and production-ready
 
@@ -29,29 +30,75 @@ Quantum is a modern, full-stack MERN project management application built for in
 - [morgan](https://github.com/expressjs/morgan) — HTTP request logger
 - [dotenv](https://github.com/motdotla/dotenv) — environment variable management
 - [cors](https://github.com/expressjs/cors) — cross-origin resource sharing
+- [nodemon](https://nodemon.io/) — development server with auto-restart
 
 ## Project Structure
 
 ```
 quantum/
-├── client/                    ← React/Vite
+├── client/                    ← React 19 + Vite + TypeScript
 └── server/
     ├── config/
-    │   └── connection.js      ← MongoDB connection
+    │   └── connection.js      ← MongoDB Atlas connection
     ├── middleware/
-    │   └── auth.js            ← JWT verification middleware
+    │   └── auth.js            ← JWT verification and user attachment
     ├── models/
-    │   ├── User.js
-    │   ├── Project.js
-    │   └── Task.js
+    │   ├── User.js            ← user schema with bcrypt pre-save hook
+    │   ├── Project.js         ← project schema with owner reference
+    │   └── Task.js            ← task schema with project and owner references
     ├── routes/
-    │   ├── authRoutes.js
-    │   ├── projectRoutes.js
-    │   └── taskRoutes.js
+    │   ├── authRoutes.js      ← register and login endpoints
+    │   ├── projectRoutes.js   ← full CRUD with ownership authorization
+    │   └── taskRoutes.js      ← full CRUD with nested routing and parent project authorization
     ├── .env.example
     ├── package.json
-    ├── requests.http
-    └── server.js
+    ├── requests.http          ← REST Client API test requests
+    └── server.js              ← Express entry point, middleware, route mounting
+```
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) v20 or higher
+- [MongoDB Atlas](https://www.mongodb.com/atlas) account
+- [Git](https://git-scm.com/)
+
+### Local Setup
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/zstem001hz-droid/quantum.git
+cd quantum
+```
+
+**2. Install server dependencies**
+
+```bash
+cd server && npm install
+```
+
+**3. Create your environment file**
+
+```bash
+cp .env.example .env
+```
+
+**4. Populate `server/.env` with your values** — see [Environment Variables](#environment-variables) below
+
+**5. Start the development server**
+
+```bash
+npm run dev
+```
+
+Server runs at `http://localhost:3001`
+
+Confirm connection:
+
+```bash
+curl http://localhost:3001/api/health
 ```
 
 ## Environment Variables
@@ -82,6 +129,26 @@ Create a `.env` file inside `server/` using `.env.example` as a template:
 | `In Progress` | Task is actively being worked on |
 | `Complete`    | Task has been finished           |
 
+### Projects
+
+| Method   | Endpoint            | Description                         | Auth Required |
+| -------- | ------------------- | ----------------------------------- | ------------- |
+| `GET`    | `/api/projects`     | Get all projects for logged-in user | Yes           |
+| `GET`    | `/api/projects/:id` | Get single project by ID            | Yes           |
+| `POST`   | `/api/projects`     | Create new project                  | Yes           |
+| `PUT`    | `/api/projects/:id` | Update project by ID                | Yes           |
+| `DELETE` | `/api/projects/:id` | Delete project by ID                | Yes           |
+
+### Tasks
+
+| Method   | Endpoint                             | Description                 | Auth Required |
+| -------- | ------------------------------------ | --------------------------- | ------------- |
+| `GET`    | `/api/projects/:projectId/tasks`     | Get all tasks for a project | Yes           |
+| `GET`    | `/api/projects/:projectId/tasks/:id` | Get single task by ID       | Yes           |
+| `POST`   | `/api/projects/:projectId/tasks`     | Create new task             | Yes           |
+| `PUT`    | `/api/projects/:projectId/tasks/:id` | Update task by ID           | Yes           |
+| `DELETE` | `/api/projects/:projectId/tasks/:id` | Delete task by ID           | Yes           |
+
 ## Authentication Flow
 
 1. User registers via `POST /api/auth/register` — password is hashed by bcrypt pre-save hook before storing
@@ -90,6 +157,55 @@ Create a `.env` file inside `server/` using `.env.example` as a template:
 4. Client stores the JWT and sends it in the `Authorization` header on every protected request: `Bearer <token>`
 5. Auth middleware verifies the token signature, decodes the user ID, and attaches the user to `req.user`
 6. If the token is missing, invalid, or expired — the request is rejected with a 401
+
+## Authorization Flow
+
+1. Every protected route runs the `protect` middleware first — no route logic executes without a valid JWT
+2. The protect middleware decodes the token and attaches the user to `req.user`
+3. For project routes — the logged-in user's ID is compared against the project's `owner` field
+4. If the IDs don't match — the request is rejected with `403 Forbidden`
+5. For task routes — authorization runs at the project level first, not the task level
+6. A user's access to tasks is determined entirely by whether they own the parent project
+7. The `owner` field is always set server-side — the client never sends it
+
+## Task Authorization Chain
+
+When any task operation is requested, the following chain runs in order:
+
+1. JWT verified by `protect` middleware — user identity confirmed
+2. Parent project located by `projectId` from the URL
+3. Project existence verified — `404` if not found
+4. Project ownership verified — `403` if requester is not the owner
+5. Task located by `id` from the URL (for single task operations)
+6. Task existence verified — `404` if not found
+7. Operation executes — create, read, update, or delete
+
+## Data Model Relationships
+
+- A **User** owns many **Projects** — `Project.owner` references `User._id`
+- A **Project** contains many **Tasks** — `Task.project` references `Project._id`
+- A **Task** is created by a **User** — `Task.owner` references `User._id`
+- A **Project** can have many **Members** — `Project.members` is an array of `User._id` references (collaboration stretch goal)
+
+All relationships use Mongoose `ref` and MongoDB ObjectId references, enabling `.populate()` queries to fetch related documents in a single call.
+
+## Error Responses
+
+All errors return a consistent JSON shape:
+
+```json
+{
+  "message": "Description of the error"
+}
+```
+
+| Status Code | Meaning               | Example Trigger                              |
+| ----------- | --------------------- | -------------------------------------------- |
+| `400`       | Bad Request           | Email already registered                     |
+| `401`       | Unauthorized          | Missing or invalid JWT                       |
+| `403`       | Forbidden             | Attempting to modify another user's resource |
+| `404`       | Not Found             | Project or task ID does not exist            |
+| `500`       | Internal Server Error | Database connection failure                  |
 
 ## Security Features
 

@@ -131,13 +131,14 @@ Create a `.env` file inside `server/` using `.env.example` as a template:
 
 ### Projects
 
-| Method   | Endpoint            | Description                         | Auth Required |
-| -------- | ------------------- | ----------------------------------- | ------------- |
-| `GET`    | `/api/projects`     | Get all projects for logged-in user | Yes           |
-| `GET`    | `/api/projects/:id` | Get single project by ID            | Yes           |
-| `POST`   | `/api/projects`     | Create new project                  | Yes           |
-| `PUT`    | `/api/projects/:id` | Update project by ID                | Yes           |
-| `DELETE` | `/api/projects/:id` | Delete project by ID                | Yes           |
+| Method   | Endpoint                   | Description                         | Auth Required |
+| -------- | -------------------------- | ----------------------------------- | ------------- |
+| `GET`    | `/api/projects`            | Get all projects for logged-in user | Yes           |
+| `GET`    | `/api/projects/:id`        | Get single project by ID            | Yes           |
+| `POST`   | `/api/projects`            | Create new project                  | Yes           |
+| `PUT`    | `/api/projects/:id`        | Update project by ID                | Yes           |
+| `PUT`    | `/api/projects/:id/invite` | Invite a collaborator by email      | Yes           |
+| `DELETE` | `/api/projects/:id`        | Delete project by ID                | Yes           |
 
 ### Tasks
 
@@ -220,8 +221,8 @@ All errors return a consistent JSON shape:
 
 ### Stretch Goals
 
-- [ ] Collaborator invitations — project owners can invite registered users
-- [ ] Collaborator permissions — invited users can view and update tasks
+- [x] Collaborator invitations — project owners can invite registered users
+- [x] Collaborator permissions — invited users can view and update tasks
 - [ ] Drag-and-drop task management between Kanban columns
 
 ### Future Features
@@ -266,7 +267,7 @@ API endpoints are organized in a dedicated Postman workspace. The collection is 
 - [MongoDB Atlas](https://www.mongodb.com/atlas)
 - [Mongoose Documentation](https://mongoosejs.com/docs/)
 - [Mongoose — Arrays](https://mongoosejs.com/docs/schematypes.html#arrays)
-- [Mongoose — Document.save()](https://mongoosejs.com/docs/api/document.html#Document.prototype.save())
+- [Mongoose — Document.save()](<https://mongoosejs.com/docs/api/document.html#Document.prototype.save()>)
 - [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
 - [Express 5 Documentation](https://expressjs.com/)
 - [JSON Web Tokens — jwt.io](https://jwt.io/)

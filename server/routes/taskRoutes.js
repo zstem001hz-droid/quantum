@@ -8,7 +8,7 @@ const router = express.Router({ mergeParams: true });
 // Helper - returns true if user is project owner or member
 const isOwnerOrMember = (project, userId) => {
   return (
-    project.owner.tostring() === userId.toString() ||
+    project.owner.toString() === userId.toString() ||
     project.members.some((m) => m.toString() === userId.toString())
   );
 };
@@ -22,7 +22,7 @@ router.get("/", protect, async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    if (project.owner.toString() !== req.user._id.toString()) {
+    if (!isOwnerOrMember(project, req.user._id)) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
@@ -42,7 +42,7 @@ router.get("/:id", protect, async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    if (project.owner.toString() !== req.user._id.toString()) {
+    if (!isOwnerOrMember(project, req.user._id)) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
@@ -69,7 +69,7 @@ router.post("/", protect, async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    if (project.owner.toString() !== req.user._id.toString()) {
+    if (!isOwnerOrMember(project, req.user._id)) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
@@ -96,7 +96,7 @@ router.put("/:id", protect, async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    if (project.owner.toString() !== req.user._id.toString()) {
+    if (!isOwnerOrMember(project, req.user._id)) {
       return res.status(403).json({ message: "Not authorized" });
     }
 

@@ -7,7 +7,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
 ![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38bdf8)
 ![JWT](https://img.shields.io/badge/Auth-JWT-orange)
-![License](https://img.shields.io/badge/License-ISC-blue)
+![License](https://img.shields.io/badge/License-Proprietary-red)
 ![bcrypt](https://img.shields.io/badge/Security-bcrypt-red)
 ![Vite](https://img.shields.io/badge/Vite-6.x-yellow)
 ![Morgan](https://img.shields.io/badge/Morgan-Logger-lightgrey)
@@ -290,5 +290,9 @@ API endpoints are organized in a dedicated Postman workspace. The collection is 
 - [Render Documentation](https://render.com/docs)
 - [Render — Deploying a Node.js App](https://render.com/docs/node-express)
 - [Render — Static Site Deployment](https://render.com/docs/static-sites)
+
+## License
+
+Copyright © 2026 Zac White. All Rights Reserved.
 
 > 🚧 Work in progress

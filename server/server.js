@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Zac White. All Rights Reserved.
 require("dotenv").config();
 
 const express = require("express");

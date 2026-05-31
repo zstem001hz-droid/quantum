@@ -36,8 +36,49 @@ Quantum is a modern, full-stack MERN project management application built for in
 
 ```
 quantum/
-├── client/                    ← React 19 + Vite + TypeScript
-└── server/
+── client/                             ← React 19 + Vite + TypeScript
+   ├── public/
+   │   └── favicon.svg                 ← custom atom favicon
+   └── src/
+       ├── components/
+       │   ├── animations/
+       │   │   ├── QuantumLogo.tsx     ← animated SVG atom logo
+       │   │   └── TaskCompleteAnimation.tsx
+       │   ├── modals/
+       │   │   ├── CreateProjectModal.tsx
+       │   │   ├── EditProjectModal.tsx
+       │   │   ├── CreateTaskModal.tsx
+       │   │   ├── EditTaskModal.tsx
+       │   │   └── InviteModal.tsx
+       │   ├── EmptyState.tsx
+       │   ├── ErrorMessage.tsx
+       │   ├── LoadingSpinner.tsx
+       │   ├── Navbar.tsx
+       │   ├── ProjectCard.tsx
+       │   ├── ProtectedRoute.tsx
+       │   ├── TaskBoard.tsx
+       │   ├── TaskCard.tsx
+       │   ├── TaskColumn.tsx
+       │   └── ThemeSwitcher.tsx
+       ├── context/
+       │   └── AuthContext.tsx
+       ├── hooks/
+       │   ├── useAuth.ts
+       │   ├── useProjects.ts
+       │   ├── useTasks.ts
+       │   └── useTheme.ts
+       ├── pages/
+       │   ├── DashboardPage.tsx
+       │   ├── LoginPage.tsx
+       │   ├── ProjectDetailPage.tsx
+       │   └── RegisterPage.tsx
+       ├── services/
+       │   └── api.ts
+       ├── types/
+       │   └── index.ts
+       ├── App.tsx
+       └── main.tsx
+├── server/
     ├── config/
     │   └── connection.js      ← MongoDB Atlas connection
     ├── middleware/

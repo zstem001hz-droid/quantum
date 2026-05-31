@@ -14,6 +14,72 @@ Content-Type: application/json
   "password": "password11x"
 }
 
+### Register - Username Too Short (should fail)
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "username": "abc",
+  "email": "failtest1@test.com",
+  "password": "Password1!"
+}
+
+### Register - Invalid Username Characters (should fail)
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "username": "bad user!",
+  "email": "failtest2@test.com",
+  "password": "Password1!"
+}
+
+### Register - Weak Password No Uppercase (should fail)
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "username": "validuser1",
+  "email": "failtest3@test.com",
+  "password": "password1!"
+}
+
+### Register - Weak Password No Number (should fail)
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "username": "validuser2",
+  "email": "failtest4@test.com",
+  "password": "Password!!"
+}
+
+### Register - Weak Password No Special Char (should fail)
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "username": "validuser3",
+  "email": "failtest5@test.com",
+  "password": "Password11"
+}
+
+### Register - Valid Strong Credentials (should succeed)
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Fyodor Dostoevsky",
+  "username": "dostoevsky",
+  "email": "raskolnikov@crimeandpunishment.com",
+  "password": "Ax!mkov99"
+}
+
 ### Login User
 POST http://localhost:3001/api/auth/login
 Content-Type: application/json

@@ -5,6 +5,14 @@ const { protect } = require("../middleware/auth");
 
 const router = express.Router({ mergeParams: true });
 
+// Helper - returns true if user is project owner or member
+const isOwnerOrMember = (project, userId) => {
+  return (
+    project.owner.tostring() === userId.toString() ||
+    project.members.some((m) => m.toString() === userId.toString())
+  );
+};
+
 // GET /api/projects/:projectId/tasks — get all tasks for a project
 router.get("/", protect, async (req, res) => {
   try {

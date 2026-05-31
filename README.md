@@ -79,22 +79,26 @@ quantum/
        ├── App.tsx
        └── main.tsx
 ├── server/
-    ├── config/
-    │   └── connection.js      ← MongoDB Atlas connection
-    ├── middleware/
-    │   └── auth.js            ← JWT verification and user attachment
-    ├── models/
-    │   ├── User.js            ← user schema with bcrypt pre-save hook
-    │   ├── Project.js         ← project schema with owner reference
-    │   └── Task.js            ← task schema with project and owner references
-    ├── routes/
-    │   ├── authRoutes.js      ← register and login endpoints
-    │   ├── projectRoutes.js   ← full CRUD with ownership authorization
-    │   └── taskRoutes.js      ← full CRUD with nested routing and parent project authorization
-    ├── .env.example
-    ├── package.json
-    ├── requests.http          ← REST Client API test requests
-    └── server.js              ← Express entry point, middleware, route mounting
+│   ├── config/
+│   │   └── connection.js      ← MongoDB Atlas connection
+│   ├── middleware/
+│   │   └── auth.js            ← JWT verification and user attachment
+│   ├── models/
+│   │   ├── User.js            ← user schema with bcrypt pre-save hook
+│   │   ├── Project.js         ← project schema with owner and members
+│   │   └── Task.js            ← task schema with project and owner refs
+│   ├── routes/
+│   │   ├── authRoutes.js      ← register and login endpoints
+│   │   ├── projectRoutes.js   ← full CRUD + invite collaborator
+│   │   └── taskRoutes.js      ← full CRUD with nested routing
+│   ├── .env.example
+│   ├── package.json
+│   ├── requests.http          ← REST Client API test requests
+│   └── server.js              ← Express entry point, middleware, routes
+├── LICENSE
+├── .gitignore
+├── package.json
+└── README.md
 ```
 
 ## Getting Started

@@ -207,6 +207,30 @@ All errors return a consistent JSON shape:
 | `404`       | Not Found             | Project or task ID does not exist            |
 | `500`       | Internal Server Error | Database connection failure                  |
 
+## Roadmap
+
+### Core Features
+
+- [x] User registration and login with JWT authentication
+- [x] Full project CRUD with ownership-based authorization
+- [x] Full task CRUD with nested routing and parent project authorization
+- [x] Kanban-style task board with To Do / In Progress / Complete columns
+- [x] Responsive design — mobile, tablet, and desktop
+- [x] Deployed on Render — backend Web Service and frontend Static Site
+
+### Stretch Goals
+
+- [ ] Collaborator invitations — project owners can invite registered users
+- [ ] Collaborator permissions — invited users can view and update tasks
+- [ ] Drag-and-drop task management between Kanban columns
+
+### Future Features
+
+- [ ] Admin role — platform management and user moderation
+- [ ] Real-time updates — WebSocket integration for live task changes
+- [ ] Email notifications — task assignments and project activity
+- [ ] Refresh token rotation — enhanced JWT security
+
 ## Security Features
 
 - Passwords hashed with bcrypt (cost factor 10) via pre-save hook — plain text never touches the database
@@ -241,6 +265,9 @@ API endpoints are organized in a dedicated Postman workspace. The collection is 
 
 - [MongoDB Atlas](https://www.mongodb.com/atlas)
 - [Mongoose Documentation](https://mongoosejs.com/docs/)
+- [Mongoose — Arrays](https://mongoosejs.com/docs/schematypes.html#arrays)
+- [Mongoose — Document.save()](https://mongoosejs.com/docs/api/document.html#Document.prototype.save())
+- [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
 - [Express 5 Documentation](https://expressjs.com/)
 - [JSON Web Tokens — jwt.io](https://jwt.io/)
 

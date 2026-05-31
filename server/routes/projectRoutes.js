@@ -1,13 +1,36 @@
 const express = require("express");
 const Project = require("../models/Project");
+const User = require("../models/User");
 const { protect } = require("../middleware/auth");
 
 const router = express.Router();
 
+// Helper — returns true if user is project owner or member
+const isOwnerOrMember = (project, userId) => {
+  return (
+    project.owner.toString() === userId.toString() ||
+    project.members.some((m) => m.toString() === userId.toString())
+  );
+};
+
 // GET /api/projects — get all projects for logged-in user
 router.get("/", protect, async (req, res) => {
   try {
-    const projects = await Project.find({ owner: req.user._id });
+    const projects = await Project.find({
+      $or: [{ owner: req.user._id }, { members: req.user._id }],
+    });
+
+    res.status(200).json(projects);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}); // GET /api/projects — get all projects for logged-in user
+router.get("/", protect, async (req, res) => {
+  try {
+    const projects = await Project.find({
+      $or: [{ owner: req.user._id }, { members: req.user._id }],
+    });
+
     res.status(200).json(projects);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -24,7 +47,7 @@ router.get("/:id", protect, async (req, res) => {
     }
 
     // Ownership check
-    if (project.owner.toString() !== req.user._id.toString()) {
+    if (!isOwnerOrMember(project, req.user._id)) {
       return res.status(403).json({ message: "Not authorized" });
     }
 
@@ -71,6 +94,45 @@ router.put("/:id", protect, async (req, res) => {
     });
 
     res.status(200).json(updated);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// PUT /api/projects/:id/invite — invite a collaborator by email (owner only)
+router.put("/:id/invite", protect, async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    if (project.owner.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    const invitee = await User.findOne({ email });
+    if (!invitee) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (invitee._id.toString() === req.user._id.toString()) {
+      return res.status(400).json({ message: "Cannot invite yourself" });
+    }
+
+    if (project.members.some((m) => m.toString() === invitee._id.toString())) {
+      return res
+        .status(400)
+        .json({ message: "User is already a collaborator" });
+    }
+
+    project.members.push(invitee._id);
+    await project.save();
+
+    res.status(200).json(project);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

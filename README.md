@@ -20,6 +20,7 @@ Quantum is a modern, full-stack MERN project management application built for in
 ## Tech Stack
 
 **Frontend**
+
 - [React 19](https://react.dev/) — UI library
 - [TypeScript](https://www.typescriptlang.org/) — typed JavaScript
 - [Vite](https://vitejs.dev/) — build tool and dev server
@@ -311,6 +312,10 @@ POST /api/auth/register 201 45ms
 GET /api/projects 401 3ms
 ```
 
+### MongoDB Compass
+
+Database state is verified visually using [MongoDB Compass](https://www.mongodb.com/products/compass). Used to confirm documents are created, updated, and deleted correctly during API testing, and to verify relationship fields such as `owner` and `members` arrays.
+
 ### Postman
 
 API endpoints are organized in a dedicated Postman workspace. The collection is structured by resource — Auth, Projects, and Tasks. A Postman environment manages the base URL and JWT token automatically between requests.
@@ -318,15 +323,17 @@ API endpoints are organized in a dedicated Postman workspace. The collection is 
 ## References
 
 **Core Stack — Backend**
+
 - [MongoDB Atlas](https://www.mongodb.com/atlas)
 - [Mongoose Documentation](https://mongoosejs.com/docs/)
 - [Mongoose — Arrays](https://mongoosejs.com/docs/schematypes.html#arrays)
-- [Mongoose — Document.save()](https://mongoosejs.com/docs/api/document.html#Document.prototype.save())
+- [Mongoose — Document.save()](<https://mongoosejs.com/docs/api/document.html#Document.prototype.save()>)
 - [Express 5 Documentation](https://expressjs.com/)
 - [JSON Web Tokens — jwt.io](https://jwt.io/)
 - [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
 
 **Core Stack — Frontend**
+
 - [React Documentation](https://react.dev/)
 - [Vite Documentation](https://vitejs.dev/)
 - [React Router Documentation](https://reactrouter.com/)
@@ -340,12 +347,12 @@ API endpoints are organized in a dedicated Postman workspace. The collection is 
 
 **Development Tools**
 
-- [MongoDB Compass](https://www.mongodb.com/products/compass)
 - [REST Client — VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
 - [Morgan — HTTP Request Logger](https://github.com/expressjs/morgan)
 - [Chrome DevTools Documentation](https://developer.chrome.com/docs/devtools/)
 - [ExplainShell — Unix Command Reference](https://explainshell.com/)
 - [Postman Documentation](https://learning.postman.com/docs/getting-started/overview/)
+- [MongoDB Compass](https://www.mongodb.com/products/compass)
 
 **Deployment**
 

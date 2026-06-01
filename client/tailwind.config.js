@@ -14,6 +14,9 @@ export default {
           text: "#f0f2ff",
           muted: "#6b7490",
           accent: "#6366f1",
+          gold: "#d4a017",
+          crimson: "#cc2200",
+          magenta: "#e040fb",
           "accent-hover": "#4f46e5",
         },
         status: {

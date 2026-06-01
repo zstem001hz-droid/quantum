@@ -375,11 +375,17 @@ Zero errors required before every commit.
 - [Axios Documentation](https://axios-http.com/docs/intro)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [Framer Motion Documentation](https://www.framer.com/motion/)
+- [Framer Motion — Animation](https://www.framer.com/motion/animation/)
+- [Framer Motion — Transition Options](https://www.framer.com/motion/transition/)
 - [@dnd-kit Documentation](https://dndkit.com/)
 
 **Standards**
 
 - [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+- [MDN — SVG ellipse](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse)
+- [MDN — SVG feGaussianBlur](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feGaussianBlur)
+- [MDN — SVG feMerge](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feMerge)
+- [MDN — SVG viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox)
 
 **Development Tools**
 

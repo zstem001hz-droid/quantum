@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Quantum — Full Stack MERN Project Management Application",
   "author": "Zac White",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "scripts": {
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev"

@@ -114,6 +114,8 @@ quantum/
 
 ## Getting Started
 
+> **Note:** This project is proprietary software. Local setup instructions are provided for evaluation purposes only.
+
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) v20 or higher
@@ -135,23 +137,38 @@ cd quantum
 cd server && npm install
 ```
 
-**3. Create your environment file**
+**3. Install client dependencies**
 
 ```bash
-cp .env.example .env
+cd ../client && npm install
 ```
 
-**4. Populate `server/.env` with your values** — see [Environment Variables](#environment-variables) below
-
-**5. Start the development server**
+**4. Create environment files**
 
 ```bash
-npm run dev
+cp server/.env.example server/.env
+cp client/.env.example client/.env
+```
+
+**5. Populate both `.env` files with your values** — see [Environment Variables](#environment-variables) below
+
+**6. Start the backend server**
+
+```bash
+cd server && npm run dev
 ```
 
 Server runs at `http://localhost:3001`
 
-Confirm connection:
+**7. Start the frontend dev server** _(open a second terminal)_
+
+```bash
+cd client && npm run dev
+```
+
+Frontend runs at `http://localhost:5173`
+
+**8. Confirm backend connection**
 
 ```bash
 curl http://localhost:3001/api/health
@@ -167,6 +184,12 @@ Create a `.env` file inside `server/` using `.env.example` as a template:
 | `JWT_SECRET`    | Secret key for signing and verifying JWTs                       |
 | `PORT`          | Server port (default: `3001`)                                   |
 | `CLIENT_ORIGIN` | Frontend URL allowed by CORS (default: `http://localhost:5173`) |
+
+Create a `.env` file inside `client/` using `.env.example` as a template:
+
+| Variable       | Description                                        |
+| -------------- | -------------------------------------------------- |
+| `VITE_API_URL` | Backend API URL (default: `http://localhost:3001`) |
 
 ## API Endpoints
 
@@ -319,6 +342,16 @@ Database state is verified visually using [MongoDB Compass](https://www.mongodb.
 ### Postman
 
 API endpoints are organized in a dedicated Postman workspace. The collection is structured by resource — Auth, Projects, and Tasks. A Postman environment manages the base URL and JWT token automatically between requests.
+
+### TypeScript Compiler Check
+
+Run a full TypeScript check across the codebase without building:
+
+```bash
+npx tsc --noEmit
+```
+
+Zero errors required before every commit.
 
 ## References
 

@@ -353,6 +353,9 @@ API endpoints are organized in a dedicated Postman workspace. The collection is 
 - [ExplainShell — Unix Command Reference](https://explainshell.com/)
 - [Postman Documentation](https://learning.postman.com/docs/getting-started/overview/)
 - [MongoDB Compass](https://www.mongodb.com/products/compass)
+- [Vite Plugin React — react-refresh/only-export-components](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react)
+- [Kent C. Dodds — How to use React Context effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively)
+- [ESLint — Disabling Rules with Comments](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments)
 
 **Deployment**
 

@@ -19,24 +19,34 @@ Quantum is a modern, full-stack MERN project management application built for in
 
 ## Tech Stack
 
+**Frontend**
+- [React 19](https://react.dev/) — UI library
+- [TypeScript](https://www.typescriptlang.org/) — typed JavaScript
+- [Vite](https://vitejs.dev/) — build tool and dev server
+- [React Router](https://reactrouter.com/) — client-side routing
+- [Axios](https://axios-http.com/) — HTTP client for API requests
+- [Tailwind CSS](https://tailwindcss.com/) — utility-first styling
+- [Framer Motion](https://www.framer.com/motion/) — animations
+- [@dnd-kit](https://dndkit.com/) — drag-and-drop task board
+
 **Backend**
 
 - [Node.js](https://nodejs.org/) — runtime environment
 - [Express 5](https://expressjs.com/) — web framework
 - [MongoDB](https://www.mongodb.com/) — NoSQL database
 - [Mongoose](https://mongoosejs.com/) — MongoDB object modeling
+- [dotenv](https://github.com/motdotla/dotenv) — environment variable management
+- [cors](https://github.com/expressjs/cors) — cross-origin resource sharing
 - [JSON Web Tokens](https://jwt.io/) — authentication
 - [bcryptjs](https://github.com/dcodeIO/bcrypt.js) — password hashing
 - [morgan](https://github.com/expressjs/morgan) — HTTP request logger
-- [dotenv](https://github.com/motdotla/dotenv) — environment variable management
-- [cors](https://github.com/expressjs/cors) — cross-origin resource sharing
 - [nodemon](https://nodemon.io/) — development server with auto-restart
 
 ## Project Structure
 
 ```
 quantum/
-── client/                             ← React 19 + Vite + TypeScript
+├── client/                            ← React 19 + Vite + TypeScript
    ├── public/
    │   └── favicon.svg                 ← custom atom favicon
    └── src/
@@ -307,15 +317,22 @@ API endpoints are organized in a dedicated Postman workspace. The collection is 
 
 ## References
 
-**Core Stack**
-
+**Core Stack — Backend**
 - [MongoDB Atlas](https://www.mongodb.com/atlas)
 - [Mongoose Documentation](https://mongoosejs.com/docs/)
 - [Mongoose — Arrays](https://mongoosejs.com/docs/schematypes.html#arrays)
-- [Mongoose — Document.save()](<https://mongoosejs.com/docs/api/document.html#Document.prototype.save()>)
-- [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
+- [Mongoose — Document.save()](https://mongoosejs.com/docs/api/document.html#Document.prototype.save())
 - [Express 5 Documentation](https://expressjs.com/)
 - [JSON Web Tokens — jwt.io](https://jwt.io/)
+- [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
+
+**Core Stack — Frontend**
+- [React Documentation](https://react.dev/)
+- [Vite Documentation](https://vitejs.dev/)
+- [React Router Documentation](https://reactrouter.com/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Framer Motion Documentation](https://www.framer.com/motion/)
+- [@dnd-kit Documentation](https://dndkit.com/)
 
 **Standards**
 

@@ -9,6 +9,7 @@ export default {
           bg: "#0d0f1a",
           surface: "#161929",
           surface2: "#1e2235",
+          input: "#1a2e58",
           border: "#2a2f4a",
           text: "#f0f2ff",
           muted: "#6b7490",

@@ -374,6 +374,8 @@ Zero errors required before every commit.
 - [React Router Documentation](https://reactrouter.com/)
 - [Axios Documentation](https://axios-http.com/docs/intro)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Tailwind CSS — Customizing Colors](https://tailwindcss.com/docs/customizing-colors)
+- [Tailwind CSS — Utility Class Reference](https://tailwindcss.com/docs/utility-first)
 - [Framer Motion Documentation](https://www.framer.com/motion/)
 - [Framer Motion — Animation](https://www.framer.com/motion/animation/)
 - [Framer Motion — Transition Options](https://www.framer.com/motion/transition/)
@@ -381,11 +383,14 @@ Zero errors required before every commit.
 
 **Standards**
 
+- [React — Writing Markup with JSX](https://react.dev/learn/writing-markup-with-jsx)
 - [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 - [MDN — SVG ellipse](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse)
 - [MDN — SVG feGaussianBlur](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feGaussianBlur)
 - [MDN — SVG feMerge](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feMerge)
 - [MDN — SVG viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox)
+- [MDN — Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
+- [TypeScript — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
 
 **Development Tools**
 

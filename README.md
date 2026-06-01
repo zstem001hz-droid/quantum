@@ -271,9 +271,9 @@ All errors return a consistent JSON shape:
 - [x] User registration and login with JWT authentication
 - [x] Full project CRUD with ownership-based authorization
 - [x] Full task CRUD with nested routing and parent project authorization
-- [x] Kanban-style task board with To Do / In Progress / Complete columns
-- [x] Responsive design — mobile, tablet, and desktop
-- [x] Deployed on Render — backend Web Service and frontend Static Site
+- [ ] Kanban-style task board with To Do / In Progress / Complete columns
+- [ ] Responsive design — mobile, tablet, and desktop
+- [ ] Deployed on Render — backend Web Service and frontend Static Site
 
 ### Stretch Goals
 
@@ -335,8 +335,11 @@ API endpoints are organized in a dedicated Postman workspace. The collection is 
 **Core Stack — Frontend**
 
 - [React Documentation](https://react.dev/)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [TypeScript Compiler Options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
 - [Vite Documentation](https://vitejs.dev/)
 - [React Router Documentation](https://reactrouter.com/)
+- [Axios Documentation](https://axios-http.com/docs/intro)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [Framer Motion Documentation](https://www.framer.com/motion/)
 - [@dnd-kit Documentation](https://dndkit.com/)

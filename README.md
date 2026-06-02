@@ -311,6 +311,7 @@ All errors return a consistent JSON shape:
 - [ ] Real-time updates — WebSocket integration for live task changes
 - [ ] Email notifications — task assignments and project activity
 - [ ] Refresh token rotation — enhanced JWT security
+- [ ] User avatar selector — custom profile image upload and display
 
 ## Security Features
 
@@ -385,6 +386,7 @@ Zero errors required before every commit.
 **Standards**
 
 - [React — Writing Markup with JSX](https://react.dev/learn/writing-markup-with-jsx)
+- [TypeScript — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
 - [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
 - [MDN — SVG ellipse](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse)
 - [MDN — SVG feGaussianBlur](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feGaussianBlur)
@@ -392,7 +394,7 @@ Zero errors required before every commit.
 - [MDN — SVG viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox)
 - [MDN — Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
 - [MDN — Window.matchMedia()](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
-- [TypeScript — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
+- [MDN — Nullish Coalescing Operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)
 
 **Development Tools**
 

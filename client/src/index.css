@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes stroke-indigo {
+  0%, 100% { stroke: #818cf8; }
+  50% { stroke: #4338ca; }
+}
+@keyframes stroke-blue {
+  0%, 100% { stroke: #93c5fd; }
+  50% { stroke: #2563eb; }
+}
+@keyframes stroke-purple {
+  0%, 100% { stroke: #c4b5fd; }
+  50% { stroke: #6d28d9; }
+}
+@keyframes stroke-gold {
+  0%, 100% { stroke: #fbbf24; }
+  50% { stroke: #92400e; }
+}
+@keyframes stroke-crimson {
+  0%, 100% { stroke: #f87171; }
+  50% { stroke: #7f1d1d; }
+}
+@keyframes stroke-magenta {
+  0%, 100% { stroke: #f0abfc; }
+  50% { stroke: #a21caf; }
+}

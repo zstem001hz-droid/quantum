@@ -15,7 +15,11 @@ const useTheme = () => {
       const systemDark = window.matchMedia(
         "(prefers-color-scheme: dark)",
       ).matches;
-      systemDark ? root.classList.add("dark") : root.classList.remove("dark");
+      if (systemDark) {
+        root.classList.add("dark");
+      } else {
+        root.classList.remove("dark");
+      }
     } else if (theme === "dark") {
       root.classList.add("dark");
     } else {

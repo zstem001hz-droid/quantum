@@ -306,6 +306,7 @@ All errors return a consistent JSON shape:
 
 ### Future Features
 
+- [ ] Quantum decoherence error animation — logo disperses on error states
 - [ ] Admin role — platform management and user moderation
 - [ ] Real-time updates — WebSocket integration for live task changes
 - [ ] Email notifications — task assignments and project activity
@@ -390,6 +391,7 @@ Zero errors required before every commit.
 - [MDN — SVG feMerge](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feMerge)
 - [MDN — SVG viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox)
 - [MDN — Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
+- [MDN — Window.matchMedia()](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
 - [TypeScript — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
 
 **Development Tools**

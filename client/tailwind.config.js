@@ -17,6 +17,7 @@ export default {
           gold: "#d4a017",
           crimson: "#cc2200",
           magenta: "#e040fb",
+          'light-bg': '#eef2ff',
           "accent-hover": "#4f46e5",
         },
         status: {

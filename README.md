@@ -17,6 +17,14 @@
 
 Quantum is a modern, full-stack MERN project management application built for individuals and small teams. It features secure JWT-based authentication, ownership-based authorization, and a RESTful API for managing projects and tasks — deployed and production-ready
 
+## Screenshots
+
+> 📸 Screenshots and demo GIF coming before final submission.
+
+## Vision
+
+Quantum was built to explore what a modern, production-ready project management tool looks like when designed with intention — dark-first UI, real-time collaboration, and quantum physics as a visual language for the complexity of coordinating teams and tasks.
+
 ## Tech Stack
 
 **Frontend**
@@ -202,11 +210,11 @@ Create a `.env` file inside `client/` using `.env.example` as a template:
 
 ## Task Status Values
 
-| Status        | Description                      |
-| ------------- | -------------------------------- |
-| `To Do`       | Task has not been started        |
-| `In Progress` | Task is actively being worked on |
-| `Complete`    | Task has been finished           |
+| Status                                                                              | Description                      |
+| ----------------------------------------------------------------------------------- | -------------------------------- |
+| ![To Do](https://img.shields.io/badge/To%20Do-60a5fa?style=flat-square)             | Task has not been started        |
+| ![In Progress](https://img.shields.io/badge/In%20Progress-f59e0b?style=flat-square) | Task is actively being worked on |
+| ![Complete](https://img.shields.io/badge/Complete-10b981?style=flat-square)         | Task has been finished           |
 
 ### Projects
 
@@ -361,69 +369,72 @@ Zero errors required before every commit.
 
 **Core Stack — Backend**
 
-- [MongoDB Atlas](https://www.mongodb.com/atlas)
-- [Mongoose Documentation](https://mongoosejs.com/docs/)
-- [Mongoose — Arrays](https://mongoosejs.com/docs/schematypes.html#arrays)
-- [Mongoose — Document.save()](<https://mongoosejs.com/docs/api/document.html#Document.prototype.save()>)
-- [Express 5 Documentation](https://expressjs.com/)
-- [JSON Web Tokens — jwt.io](https://jwt.io/)
-- [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
+- [MongoDB Atlas](https://www.mongodb.com/atlas) — Cloud-hosted NoSQL database
+- [Mongoose Documentation](https://mongoosejs.com/docs/) — MongoDB object modeling library for Node.js
+- [Mongoose — Arrays](https://mongoosejs.com/docs/schematypes.html#arrays) — Array schema type; used for `project.members` collaborator references
+- [Mongoose — Document.save()](<https://mongoosejs.com/docs/api/document.html#Document.prototype.save()>) — Push collaborators to `project.members`
+- [Express 5 Documentation](https://expressjs.com/) — Web framework; API Routing
+- [JSON Web Tokens — jwt.io](https://jwt.io/) — Secure token authentication
+- [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) — `isOwnerOrMember` helper
 
 **Core Stack — Frontend**
 
-- [React Documentation](https://react.dev/)
-- [React Router — Link](https://reactrouter.com/en/main/components/link)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
-- [TypeScript Compiler Options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
-- [Vite Documentation](https://vitejs.dev/)
-- [React Router Documentation](https://reactrouter.com/)
-- [Axios Documentation](https://axios-http.com/docs/intro)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Tailwind CSS — Customizing Colors](https://tailwindcss.com/docs/customizing-colors)
-- [Tailwind CSS — Dark Mode](https://tailwindcss.com/docs/dark-mode)
-- [Tailwind CSS — Utility Class Reference](https://tailwindcss.com/docs/utility-first)
-- [Tailwind CSS — Hover, Focus, and Other States](https://tailwindcss.com/docs/hover-focus-and-other-states)
-- [Tailwind CSS — Transition Property](https://tailwindcss.com/docs/transition-property)
-- [Tailwind CSS — Line Clamp](https://tailwindcss.com/docs/line-clamp)
-- [Tailwind CSS — Flexbox](https://tailwindcss.com/docs/flex)
-- [Tailwind CSS — Grid Template Columns](https://tailwindcss.com/docs/grid-template-columns)
-- [Tailwind CSS — Background Gradient](https://tailwindcss.com/docs/background-image#gradients)
-- [Framer Motion Documentation](https://www.framer.com/motion/)
-- [Framer Motion — Animation](https://www.framer.com/motion/animation/)
-- [Framer Motion — Transition Options](https://www.framer.com/motion/transition/)
-- [@dnd-kit Documentation](https://dndkit.com/)
+- [React Documentation](https://react.dev/) — Core UI library
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/) — Typed JavaScript; interfaces, generics, and type safety throughout the client
+- [TypeScript Compiler Options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) — `npx tsc --noEmit` type verification
+- [Vite Documentation](https://vitejs.dev/) — Build tool and dev server
+- [React Router Documentation](https://reactrouter.com/) — Client-side routing; protected routes and navigation configured in `App.tsx`
+- [Axios Documentation](https://axios-http.com/docs/intro) — HTTP client; JWT interceptor in `src/services/api.ts` attaches token to every request
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs) — Utility-first styling
+- [Tailwind CSS — Customizing Colors](https://tailwindcss.com/docs/customizing-colors) — Define color object to generate branding utility classes
+- [Tailwind CSS — Utility Class Reference](https://tailwindcss.com/docs/utility-first) — Layout, spacing, and typography utilities
+- [Tailwind CSS — Dark Mode](https://tailwindcss.com/docs/dark-mode) — `darkMode: 'class'` strategy; `useTheme` hook manages the `dark` class on `<html>`
+- [Tailwind CSS — Hover, Focus, and Other States](https://tailwindcss.com/docs/hover-focus-and-other-states) — State variants applied to all interactive elements
+- [Tailwind CSS — Transition Property](https://tailwindcss.com/docs/transition-property) — `transition-colors` on buttons and interactive borders
+- [Tailwind CSS — Line Clamp](https://tailwindcss.com/docs/line-clamp) — Truncate long descriptions
+- [Tailwind CSS — Flexbox](https://tailwindcss.com/docs/flex) — Core layout utility used throughout every component
+- [Tailwind CSS — Grid Template Columns](https://tailwindcss.com/docs/grid-template-columns) — Statistics grid columns
+- [Tailwind CSS — Background Gradient](https://tailwindcss.com/docs/background-image#gradients) — Gradient backgrounds; used for user avatar in `Navbar`
+- [Framer Motion Documentation](https://www.framer.com/motion/) — Animation library
+- [Framer Motion — Animation](https://www.framer.com/motion/animation/) — `animate` prop
+- [Framer Motion — Transition Options](https://www.framer.com/motion/transition/) — `duration`, `repeat`, `ease` options
+- [@dnd-kit Documentation](https://dndkit.com/) — Drag-and-drop library; Kanban board task reordering
 
 **Standards**
 
-- [React — Writing Markup with JSX](https://react.dev/learn/writing-markup-with-jsx)
-- [TypeScript — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
-- [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
-- [MDN — SVG ellipse](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse)
-- [MDN — SVG feGaussianBlur](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feGaussianBlur)
-- [MDN — SVG feMerge](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feMerge)
-- [MDN — SVG viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox)
-- [MDN — Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
-- [MDN — Window.matchMedia()](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
-- [MDN — Nullish Coalescing Operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)
-- [MDN — Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+- [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) — API return status codes
+- [React — Writing Markup with JSX](https://react.dev/learn/writing-markup-with-jsx) — JSX syntax for React components
+- [MDN — Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) — Form `handleSubmit` handlers, prevents page reload
+- [TypeScript — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) — `err instanceof Error` for catch blocks
+- [MDN — SVG ellipse](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse) — SVG orbital rings effect
+- [MDN — SVG feGaussianBlur](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feGaussianBlur) — Creates blur effect used in ring and nucleus glow filters in `QuantumLogo`
+- [MDN — SVG viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox) — Centered coordinate system (`-100 -100 200 200`) enabling rotation around the SVG origin
+- [MDN — SVG feMerge](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feMerge) — Combines blur and source graphic for glow filter output
+- [React — Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks) — Never call hooks inside loops or conditions; followed throughout all components and custom hooks
+- [React — Rules](https://react.dev/reference/rules) — Core React rules
+- [MDN — Window.matchMedia()](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) — Detects system dark/light preference in `useTheme` hook
+- [MDN — Nullish Coalescing Operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing) — Default fallback for optional `retryLabel` prop in `ErrorMessage`
+- [MDN — Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) — Transforms arrays into rendered JSX lists throughout all components
+- [React Router — Link](https://reactrouter.com/en/main/components/link) — Used in `Navbar` and `ProjectCard` for client-side navigation
 
 **Development Tools**
 
-- [REST Client — VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
-- [Morgan — HTTP Request Logger](https://github.com/expressjs/morgan)
-- [Chrome DevTools Documentation](https://developer.chrome.com/docs/devtools/)
-- [ExplainShell — Unix Command Reference](https://explainshell.com/)
-- [Postman Documentation](https://learning.postman.com/docs/getting-started/overview/)
-- [MongoDB Compass](https://www.mongodb.com/products/compass)
-- [Vite Plugin React — react-refresh/only-export-components](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react)
-- [Kent C. Dodds — How to use React Context effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively)
-- [ESLint — Disabling Rules with Comments](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments)
+- [REST Client — VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) — API testing via `server/requests.http`
+- [Morgan — HTTP Request Logger](https://github.com/expressjs/morgan) — Logs API requests to the terminal
+- [Chrome DevTools Documentation](https://developer.chrome.com/docs/devtools/) — Network tab for API inspection, Application tab for localStorage, Console for runtime errors
+- [ExplainShell — Unix Command Reference](https://explainshell.com/) — Reference for terminal commands used throughout development
+- [Postman Documentation](https://learning.postman.com/docs/getting-started/overview/) — Quantum workspace with Quantum Local environment; login request auto-saves JWT token
+- [MongoDB Compass](https://www.mongodb.com/products/compass) — Visual database inspection; used to verify documents, relationships, and collaborator arrays
+- [Vite Plugin React — react-refresh/only-export-components](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react) — ESLint rule requiring `eslint-disable-next-line` comment in `AuthContext.tsx`
+- [Kent C. Dodds — How to use React Context effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively) — Pattern followed for `AuthContext` provider and consumer design
+- [ESLint — Disabling Rules with Comments](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments) — Used in `AuthContext.tsx` to disable fast refresh rule for context files
+- [Shields.io — Badge Generator](https://shields.io/) — Generates README header badges and colored Task Status Values
 
 **Deployment**
 
-- [Render Documentation](https://render.com/docs)
-- [Render — Deploying a Node.js App](https://render.com/docs/node-express)
-- [Render — Static Site Deployment](https://render.com/docs/static-sites)
+- [Render Documentation](https://render.com/docs) — Deployment platform for backend Web Service and frontend Static Site
+- [Render — Deploying a Node.js App](https://render.com/docs/node-express) — Deploying the Express backend as a Web Service
+- [Render — Static Site Deployment](https://render.com/docs/static-sites) — Deploying the Vite React frontend as a Static Site
 
 ## License
 

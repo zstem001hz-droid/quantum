@@ -22,7 +22,7 @@ const useTheme = () => {
       }
     } else if (theme === "dark") {
       root.classList.add("dark");
-    } else {
+    } else if (theme === "light") {
       root.classList.remove("dark");
     }
 

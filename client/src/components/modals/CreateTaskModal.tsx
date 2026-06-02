@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import api from '../../services/api';
-import type { Task } from '../../types';
+import { useState } from "react";
+import type { FormEvent } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import api from "../../services/api";
+import type { Task } from "../../types";
 
 interface CreateTaskModalProps {
   projectId: string;
@@ -11,26 +11,30 @@ interface CreateTaskModalProps {
 }
 
 // Modal form for creating a new task within a project
-const CreateTaskModal = ({ projectId, onClose, onCreated }: CreateTaskModalProps) => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+const CreateTaskModal = ({
+  projectId,
+  onClose,
+  onCreated,
+}: CreateTaskModalProps) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
     try {
       const { data } = await api.post(`/api/projects/${projectId}/tasks`, {
         title,
         description,
-        status: 'To Do',
+        status: "To Do",
       });
       onCreated(data);
       onClose();
     } catch {
-      setError('Failed to create task');
+      setError("Failed to create task");
     } finally {
       setLoading(false);
     }
@@ -91,7 +95,7 @@ const CreateTaskModal = ({ projectId, onClose, onCreated }: CreateTaskModalProps
                 disabled={loading}
                 className="bg-quantum-accent hover:bg-quantum-accent-hover text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
               >
-                {loading ? 'Creating...' : 'Create Task'}
+                {loading ? "Creating..." : "Create Task"}
               </button>
             </div>
           </form>

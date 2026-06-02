@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import api from '../../services/api';
-import type { Project } from '../../types';
+import { useState } from "react";
+import type { FormEvent } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import api from "../../services/api";
+import type { Project } from "../../types";
 
 interface CreateProjectModalProps {
   onClose: () => void;
@@ -10,22 +10,25 @@ interface CreateProjectModalProps {
 }
 
 // Modal form for creating a new project
-const CreateProjectModal = ({ onClose, onCreated }: CreateProjectModalProps) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+const CreateProjectModal = ({
+  onClose,
+  onCreated,
+}: CreateProjectModalProps) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
     try {
-      const { data } = await api.post('/api/projects', { name, description });
+      const { data } = await api.post("/api/projects", { name, description });
       onCreated(data);
       onClose();
     } catch {
-      setError('Failed to create project');
+      setError("Failed to create project");
     } finally {
       setLoading(false);
     }
@@ -47,7 +50,9 @@ const CreateProjectModal = ({ onClose, onCreated }: CreateProjectModalProps) => 
           exit={{ opacity: 0, y: 24 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <h2 className="text-quantum-text font-bold text-lg mb-4">New Project</h2>
+          <h2 className="text-quantum-text font-bold text-lg mb-4">
+            New Project
+          </h2>
           {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
@@ -86,7 +91,7 @@ const CreateProjectModal = ({ onClose, onCreated }: CreateProjectModalProps) => 
                 disabled={loading}
                 className="bg-quantum-accent hover:bg-quantum-accent-hover text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
               >
-                {loading ? 'Creating...' : 'Create Project'}
+                {loading ? "Creating..." : "Create Project"}
               </button>
             </div>
           </form>

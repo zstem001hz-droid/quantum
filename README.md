@@ -370,6 +370,7 @@ Zero errors required before every commit.
 **Core Stack — Frontend**
 
 - [React Documentation](https://react.dev/)
+- [React Router — Link](https://reactrouter.com/en/main/components/link)
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/)
 - [TypeScript Compiler Options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
 - [Vite Documentation](https://vitejs.dev/)
@@ -395,6 +396,7 @@ Zero errors required before every commit.
 - [MDN — Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
 - [MDN — Window.matchMedia()](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia)
 - [MDN — Nullish Coalescing Operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)
+- [MDN — Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
 
 **Development Tools**
 

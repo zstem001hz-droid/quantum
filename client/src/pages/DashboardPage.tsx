@@ -6,6 +6,7 @@ import ProjectCard from "../components/ProjectCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import ErrorMessage from "../components/ErrorMessage";
 import EmptyState from "../components/EmptyState";
+import CreateProjectModal from "../components/modals/CreateProjectModal";
 
 // Dashboard page — project list with aggregate task stats
 export default function DashboardPage() {
@@ -67,6 +68,14 @@ export default function DashboardPage() {
           </p>
           <p className="text-status-complete text-2xl font-bold">{complete}</p>
         </div>
+        {showCreateModal && (
+          <CreateProjectModal
+            onClose={() => setShowCreateModal(false)}
+            onCreated={(project) => {
+              setShowCreateModal(false);
+            }}
+          />
+        )}
       </div>
 
       {/* Projects header */}

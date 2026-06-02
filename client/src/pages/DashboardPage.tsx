@@ -10,7 +10,7 @@ import CreateProjectModal from "../components/modals/CreateProjectModal";
 
 // Dashboard page — project list with aggregate task stats
 export default function DashboardPage() {
-  const { projects, loading, error } = useProjects();
+  const { projects, setProjects, loading, error } = useProjects();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [allTasks, setAllTasks] = useState<Task[]>([]);
 
@@ -72,6 +72,7 @@ export default function DashboardPage() {
           <CreateProjectModal
             onClose={() => setShowCreateModal(false)}
             onCreated={(project) => {
+              setProjects((prev) => [...prev, project]);
               setShowCreateModal(false);
             }}
           />

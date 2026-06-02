@@ -1,11 +1,11 @@
-import useTheme from '../hooks/useTheme';
+import useTheme from "../hooks/useTheme";
 
-type Theme = 'light' | 'system' | 'dark';
+type Theme = "light" | "system" | "dark";
 
 const options: { value: Theme; label: string }[] = [
-  { value: 'light', label: '☀ Light' },
-  { value: 'system', label: '⊙ System' },
-  { value: 'dark', label: '◑ Dark' },
+  { value: "light", label: "☀ Light" },
+  { value: "system", label: "⊙ System" },
+  { value: "dark", label: "◑ Dark" },
 ];
 
 // Three-way toggle matching the wireframe design
@@ -20,8 +20,8 @@ const ThemeSwitcher = () => {
           onClick={() => setTheme(value)}
           className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
             theme === value
-              ? 'bg-quantum-accent text-white'
-              : 'text-quantum-gold hover:text-quantum-text'
+              ? "bg-quantum-accent text-white"
+              : "text-quantum-gold hover:text-quantum-text"
           }`}
         >
           {label}

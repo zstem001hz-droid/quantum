@@ -308,6 +308,7 @@ All errors return a consistent JSON shape:
 
 - [ ] Quantum decoherence error animation — logo disperses on error states
 - [ ] Quantum brand text color spectrum animation on initial page load
+- [ ] User profile — view and edit profile details by clicking the avatar
 - [ ] Admin role — platform management and user moderation
 - [ ] Real-time updates — WebSocket integration for live task changes
 - [ ] Email notifications — task assignments and project activity
@@ -379,7 +380,14 @@ Zero errors required before every commit.
 - [Axios Documentation](https://axios-http.com/docs/intro)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [Tailwind CSS — Customizing Colors](https://tailwindcss.com/docs/customizing-colors)
+- [Tailwind CSS — Dark Mode](https://tailwindcss.com/docs/dark-mode)
 - [Tailwind CSS — Utility Class Reference](https://tailwindcss.com/docs/utility-first)
+- [Tailwind CSS — Hover, Focus, and Other States](https://tailwindcss.com/docs/hover-focus-and-other-states)
+- [Tailwind CSS — Transition Property](https://tailwindcss.com/docs/transition-property)
+- [Tailwind CSS — Line Clamp](https://tailwindcss.com/docs/line-clamp)
+- [Tailwind CSS — Flexbox](https://tailwindcss.com/docs/flex)
+- [Tailwind CSS — Grid Template Columns](https://tailwindcss.com/docs/grid-template-columns)
+- [Tailwind CSS — Background Gradient](https://tailwindcss.com/docs/background-image#gradients)
 - [Framer Motion Documentation](https://www.framer.com/motion/)
 - [Framer Motion — Animation](https://www.framer.com/motion/animation/)
 - [Framer Motion — Transition Options](https://www.framer.com/motion/transition/)

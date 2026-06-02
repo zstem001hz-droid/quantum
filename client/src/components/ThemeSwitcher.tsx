@@ -21,7 +21,7 @@ const ThemeSwitcher = () => {
           className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
             theme === value
               ? 'bg-quantum-accent text-white'
-              : 'text-quantum-muted hover:text-quantum-text'
+              : 'text-quantum-gold hover:text-quantum-text'
           }`}
         >
           {label}

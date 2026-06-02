@@ -307,6 +307,7 @@ All errors return a consistent JSON shape:
 ### Future Features
 
 - [ ] Quantum decoherence error animation — logo disperses on error states
+- [ ] Quantum brand text color spectrum animation on initial page load
 - [ ] Admin role — platform management and user moderation
 - [ ] Real-time updates — WebSocket integration for live task changes
 - [ ] Email notifications — task assignments and project activity

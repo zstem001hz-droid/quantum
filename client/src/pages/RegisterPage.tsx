@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { FormEvent } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import QuantumLogo from "../components/animations/QuantumLogo";
@@ -16,7 +17,7 @@ export default function RegisterPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     if (password !== confirmPassword) {

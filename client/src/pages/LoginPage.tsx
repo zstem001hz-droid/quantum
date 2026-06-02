@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import QuantumLogo from "../components/animations/QuantumLogo";
@@ -13,7 +14,7 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -40,7 +41,7 @@ export default function LoginPage() {
       >
         {/* Logo */}
         <div className="flex flex-col items-center gap-3">
-          <QuantumLogo size={80} />
+          <QuantumLogo size={120} />
           <h1 className="text-3xl font-bold text-quantum-text">Quantum</h1>
           <p className="text-quantum-muted text-sm text-center">
             Project intelligence for modern teams

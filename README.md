@@ -403,6 +403,12 @@ Zero errors required before every commit.
 - [Framer Motion — Animation](https://www.framer.com/motion/animation/) — `animate` prop
 - [Framer Motion — Transition Options](https://www.framer.com/motion/transition/) — `duration`, `repeat`, `ease` options
 - [@dnd-kit Documentation](https://dndkit.com/) — Drag-and-drop library; Kanban board task reordering
+- [@dnd-kit/core Documentation](https://docs.dndkit.com/) — Drag-and-drop primitives; DndContext and collision detection for the Kanban board
+- [@dnd-kit/sortable Documentation](https://docs.dndkit.com/presets/sortable) — Sortable preset; `useSortable` hook used in `TaskCard` for drag handles and position tracking
+- [@dnd-kit/utilities Documentation](https://docs.dndkit.com/utilities) — `CSS.Transform.toString()` converts live transform data to CSS transform strings during drag
+- [@dnd-kit/core — useDroppable](https://docs.dndkit.com/api-documentation/droppable) — Registers TaskColumn as a valid drop target; `id` matches status string for drop detection
+- [@dnd-kit/sortable — SortableContext](https://docs.dndkit.com/presets/sortable/sortable-context) — Provides shared drag context for all TaskCards within a column
+- [@dnd-kit/sortable — verticalListSortingStrategy](https://docs.dndkit.com/presets/sortable/sortable-context#sorting-strategies) — Optimizes drag calculations for vertically arranged task lists
 
 **Standards**
 
@@ -410,6 +416,7 @@ Zero errors required before every commit.
 - [React — Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks) — Never call hooks inside loops or conditions; followed throughout all components and custom hooks
 - [React — Rules](https://react.dev/reference/rules) — Core React rules
 - [React Router — Link](https://reactrouter.com/en/main/components/link) — Used in `Navbar` and `ProjectCard` for client-side navigation- [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) — API return status codes
+- [REST API — Nested Resources](https://restfulapi.net/resource-naming/) — Nested route pattern `/api/projects/:id/tasks/:id`
 - [MDN — Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) — Form `handleSubmit` handlers, prevents page reload
 - [MDN — SVG ellipse](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse) — SVG orbital rings effect
 - [MDN — SVG feGaussianBlur](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feGaussianBlur) — Creates blur effect used in ring and nucleus glow filters in `QuantumLogo`
@@ -422,7 +429,12 @@ Zero errors required before every commit.
 - [MDN — HTTP PUT Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT) — HTTP method for updating existing resources
 - [MDN — HTTP DELETE Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE) — HTTP method for removing resources
 - [MDN — HTML select element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) — Dropdown status selector in EditTaskModal
-- [REST API — Nested Resources](https://restfulapi.net/resource-naming/) — Nested route pattern `/api/projects/:id/tasks/:id`
+- [MDN — CSS transform Property](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) — Applied via inline style during drag to move TaskCard visually
+- [MDN — CSS border-left](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) — `border-l-4` with status color creates the left accent stripe on TaskCard
+- [MDN — CSS opacity](https://developer.mozilla.org/en-US/docs/Web/CSS/opacity) — `isDragging` reduces card opacity to 0.4 while dragging to show ghost position
+- [MDN — CSS border-top](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) — `border-t-4` with status color creates the top accent stripe on each TaskColumn
+- [MDN — ARIA — tabIndex](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) — Keyboard accessibility attribute spread onto TaskCard via `useSortable` attributes
+- [MDN — ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) — Accessibility roles spread onto TaskCard via `useSortable` attributes
 
 **Development Tools**
 
@@ -437,6 +449,7 @@ Zero errors required before every commit.
 - [Shields.io — Badge Generator](https://shields.io/) — Generates README header badges and colored Task Status Values
 - [Kent C. Dodds — How to use React Context effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively) — Pattern followed for `AuthContext` provider and consumer design
 - [Traversy Media — Axios Crash Course](https://www.youtube.com/watch?v=6LyagkoRWYA) — HTTP requests, interceptors, and all Axios methods including PUT and DELETE
+- [Traversy Media — Drag and Drop with React](https://www.youtube.com/results?search_query=traversy+media+drag+and+drop+react) — Search term for Brad Traversy's React DnD content
 
 **Deployment**
 

@@ -402,8 +402,10 @@ Zero errors required before every commit.
 - [Framer Motion Documentation](https://www.framer.com/motion/) — Animation library
 - [Framer Motion — Animation](https://www.framer.com/motion/animation/) — `animate` prop
 - [Framer Motion — Transition Options](https://www.framer.com/motion/transition/) — `duration`, `repeat`, `ease` options
+- [DEV Community — Beginner's Guide to dnd-kit in React](https://dev.to/kelseyroche/a-beginners-guide-to-drag-and-drop-with-dnd-kit-in-react-5hfe) — Practical walkthrough of `DndContext`, `useDroppable`, and `onDragEnd` patterns
 - [@dnd-kit Documentation](https://dndkit.com/) — Drag-and-drop library; Kanban board task reordering
 - [@dnd-kit/core Documentation](https://docs.dndkit.com/) — Drag-and-drop primitives; DndContext and collision detection for the Kanban board
+- [@dnd-kit/core — GitHub Source](https://github.com/clauderic/dnd-kit/tree/master/packages/core/src) — TypeScript type definitions including `DragEndEvent`; source of truth when docs don't cover specific types
 - [@dnd-kit/sortable Documentation](https://docs.dndkit.com/presets/sortable) — Sortable preset; `useSortable` hook used in `TaskCard` for drag handles and position tracking
 - [@dnd-kit/utilities Documentation](https://docs.dndkit.com/utilities) — `CSS.Transform.toString()` converts live transform data to CSS transform strings during drag
 - [@dnd-kit/core — useDroppable](https://docs.dndkit.com/api-documentation/droppable) — Registers TaskColumn as a valid drop target; `id` matches status string for drop detection

@@ -14,17 +14,17 @@ const ProjectCard = ({ project, tasks }: ProjectCardProps) => {
 
   return (
     <Link to={`/projects/${project._id}`}>
-      <div className="bg-quantum-surface border border-quantum-border rounded-xl p-4 hover:border-quantum-accent transition-colors cursor-pointer">
+      <div className="bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-xl p-4 hover:border-quantum-accent transition-colors cursor-pointer">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="text-quantum-text font-semibold text-sm">
+          <h3 className="text-quantum-light-text dark:text-quantum-text font-semibold text-sm">
             {project.name}
           </h3>
-          <span className="text-xs bg-quantum-surface2 text-quantum-muted px-2 py-0.5 rounded-full">
+          <span className="text-xs bg-quantum-light-border dark:bg-quantum-surface2 text-quantum-light-muted dark:text-quantum-muted px-2 py-0.5 rounded-full">
             {project.status}
           </span>
         </div>
         {project.description && (
-          <p className="text-quantum-muted text-xs mb-3 line-clamp-2">
+          <p className="text-quantum-light-muted dark:text-quantum-muted text-xs mb-3 line-clamp-2">
             {project.description}
           </p>
         )}

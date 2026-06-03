@@ -3,7 +3,7 @@ import QuantumLogo from "./animations/QuantumLogo";
 // Full-screen loading state — uses animated QuantumLogo as spinner
 const LoadingSpinner = () => {
   return (
-    <div className="min-h-screen bg-quantum-bg flex items-center justify-center">
+    <div className="min-h-screen bg-quantum-light-bg dark:bg-quantum-bg flex items-center justify-center">
       <QuantumLogo size={80} />
     </div>
   );

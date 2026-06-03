@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import QuantumLogo from "../components/animations/QuantumLogo";
 import api from "../services/api";
 import useAuth from "../hooks/useAuth";
+import ThemeSwitcher from "../components/ThemeSwitcher";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setLoading(true);
@@ -32,7 +33,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
   };
 
   return (
-    <div className="min-h-screen bg-quantum-bg flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-quantum-light-bg dark:bg-quantum-bg flex flex-col items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -42,14 +43,15 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         {/* Logo */}
         <div className="flex flex-col items-center gap-3">
           <QuantumLogo size={120} />
-          <h1 className="text-3xl font-bold text-quantum-text">Quantum</h1>
+          <h1 className="text-3xl font-bold text-quantum-accent dark:text-quantum-text">
+            Quantum
+          </h1>
           <p className="text-quantum-muted text-sm text-center">
             Project intelligence for modern teams
           </p>
         </div>
 
-        {/* Form */}
-        <div className="w-full bg-quantum-surface border border-quantum-border rounded-2xl p-6 flex flex-col gap-4">
+        <div className="w-full bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-2xl p-6 flex flex-col gap-4">
           {error && <p className="text-red-400 text-sm text-center">{error}</p>}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
@@ -61,7 +63,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-quantum-input border border-quantum-border rounded-lg px-3 py-2 text-quantum-text text-sm outline-none focus:border-quantum-accent transition-colors"
+                className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -73,7 +75,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="bg-quantum-input border border-quantum-border rounded-lg px-3 py-2 text-quantum-text text-sm outline-none focus:border-quantum-accent transition-colors"
+                className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
               />
             </div>
             <button
@@ -95,6 +97,9 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
           >
             Create a new account →
           </Link>
+        </div>
+        <div className="mt-4">
+          <ThemeSwitcher />
         </div>
       </motion.div>
     </div>

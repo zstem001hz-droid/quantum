@@ -35,7 +35,7 @@ const Navbar = () => {
           </div>
           <button
             onClick={handleLogout}
-            className="text-quantum-muted hover:text-quantum-crimson text-sm transition-colors"
+            className="text-quantum-light-muted dark:text-quantum-muted hover:text-quantum-crimson text-sm transition-colors"
           >
             Sign out
           </button>

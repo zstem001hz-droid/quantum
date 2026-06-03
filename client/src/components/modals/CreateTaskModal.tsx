@@ -50,7 +50,7 @@ const CreateTaskModal = ({
         onClick={onClose}
       >
         <motion.div
-          className="bg-quantum-surface border border-quantum-border rounded-2xl p-6 w-full max-w-md"
+          className="bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-2xl p-6 w-full max-w-md"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}
@@ -68,7 +68,7 @@ const CreateTaskModal = ({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
-                className="bg-quantum-input border border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
+                className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
               />
             </div>
             <div className="flex flex-col gap-1">
@@ -79,7 +79,7 @@ const CreateTaskModal = ({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
-                className="bg-quantum-input border border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors resize-none"
+                className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
               />
             </div>
             <div className="flex gap-3 justify-end">

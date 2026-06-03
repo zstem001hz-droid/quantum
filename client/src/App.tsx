@@ -18,7 +18,7 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <div className="min-h-screen bg-qhantum-bg">
+                <div className="min-h-screen bg-quantum-light-bg dark:bg-quantum-bg">
                   <Navbar />
                   <DashboardPage />
                 </div>
@@ -29,7 +29,7 @@ function App() {
             path="/projects/:id"
             element={
               <ProtectedRoute>
-                <div className="min-h-screen bg-quantum-bg">
+                <div className="min-h-screen bg-quantum-light-bg dark:bg-quantum-bg">
                   <Navbar />
                   <ProjectDetailPage />
                 </div>

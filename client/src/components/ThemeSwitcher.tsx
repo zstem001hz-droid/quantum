@@ -13,7 +13,7 @@ const ThemeSwitcher = () => {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="inline-flex items-center gap-0.5 bg-quantum-surface2 border border-quantum-border rounded-full p-0.5">
+    <div className="inline-flex items-center gap-0.5 bg-quantum-light-border dark:bg-quantum-surface2 border border-quantum-light-border dark:border-quantum-border rounded-full p-0.5">
       {options.map(({ value, label }) => (
         <button
           key={value}

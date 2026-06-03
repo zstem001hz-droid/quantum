@@ -40,30 +40,30 @@ export default function DashboardPage() {
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Stats grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-quantum-surface border border-quantum-border rounded-xl p-4">
-          <p className="text-quantum-muted text-xs font-semibold uppercase tracking-wider mb-1">
+        <div className="bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-xl p-4">
+          <p className="text-quantum-light-muted dark:text-quantum-muted text-xs font-semibold uppercase tracking-wider mb-1">
             Projects
           </p>
-          <p className="text-quantum-text text-2xl font-bold">
+          <p className="text-quantum-light-text dark:text-quantum-text text-2xl font-bold">
             {projects.length}
           </p>
         </div>
-        <div className="bg-quantum-surface border border-quantum-border rounded-xl p-4">
-          <p className="text-quantum-muted text-xs font-semibold uppercase tracking-wider mb-1">
+        <div className="bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-xl p-4">
+          <p className="text-quantum-light-muted dark:text-quantum-muted text-xs font-semibold uppercase tracking-wider mb-1">
             Open Tasks
           </p>
           <p className="text-quantum-accent text-2xl font-bold">{todo}</p>
         </div>
-        <div className="bg-quantum-surface border border-quantum-border rounded-xl p-4">
-          <p className="text-quantum-muted text-xs font-semibold uppercase tracking-wider mb-1">
+        <div className="bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-xl p-4">
+          <p className="text-quantum-light-muted dark:text-quantum-muted text-xs font-semibold uppercase tracking-wider mb-1">
             In Progress
           </p>
           <p className="text-status-progress text-2xl font-bold">
             {inProgress}
           </p>
         </div>
-        <div className="bg-quantum-surface border border-quantum-border rounded-xl p-4">
-          <p className="text-quantum-muted text-xs font-semibold uppercase tracking-wider mb-1">
+        <div className="bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-xl p-4">
+          <p className="text-quantum-light-muted dark:text-quantum-muted text-xs font-semibold uppercase tracking-wider mb-1">
             Completed
           </p>
           <p className="text-status-complete text-2xl font-bold">{complete}</p>
@@ -81,7 +81,9 @@ export default function DashboardPage() {
 
       {/* Projects header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-quantum-text text-lg font-bold">My Projects</h2>
+        <h2 className="text-quantum-light-text dark:text-quantum-text text-lg font-bold">
+          My Projects
+        </h2>
         <button
           onClick={() => setShowCreateModal(true)}
           className="bg-quantum-accent hover:bg-quantum-accent-hover text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"

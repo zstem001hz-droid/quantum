@@ -22,20 +22,22 @@ const Navbar = () => {
       .toUpperCase() ?? "?";
 
   return (
-    <nav className="bg-quantum-surface border-b border-quantum-border px-4 py-2">
+    <nav className="bg-quantum-surface border-b border-quantum-border px-4 py-2 overflow-hidden">
       <div className="flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <QuantumLogo size={36} />
           <span className="text-quantum-text font-bold text-lg">Quantum</span>
         </Link>
-        <ThemeSwitcher />
+        <div className="hidden md:block">
+          <ThemeSwitcher />
+        </div>
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-quantum-accent to-purple-600 flex items-center justify-center text-white text-xs font-bold">
             {initials}
           </div>
           <button
             onClick={handleLogout}
-            className="text-quantum-light-muted dark:text-quantum-muted hover:text-quantum-crimson text-sm transition-colors"
+            className="text-quantum-muted hover:text-quantum-crimson active:text-quantum-crimson text-sm transition-colors"
           >
             Sign out
           </button>

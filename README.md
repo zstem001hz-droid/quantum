@@ -302,20 +302,21 @@ All errors return a consistent JSON shape:
 - [x] User registration and login with JWT authentication
 - [x] Full project CRUD with ownership-based authorization
 - [x] Full task CRUD with nested routing and parent project authorization
-- [ ] Kanban-style task board with To Do / In Progress / Complete columns
-- [ ] Responsive design — mobile, tablet, and desktop
+- [x] Kanban-style task board with To Do / In Progress / Complete columns
+- [x] Responsive design — mobile, tablet, and desktop
 - [ ] Deployed on Render — backend Web Service and frontend Static Site
 
 ### Stretch Goals
 
 - [x] Collaborator invitations — project owners can invite registered users
 - [x] Collaborator permissions — invited users can view and update tasks
-- [ ] Drag-and-drop task management between Kanban columns
+- [x] Drag-and-drop task management between Kanban columns
 
 ### Future Features
 
 - [ ] Quantum decoherence error animation — logo disperses on error states
 - [ ] Quantum brand text color spectrum animation on initial page load
+- [ ] Dashboard stat card filtering — click a stat to filter projects by task status
 - [ ] User profile — view and edit profile details by clicking the avatar
 - [ ] Admin role — platform management and user moderation
 - [ ] Real-time updates — WebSocket integration for live task changes
@@ -411,6 +412,7 @@ Zero errors required before every commit.
 - [@dnd-kit/core — useDroppable](https://docs.dndkit.com/api-documentation/droppable) — Registers TaskColumn as a valid drop target; `id` matches status string for drop detection
 - [@dnd-kit/sortable — SortableContext](https://docs.dndkit.com/presets/sortable/sortable-context) — Provides shared drag context for all TaskCards within a column
 - [@dnd-kit/sortable — verticalListSortingStrategy](https://docs.dndkit.com/presets/sortable/sortable-context#sorting-strategies) — Optimizes drag calculations for vertically arranged task lists
+- [@dnd-kit/core — DragOverlay](https://docs.dndkit.com/api-documentation/draggable/drag-overlay) — Renders a floating visual clone of the dragged TaskCard under the cursor during drag operations
 
 **Standards**
 
@@ -437,6 +439,7 @@ Zero errors required before every commit.
 - [MDN — CSS border-top](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) — `border-t-4` with status color creates the top accent stripe on each TaskColumn
 - [MDN — ARIA — tabIndex](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) — Keyboard accessibility attribute spread onto TaskCard via `useSortable` attributes
 - [MDN — ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) — Accessibility roles spread onto TaskCard via `useSortable` attributes
+- [Smashing Magazine — Optimistic UI Updates](https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/) — Pattern used in TaskBoard to update task status instantly before API confirmation
 
 **Development Tools**
 

@@ -1,12 +1,13 @@
-import { useCallback } from "react";
+import { useState, useCallback } from "react";
 import {
   DndContext,
   closestCenter,
   PointerSensor,
   useSensor,
   useSensors,
+  DragOverlay,
 } from "@dnd-kit/core";
-import type { DragEndEvent } from "@dnd-kit/core";
+import type { DragEndEvent, DragStartEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import api from "../services/api";
 import type { Task } from "../types";
@@ -21,14 +22,25 @@ const STATUSES: Task["status"][] = ["To Do", "In Progress", "Complete"];
 
 // Kanban board — manages drag-and-drop across three status columns
 const TaskBoard = ({ tasks, setTasks }: TaskBoardProps) => {
+  const [activeTask, setActiveTask] = useState<Task | null>(null);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 8 },
     }),
   );
 
+  const handleDragStart = useCallback(
+    (event: DragStartEvent) => {
+      const task = tasks.find((t) => t._id === event.active.id);
+      if (task) setActiveTask(task);
+    },
+    [tasks],
+  );
+
   const handleDragEnd = useCallback(
     async (event: DragEndEvent) => {
+      setActiveTask(null);
       const { active, over } = event;
       if (!over) return;
 
@@ -100,6 +112,7 @@ const TaskBoard = ({ tasks, setTasks }: TaskBoardProps) => {
     <DndContext
       sensors={sensors}
       collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -113,6 +126,20 @@ const TaskBoard = ({ tasks, setTasks }: TaskBoardProps) => {
           />
         ))}
       </div>
+      <DragOverlay>
+        {activeTask ? (
+          <div className="bg-quantum-surface border border-quantum-accent rounded-lg p-3 shadow-lg shadow-quantum-accent/20 rotate-2 cursor-grabbing">
+            <p className="text-quantum-text text-sm font-semibold">
+              {activeTask.title}
+            </p>
+            {activeTask.description && (
+              <p className="text-quantum-muted text-xs line-clamp-2">
+                {activeTask.description}
+              </p>
+            )}
+          </div>
+        ) : null}
+      </DragOverlay>
     </DndContext>
   );
 };

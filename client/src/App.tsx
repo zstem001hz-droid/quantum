@@ -18,7 +18,7 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <div className="min-h-screen bg-quantum-light-bg dark:bg-quantum-bg">
+                <div className="min-h-screen bg-quantum-light-bg dark:bg-quantum-bg overflow-x-hidden">
                   <Navbar />
                   <DashboardPage />
                 </div>

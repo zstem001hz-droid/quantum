@@ -382,9 +382,13 @@ Zero errors required before every commit.
 - [React Documentation](https://react.dev/) — Core UI library
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/) — Typed JavaScript; interfaces, generics, and type safety throughout the client
 - [TypeScript Compiler Options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) — `npx tsc --noEmit` type verification
+- [TypeScript — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) — `err instanceof Error` for catch blocks
+- [TypeScript — Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) — `as Task['status']` cast on select onChange handler
+- [TypeScript — Indexed Access Types](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) — `Task['status']` pattern for accessing union type from interface
 - [Vite Documentation](https://vitejs.dev/) — Build tool and dev server
 - [React Router Documentation](https://reactrouter.com/) — Client-side routing; protected routes and navigation configured in `App.tsx`
 - [Axios Documentation](https://axios-http.com/docs/intro) — HTTP client; JWT interceptor in `src/services/api.ts` attaches token to every request
+- [Axios — API Reference (PUT and DELETE)](https://axios-http.com/docs/api_intro) — Axios request methods `api.put()` and `api.delete()`
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs) — Utility-first styling
 - [Tailwind CSS — Customizing Colors](https://tailwindcss.com/docs/customizing-colors) — Define color object to generate branding utility classes
 - [Tailwind CSS — Utility Class Reference](https://tailwindcss.com/docs/utility-first) — Layout, spacing, and typography utilities
@@ -402,20 +406,23 @@ Zero errors required before every commit.
 
 **Standards**
 
-- [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) — API return status codes
 - [React — Writing Markup with JSX](https://react.dev/learn/writing-markup-with-jsx) — JSX syntax for React components
+- [React — Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks) — Never call hooks inside loops or conditions; followed throughout all components and custom hooks
+- [React — Rules](https://react.dev/reference/rules) — Core React rules
+- [React Router — Link](https://reactrouter.com/en/main/components/link) — Used in `Navbar` and `ProjectCard` for client-side navigation- [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) — API return status codes
 - [MDN — Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) — Form `handleSubmit` handlers, prevents page reload
-- [TypeScript — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) — `err instanceof Error` for catch blocks
 - [MDN — SVG ellipse](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse) — SVG orbital rings effect
 - [MDN — SVG feGaussianBlur](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feGaussianBlur) — Creates blur effect used in ring and nucleus glow filters in `QuantumLogo`
 - [MDN — SVG viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox) — Centered coordinate system (`-100 -100 200 200`) enabling rotation around the SVG origin
 - [MDN — SVG feMerge](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feMerge) — Combines blur and source graphic for glow filter output
-- [React — Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks) — Never call hooks inside loops or conditions; followed throughout all components and custom hooks
-- [React — Rules](https://react.dev/reference/rules) — Core React rules
 - [MDN — Window.matchMedia()](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) — Detects system dark/light preference in `useTheme` hook
 - [MDN — Nullish Coalescing Operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing) — Default fallback for optional `retryLabel` prop in `ErrorMessage`
 - [MDN — Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) — Transforms arrays into rendered JSX lists throughout all components
-- [React Router — Link](https://reactrouter.com/en/main/components/link) — Used in `Navbar` and `ProjectCard` for client-side navigation
+- [MDN — Window.confirm()](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm) — Native browser confirmation dialog
+- [MDN — HTTP PUT Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT) — HTTP method for updating existing resources
+- [MDN — HTTP DELETE Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE) — HTTP method for removing resources
+- [MDN — HTML select element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) — Dropdown status selector in EditTaskModal
+- [REST API — Nested Resources](https://restfulapi.net/resource-naming/) — Nested route pattern `/api/projects/:id/tasks/:id`
 
 **Development Tools**
 
@@ -426,9 +433,10 @@ Zero errors required before every commit.
 - [Postman Documentation](https://learning.postman.com/docs/getting-started/overview/) — Quantum workspace with Quantum Local environment; login request auto-saves JWT token
 - [MongoDB Compass](https://www.mongodb.com/products/compass) — Visual database inspection; used to verify documents, relationships, and collaborator arrays
 - [Vite Plugin React — react-refresh/only-export-components](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react) — ESLint rule requiring `eslint-disable-next-line` comment in `AuthContext.tsx`
-- [Kent C. Dodds — How to use React Context effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively) — Pattern followed for `AuthContext` provider and consumer design
 - [ESLint — Disabling Rules with Comments](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments) — Used in `AuthContext.tsx` to disable fast refresh rule for context files
 - [Shields.io — Badge Generator](https://shields.io/) — Generates README header badges and colored Task Status Values
+- [Kent C. Dodds — How to use React Context effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively) — Pattern followed for `AuthContext` provider and consumer design
+- [Traversy Media — Axios Crash Course](https://www.youtube.com/watch?v=6LyagkoRWYA) — HTTP requests, interceptors, and all Axios methods including PUT and DELETE
 
 **Deployment**
 

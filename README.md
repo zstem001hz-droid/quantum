@@ -331,6 +331,7 @@ All errors return a consistent JSON shape:
 - JWT tokens expire after 30 days
 - Generic error messages on failed login — does not reveal whether email or password was incorrect
 - CORS restricted to `CLIENT_ORIGIN` — blocks requests from unauthorized origins
+- Rate limiting — 100 requests per IP per 15-minute window via `express-rate-limit`
 
 ## Testing & Development Tools
 
@@ -461,6 +462,10 @@ Zero errors required before every commit.
 - [Render Documentation](https://render.com/docs) — Deployment platform for backend Web Service and frontend Static Site
 - [Render — Deploying a Node.js App](https://render.com/docs/node-express) — Deploying the Express backend as a Web Service
 - [Render — Static Site Deployment](https://render.com/docs/static-sites) — Deploying the Vite React frontend as a Static Site
+
+**Security**
+
+- [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — Rate limiting middleware; limits each IP to 100 requests per 15-minute window
 
 ## License
 

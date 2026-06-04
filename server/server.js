@@ -9,10 +9,20 @@ const authRoutes = require("./routes/authRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const taskRoutes = require("./routes/taskRoutes");
 
+const rateLimit = require("express-rate-limit");
+
 // Connect to MongoDB
 connectDB();
 
 const app = express();
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per IP per window
+  message: { message: "Too many requests, please try again later" },
+});
+
+app.use(limiter);
 
 // Middleware
 app.use(

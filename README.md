@@ -1,11 +1,11 @@
-# <img src="./assets/quantum-logo-read.gif" width="32" alt="Quantum Logo" /> Quantum 
+# <img src="./assets/quantum-logo-read.gif" width="32" alt="Quantum Logo" /> Quantum
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 ![Express](https://img.shields.io/badge/Express-5.x-lightgrey)
 ![React](https://img.shields.io/badge/React-19.x-blue)
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-green)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
-![Tailwind](https://img.shields.io/badge/Tailwind-CSS-38bdf8)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.x-38bdf8)
 ![JWT](https://img.shields.io/badge/Auth-JWT-orange)
 ![License](https://img.shields.io/badge/License-Proprietary-red)
 ![bcrypt](https://img.shields.io/badge/Security-bcrypt-red)
@@ -14,8 +14,42 @@
 ![CORS](https://img.shields.io/badge/CORS-Enabled-blue)
 ![dotenv](https://img.shields.io/badge/dotenv-Config-yellow)
 ![Postman](https://img.shields.io/badge/Postman-Testing-orange)
+![Framer Motion](https://img.shields.io/badge/Framer%20Motion-11.x-pink)
+![dnd-kit](https://img.shields.io/badge/@dnd--kit-6.x-6366f1)
 
-Quantum is a modern, full-stack MERN project management application built for individuals and small teams. It features secure JWT-based authentication, ownership-based authorization, and a RESTful API for managing projects and tasks — deployed and production-ready
+Quantum is a modern, full-stack MERN project management application built for individuals and small teams. It features secure JWT-based authentication, ownership-based authorization, and a RESTful API for managing projects and tasks — deployed and production-ready. The interface is designed around a dark-first aesthetic inspired by quantum physics, with a fully responsive Kanban board, real-time drag-and-drop, and light/dark/system theme switching.
+
+## Table of Contents
+
+- [Live Demo](#live-demo)
+- [Screenshots](#screenshots)
+- [Vision](#vision)
+- [Tech Stack](#tech-stack)
+- [Key Technical Decisions](#key-technical-decisions)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [API Endpoints](#api-endpoints)
+  - [Auth](#auth)
+  - [Projects](#projects)
+  - [Tasks](#tasks)
+- [Authentication Flow](#authentication-flow)
+- [Authorization Flow](#authorization-flow)
+- [Task Authorization Chain](#task-authorization-chain)
+- [Data Model Relationships](#data-model-relationships)
+- [Error Responses](#error-responses)
+- [Roadmap](#roadmap)
+- [Security Features](#security-features)
+- [Testing & Development Tools](#testing--development-tools)
+- [References](#references)
+  - [Core Stack — Backend](#core-stack--backend)
+  - [Core Stack — Frontend](#core-stack--frontend)
+  - [Standards](#standards)
+  - [Development Tools](#development-tools)
+  - [Video References](#video-references)
+  - [Deployment](#deployment)
+  - [Security](#security)
+- [License](#license)
 
 ## Live Demo
 
@@ -25,11 +59,48 @@ Quantum is a modern, full-stack MERN project management application built for in
 
 ## Screenshots
 
-> 📸 Screenshots and demo GIF coming before final submission.
+**Dashboard**
+
+<table>
+  <tr>
+    <td><img src="./assets/desktop-dashboard-dark.png" alt="Dashboard Dark Mode" width="100%"/></td>
+    <td><img src="./assets/desktop-dashboard-light.png" alt="Dashboard Light Mode" width="100%"/></td>
+  </tr>
+  <tr>
+    <td align="center">Dark Mode</td>
+    <td align="center">Light Mode</td>
+  </tr>
+</table>
+
+**Kanban Board**
+
+<table>
+  <tr>
+    <td><img src="./assets/desktop-kanban-dark.png" alt="Kanban Dark Mode" width="100%"/></td>
+    <td><img src="./assets/desktop-kanban-light.png" alt="Kanban Light Mode" width="100%"/></td>
+  </tr>
+  <tr>
+    <td align="center">Dark Mode</td>
+    <td align="center">Light Mode</td>
+  </tr>
+</table>
+
+**Mobile**
+
+<table>
+  <tr>
+    <td><img src="./assets/mobile-dashboard-dark.png" alt="Mobile Dark Mode" width="100%"/></td>
+    <td><img src="./assets/mobile-dashboard-light.png" alt="Mobile Light Mode" width="100%"/></td>
+  </tr>
+  <tr>
+    <td align="center">Dark Mode</td>
+    <td align="center">Light Mode</td>
+  </tr>
+</table>
 
 ## Vision
 
-Quantum was built to explore what a modern, production-ready project management tool looks like when designed with intention — dark-first UI, real-time collaboration, and quantum physics as a visual language for the complexity of coordinating teams and tasks.
+Quantum was built to explore what a modern, production-ready project management tool looks like when designed with intention — dark-first UI, collaborative workflows, and quantum physics as a visual language for the complexity of coordinating teams and tasks. Every design decision, from the indigo color palette to the orbital logo animation, reflects a belief that developer tools should feel as polished as the products they help build.
 
 ## Tech Stack
 
@@ -63,7 +134,7 @@ Quantum was built to explore what a modern, production-ready project management 
 
 **Express 5 over Express 4** — Express 5's async error handling eliminates boilerplate try-catch in route handlers and represents the current direction of the framework.
 
-**@dnd-kit over react-beautiful-dnd** — @dnd-kit is actively developed, accessibility-first, and provides fine-grained control over drag behavior through its sensor and modifier system.
+**@dnd-kit over react-beautiful-dnd** — react-beautiful-dnd is no longer actively maintained. @dnd-kit is actively developed, accessibility-first, and provides fine-grained control over drag behavior through its sensor and modifier system.
 
 **CommonJS over ESM** — The backend uses Node.js `require()` syntax for compatibility with Express 5 and Mongoose 9. ESM is the modern JavaScript module system, but mixing it with TypeScript in a Node.js backend introduces configuration complexity — TypeScript compiles to CommonJS by default, and aligning both systems requires extra setup that adds friction without meaningful benefit for this project's scope.
 
@@ -224,15 +295,6 @@ Create a `.env` file inside `client/` using `.env.example` as a template:
 | -------------- | -------------------------------------------------- |
 | `VITE_API_URL` | Backend API URL (default: `http://localhost:3001`) |
 
-## API Endpoints
-
-### Auth
-
-| Method | Endpoint             | Description           | Auth Required |
-| ------ | -------------------- | --------------------- | ------------- |
-| `POST` | `/api/auth/register` | Register a new user   | No            |
-| `POST` | `/api/auth/login`    | Login and receive JWT | No            |
-
 ## Task Status Values
 
 | Status                                                                              | Description                      |
@@ -240,6 +302,16 @@ Create a `.env` file inside `client/` using `.env.example` as a template:
 | ![To Do](https://img.shields.io/badge/To%20Do-60a5fa?style=flat-square)             | Task has not been started        |
 | ![In Progress](https://img.shields.io/badge/In%20Progress-f59e0b?style=flat-square) | Task is actively being worked on |
 | ![Complete](https://img.shields.io/badge/Complete-10b981?style=flat-square)         | Task has been finished           |
+
+## API Endpoints
+
+### Auth
+
+| Method | Endpoint             | Description              | Auth Required |
+| ------ | -------------------- | ------------------------ | ------------- |
+| `POST` | `/api/auth/register` | Register a new user      | No            |
+| `POST` | `/api/auth/login`    | Login and receive JWT    | No            |
+| `GET`  | `/api/auth/users`    | Get all registered users | Yes           |
 
 ### Projects
 
@@ -298,7 +370,7 @@ When any task operation is requested, the following chain runs in order:
 - A **User** owns many **Projects** — `Project.owner` references `User._id`
 - A **Project** contains many **Tasks** — `Task.project` references `Project._id`
 - A **Task** is created by a **User** — `Task.owner` references `User._id`
-- A **Project** can have many **Members** — `Project.members` is an array of `User._id` references (collaboration stretch goal)
+- A **Project** can have many **Members** — `Project.members` is an array of `User._id` references, enabling project-level collaboration
 
 All relationships use Mongoose `ref` and MongoDB ObjectId references, enabling `.populate()` queries to fetch related documents in a single call.
 
@@ -342,6 +414,11 @@ All errors return a consistent JSON shape:
 - [ ] Quantum decoherence error animation — logo disperses on error states
 - [ ] Quantum brand text color spectrum animation on initial page load
 - [ ] Dashboard stat card filtering — click a stat to filter projects by task status
+- [ ] Mobile theme switcher — accessible theme toggle for mobile viewports
+- [ ] Mobile Kanban board — optimized drag-and-drop experience for touch devices
+- [ ] Search and filter tasks — search by title or filter by assignee within a project
+- [ ] Task due dates — deadline tracking with overdue indicators
+- [ ] Project activity log — chronological history of changes to a project
 - [ ] User profile — view and edit profile details by clicking the avatar
 - [ ] Admin role — platform management and user moderation
 - [ ] Real-time updates — WebSocket integration for live task changes
@@ -362,8 +439,7 @@ All errors return a consistent JSON shape:
 
 ### REST Client (VS Code)
 
-API endpoints are tested using the [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) VS Code extension. Test requests are documented in `server/requests.http`.
-All test requests are version-controlled alongside the codebase in `server/requests.http`.
+API endpoints are tested using the [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) VS Code extension.
 
 ### Morgan
 
@@ -408,6 +484,8 @@ Zero errors required before every commit.
 **Core Stack — Frontend**
 
 - [React Documentation](https://react.dev/) — Core UI library
+- [React Router — useParams](https://reactrouter.com/en/main/hooks/use-params) — Extracts dynamic URL segments; reads project ID from route in `ProjectDetailPage`
+- [React Router — useNavigate](https://reactrouter.com/en/main/hooks/use-navigate) — Programmatic navigation; used for back button and post-delete redirect
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/) — Typed JavaScript; interfaces, generics, and type safety throughout the client
 - [TypeScript Compiler Options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) — `npx tsc --noEmit` type verification
 - [TypeScript — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) — `err instanceof Error` for catch blocks
@@ -424,6 +502,7 @@ Zero errors required before every commit.
 - [Framer Motion Documentation](https://www.framer.com/motion/) — Animation library
 - [Framer Motion — Animation](https://www.framer.com/motion/animation/) — `animate` prop
 - [Framer Motion — Transition Options](https://www.framer.com/motion/transition/) — `duration`, `repeat`, `ease` options
+- [React — useCallback](https://react.dev/reference/react/useCallback) — Memoizes drag and task update handlers to prevent unnecessary child re-renders
 - [DEV Community — Beginner's Guide to dnd-kit in React](https://dev.to/kelseyroche/a-beginners-guide-to-drag-and-drop-with-dnd-kit-in-react-5hfe) — Practical walkthrough of `DndContext`, `useDroppable`, and `onDragEnd` patterns
 - [@dnd-kit Documentation](https://dndkit.com/) — Drag-and-drop library; Kanban board task reordering
 - [@dnd-kit/core Documentation](https://docs.dndkit.com/) — Drag-and-drop primitives; DndContext and collision detection for the Kanban board
@@ -448,6 +527,7 @@ Zero errors required before every commit.
 - [MDN — SVG feMerge](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feMerge) — Combines blur and source graphic for glow filter output
 - [MDN — Window.matchMedia()](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) — Detects system dark/light preference in `useTheme` hook
 - [MDN — Window.confirm()](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm) — Native browser confirmation dialog
+- [MDN — Promise.all()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) — Fires parallel API requests simultaneously; fetches project and tasks in one round trip in `ProjectDetailPage`
 - [MDN — ARIA — tabIndex](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) — Keyboard accessibility attribute spread onto TaskCard via `useSortable` attributes
 - [MDN — ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) — Accessibility roles spread onto TaskCard via `useSortable` attributes
 - [Smashing Magazine — Optimistic UI Updates](https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/) — Pattern used in TaskBoard to update task status instantly before API confirmation
@@ -483,5 +563,3 @@ Zero errors required before every commit.
 ## License
 
 Copyright © 2026 Zac White. All Rights Reserved.
-
-> 🚧 Work in progress

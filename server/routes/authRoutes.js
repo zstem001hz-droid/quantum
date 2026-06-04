@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const { protect } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -73,6 +74,16 @@ router.post("/login", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+});
+
+// GET all users — returns id, username, and email only (no passwords)
+router.get("/users", protect, async (req, res) => {
+  try {
+    const users = await User.find({}, "username email");
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
   }
 });
 

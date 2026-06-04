@@ -1,4 +1,4 @@
-# <img src="./assets/quantum-logo-read.gif" width="40" alt="Quantum Logo" /> Quantum 
+# <img src="./assets/quantum-logo-read.gif" width="32" alt="Quantum Logo" /> Quantum 
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 ![Express](https://img.shields.io/badge/Express-5.x-lightgrey)
@@ -76,47 +76,47 @@ Quantum was built to explore what a modern, production-ready project management 
 ```
 quantum/
 ├── client/                            ← React 19 + Vite + TypeScript
-   ├── public/
-   │   └── favicon.svg                 ← custom atom favicon
-   └── src/
-       ├── components/
-       │   ├── animations/
-       │   │   ├── QuantumLogo.tsx     ← animated SVG atom logo
-       │   │   └── TaskCompleteAnimation.tsx
-       │   ├── modals/
-       │   │   ├── CreateProjectModal.tsx
-       │   │   ├── EditProjectModal.tsx
-       │   │   ├── CreateTaskModal.tsx
-       │   │   ├── EditTaskModal.tsx
-       │   │   └── InviteModal.tsx
-       │   ├── EmptyState.tsx
-       │   ├── ErrorMessage.tsx
-       │   ├── LoadingSpinner.tsx
-       │   ├── Navbar.tsx
-       │   ├── ProjectCard.tsx
-       │   ├── ProtectedRoute.tsx
-       │   ├── TaskBoard.tsx
-       │   ├── TaskCard.tsx
-       │   ├── TaskColumn.tsx
-       │   └── ThemeSwitcher.tsx
-       ├── context/
-       │   └── AuthContext.tsx
-       ├── hooks/
-       │   ├── useAuth.ts
-       │   ├── useProjects.ts
-       │   ├── useTasks.ts
-       │   └── useTheme.ts
-       ├── pages/
-       │   ├── DashboardPage.tsx
-       │   ├── LoginPage.tsx
-       │   ├── ProjectDetailPage.tsx
-       │   └── RegisterPage.tsx
-       ├── services/
-       │   └── api.ts
-       ├── types/
-       │   └── index.ts
-       ├── App.tsx
-       └── main.tsx
+│   ├── public/
+│   │   └── favicon.svg                ← custom atom favicon
+│   └── src/
+│       ├── components/
+│       │   ├── animations/
+│       │   │   ├── QuantumLogo.tsx    ← animated SVG atom with multi-axis ring rotation
+│       │   │   └── TaskCompleteAnimation.tsx ← quantum collapse animation on task completion
+│       │   ├── modals/
+│       │   │   ├── CreateProjectModal.tsx    ← animated modal for new project creation
+│       │   │   ├── EditProjectModal.tsx      ← edit or delete an existing project
+│       │   │   ├── CreateTaskModal.tsx       ← animated modal for new task creation
+│       │   │   ├── EditTaskModal.tsx         ← edit status, title, description or delete task
+│       │   │   └── InviteModal.tsx           ← invite collaborator to project by email
+│       │   ├── EmptyState.tsx         ← empty list state with optional action button
+│       │   ├── ErrorMessage.tsx       ← error display with optional retry callback
+│       │   ├── LoadingSpinner.tsx     ← full-screen loading state using QuantumLogo
+│       │   ├── Navbar.tsx             ← always-dark top bar with logo, theme switcher, avatar
+│       │   ├── ProjectCard.tsx        ← dashboard card showing project and task status counts
+│       │   ├── ProtectedRoute.tsx     ← redirects unauthenticated users to login
+│       │   ├── TaskBoard.tsx          ← DndContext root; manages drag-and-drop across columns
+│       │   ├── TaskCard.tsx           ← draggable task card with status stripe and edit modal
+│       │   ├── TaskColumn.tsx         ← droppable Kanban column for one status lane
+│       │   └── ThemeSwitcher.tsx      ← Light / System / Dark theme toggle
+│       ├── context/
+│       │   └── AuthContext.tsx        ← JWT auth state, login, logout, localStorage persistence
+│       ├── hooks/
+│       │   ├── useAuth.ts             ← consumes AuthContext; throws if outside provider
+│       │   ├── useProjects.ts         ← fetches and manages all projects for logged-in user
+│       │   ├── useTasks.ts            ← fetches tasks for a specific project by ID
+│       │   └── useTheme.ts            ← manages Light/System/Dark with localStorage persistence
+│       ├── pages/
+│       │   ├── DashboardPage.tsx      ← project grid with aggregate task stats
+│       │   ├── LoginPage.tsx          ← JWT login with animated logo entrance
+│       │   ├── ProjectDetailPage.tsx  ← full Kanban board with project controls
+│       │   └── RegisterPage.tsx       ← user registration with validation
+│       ├── services/
+│       │   └── api.ts                 ← axios instance with JWT interceptor
+│       ├── types/
+│       │   └── index.ts               ← User, Project, Task, AuthContext TypeScript interfaces
+│       ├── App.tsx                    ← router, AuthProvider, protected route wrappers
+│       └── main.tsx                   ← React entry point
 ├── server/
 │   ├── config/
 │   │   └── connection.js      ← MongoDB Atlas connection
@@ -134,6 +134,11 @@ quantum/
 │   ├── package.json
 │   ├── requests.http          ← REST Client API test requests
 │   └── server.js              ← Express entry point, middleware, routes
+├── assets/
+│   └── quantum-logo-read.gif  ← animated logo for README header
+├── docs/
+│   ├── quantum_erd.pdf        ← entity relationship diagram
+│   └── quantum_wireframes.pdf ← UI wireframes
 ├── LICENSE
 ├── .gitignore
 ├── package.json

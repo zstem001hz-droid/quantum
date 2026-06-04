@@ -1,4 +1,4 @@
-# ⚛️ Quantum
+# <img src="./assets/quantum-logo-read.gif" width="40" alt="Quantum Logo" /> Quantum 
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 ![Express](https://img.shields.io/badge/Express-5.x-lightgrey)
@@ -16,6 +16,12 @@
 ![Postman](https://img.shields.io/badge/Postman-Testing-orange)
 
 Quantum is a modern, full-stack MERN project management application built for individuals and small teams. It features secure JWT-based authentication, ownership-based authorization, and a RESTful API for managing projects and tasks — deployed and production-ready
+
+## Live Demo
+
+🚀 **[Launch Quantum](https://quantum-client.onrender.com)**
+
+> The backend runs on Render's free tier and may take 30–60 seconds to wake up on first request.
 
 ## Screenshots
 
@@ -50,6 +56,20 @@ Quantum was built to explore what a modern, production-ready project management 
 - [bcryptjs](https://github.com/dcodeIO/bcrypt.js) — password hashing
 - [morgan](https://github.com/expressjs/morgan) — HTTP request logger
 - [nodemon](https://nodemon.io/) — development server with auto-restart
+
+## Key Technical Decisions
+
+**TypeScript over JavaScript** — Type safety across the entire client prevents entire categories of runtime errors. TypeScript's indexed access types (`Task['status']`) and type assertions were particularly valuable for the Kanban board's status management.
+
+**Express 5 over Express 4** — Express 5's async error handling eliminates boilerplate try-catch in route handlers and represents the current direction of the framework.
+
+**@dnd-kit over react-beautiful-dnd** — @dnd-kit is actively developed, accessibility-first, and provides fine-grained control over drag behavior through its sensor and modifier system.
+
+**CommonJS over ESM** — The backend uses Node.js `require()` syntax for compatibility with Express 5 and Mongoose 9. ESM is the modern JavaScript module system, but mixing it with TypeScript in a Node.js backend introduces configuration complexity — TypeScript compiles to CommonJS by default, and aligning both systems requires extra setup that adds friction without meaningful benefit for this project's scope.
+
+**Optimistic updates for drag-and-drop** — Task status updates apply immediately to the UI before the API confirms, reverting on failure. This makes the Kanban board feel instant rather than dependent on network latency.
+
+**Custom Tailwind quantum palette** — All brand colors are defined once in `tailwind.config.js` and generate utility classes automatically, enabling consistent theming and instant global color updates across every component.
 
 ## Project Structure
 
@@ -304,7 +324,7 @@ All errors return a consistent JSON shape:
 - [x] Full task CRUD with nested routing and parent project authorization
 - [x] Kanban-style task board with To Do / In Progress / Complete columns
 - [x] Responsive design — mobile, tablet, and desktop
-- [ ] Deployed on Render — backend Web Service and frontend Static Site
+- [x] Deployed on Render — backend Web Service and frontend Static Site
 
 ### Stretch Goals
 
@@ -376,6 +396,7 @@ Zero errors required before every commit.
 - [Mongoose — Arrays](https://mongoosejs.com/docs/schematypes.html#arrays) — Array schema type; used for `project.members` collaborator references
 - [Mongoose — Document.save()](<https://mongoosejs.com/docs/api/document.html#Document.prototype.save()>) — Push collaborators to `project.members`
 - [Express 5 Documentation](https://expressjs.com/) — Web framework; API Routing
+- [Node.js — CommonJS Modules](https://nodejs.org/api/modules.html) — `require()` module system used throughout the Express backend
 - [JSON Web Tokens — jwt.io](https://jwt.io/) — Secure token authentication
 - [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) — `isOwnerOrMember` helper
 
@@ -390,17 +411,11 @@ Zero errors required before every commit.
 - [Vite Documentation](https://vitejs.dev/) — Build tool and dev server
 - [React Router Documentation](https://reactrouter.com/) — Client-side routing; protected routes and navigation configured in `App.tsx`
 - [Axios Documentation](https://axios-http.com/docs/intro) — HTTP client; JWT interceptor in `src/services/api.ts` attaches token to every request
-- [Axios — API Reference (PUT and DELETE)](https://axios-http.com/docs/api_intro) — Axios request methods `api.put()` and `api.delete()`
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs) — Utility-first styling
 - [Tailwind CSS — Customizing Colors](https://tailwindcss.com/docs/customizing-colors) — Define color object to generate branding utility classes
-- [Tailwind CSS — Utility Class Reference](https://tailwindcss.com/docs/utility-first) — Layout, spacing, and typography utilities
 - [Tailwind CSS — Dark Mode](https://tailwindcss.com/docs/dark-mode) — `darkMode: 'class'` strategy; `useTheme` hook manages the `dark` class on `<html>`
-- [Tailwind CSS — Hover, Focus, and Other States](https://tailwindcss.com/docs/hover-focus-and-other-states) — State variants applied to all interactive elements
-- [Tailwind CSS — Transition Property](https://tailwindcss.com/docs/transition-property) — `transition-colors` on buttons and interactive borders
 - [Tailwind CSS — Line Clamp](https://tailwindcss.com/docs/line-clamp) — Truncate long descriptions
-- [Tailwind CSS — Flexbox](https://tailwindcss.com/docs/flex) — Core layout utility used throughout every component
 - [Tailwind CSS — Grid Template Columns](https://tailwindcss.com/docs/grid-template-columns) — Statistics grid columns
-- [Tailwind CSS — Background Gradient](https://tailwindcss.com/docs/background-image#gradients) — Gradient backgrounds; used for user avatar in `Navbar`
 - [Framer Motion Documentation](https://www.framer.com/motion/) — Animation library
 - [Framer Motion — Animation](https://www.framer.com/motion/animation/) — `animate` prop
 - [Framer Motion — Transition Options](https://www.framer.com/motion/transition/) — `duration`, `repeat`, `ease` options
@@ -417,27 +432,17 @@ Zero errors required before every commit.
 
 **Standards**
 
-- [React — Writing Markup with JSX](https://react.dev/learn/writing-markup-with-jsx) — JSX syntax for React components
 - [React — Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks) — Never call hooks inside loops or conditions; followed throughout all components and custom hooks
 - [React — Rules](https://react.dev/reference/rules) — Core React rules
-- [React Router — Link](https://reactrouter.com/en/main/components/link) — Used in `Navbar` and `ProjectCard` for client-side navigation- [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) — API return status codes
+- [React Router — Link](https://reactrouter.com/en/main/components/link) — Used in `Navbar` and `ProjectCard` for client-side navigation
+- [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) — API return status codes
 - [REST API — Nested Resources](https://restfulapi.net/resource-naming/) — Nested route pattern `/api/projects/:id/tasks/:id`
-- [MDN — Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) — Form `handleSubmit` handlers, prevents page reload
 - [MDN — SVG ellipse](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse) — SVG orbital rings effect
 - [MDN — SVG feGaussianBlur](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feGaussianBlur) — Creates blur effect used in ring and nucleus glow filters in `QuantumLogo`
 - [MDN — SVG viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox) — Centered coordinate system (`-100 -100 200 200`) enabling rotation around the SVG origin
 - [MDN — SVG feMerge](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feMerge) — Combines blur and source graphic for glow filter output
 - [MDN — Window.matchMedia()](https://developer.mozilla.org/en-US/docs/Web/API/Window/matchMedia) — Detects system dark/light preference in `useTheme` hook
-- [MDN — Nullish Coalescing Operator (??)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing) — Default fallback for optional `retryLabel` prop in `ErrorMessage`
-- [MDN — Array.prototype.map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) — Transforms arrays into rendered JSX lists throughout all components
 - [MDN — Window.confirm()](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm) — Native browser confirmation dialog
-- [MDN — HTTP PUT Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT) — HTTP method for updating existing resources
-- [MDN — HTTP DELETE Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE) — HTTP method for removing resources
-- [MDN — HTML select element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select) — Dropdown status selector in EditTaskModal
-- [MDN — CSS transform Property](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) — Applied via inline style during drag to move TaskCard visually
-- [MDN — CSS border-left](https://developer.mozilla.org/en-US/docs/Web/CSS/border-left) — `border-l-4` with status color creates the left accent stripe on TaskCard
-- [MDN — CSS opacity](https://developer.mozilla.org/en-US/docs/Web/CSS/opacity) — `isDragging` reduces card opacity to 0.4 while dragging to show ghost position
-- [MDN — CSS border-top](https://developer.mozilla.org/en-US/docs/Web/CSS/border-top) — `border-t-4` with status color creates the top accent stripe on each TaskColumn
 - [MDN — ARIA — tabIndex](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) — Keyboard accessibility attribute spread onto TaskCard via `useSortable` attributes
 - [MDN — ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) — Accessibility roles spread onto TaskCard via `useSortable` attributes
 - [Smashing Magazine — Optimistic UI Updates](https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/) — Pattern used in TaskBoard to update task status instantly before API confirmation
@@ -454,8 +459,6 @@ Zero errors required before every commit.
 - [ESLint — Disabling Rules with Comments](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments) — Used in `AuthContext.tsx` to disable fast refresh rule for context files
 - [Shields.io — Badge Generator](https://shields.io/) — Generates README header badges and colored Task Status Values
 - [Kent C. Dodds — How to use React Context effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively) — Pattern followed for `AuthContext` provider and consumer design
-- [Traversy Media — Axios Crash Course](https://www.youtube.com/watch?v=6LyagkoRWYA) — HTTP requests, interceptors, and all Axios methods including PUT and DELETE
-- [Traversy Media — Drag and Drop with React](https://www.youtube.com/results?search_query=traversy+media+drag+and+drop+react) — Search term for Brad Traversy's React DnD content
 
 **Deployment**
 
@@ -466,6 +469,11 @@ Zero errors required before every commit.
 **Security**
 
 - [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — Rate limiting middleware; limits each IP to 100 requests per 15-minute window
+
+**Video References**
+
+- [Traversy Media — Axios Crash Course](https://www.youtube.com/watch?v=6LyagkoRWYA) — HTTP requests, interceptors, and all Axios methods including PUT and DELETE
+- [Tom Is Loading — Advanced Sortable Drag and Drop with React & TailwindCSS](https://www.youtube.com/watch?v=O5lZqqy7VQE) — Advanced @dnd-kit sortable implementation patterns with React and Tailwind CSS
 
 ## License
 

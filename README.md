@@ -411,6 +411,8 @@ All errors return a consistent JSON shape:
 
 ### Future Features
 
+- [ ] Task completion animation — quantum collapse effect when a task is moved to Complete
+- [ ] Quantum wave background — animated SVG wave function background on auth and dashboard pages
 - [ ] Quantum decoherence error animation — logo disperses on error states
 - [ ] Quantum brand text color spectrum animation on initial page load
 - [ ] Dashboard stat card filtering — click a stat to filter projects by task status

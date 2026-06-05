@@ -472,7 +472,7 @@ Zero errors required before every commit.
 
 ## References
 
-**Core Stack — Backend**
+### Core Stack — Backend
 
 - [MongoDB Atlas](https://www.mongodb.com/atlas) — Cloud-hosted NoSQL database
 - [Mongoose Documentation](https://mongoosejs.com/docs/) — MongoDB object modeling library for Node.js
@@ -483,7 +483,7 @@ Zero errors required before every commit.
 - [JSON Web Tokens — jwt.io](https://jwt.io/) — Secure token authentication
 - [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) — `isOwnerOrMember` helper
 
-**Core Stack — Frontend**
+### Core Stack — Frontend
 
 - [React Documentation](https://react.dev/) — Core UI library
 - [React Router — useParams](https://reactrouter.com/en/main/hooks/use-params) — Extracts dynamic URL segments; reads project ID from route in `ProjectDetailPage`
@@ -516,7 +516,7 @@ Zero errors required before every commit.
 - [@dnd-kit/sortable — verticalListSortingStrategy](https://docs.dndkit.com/presets/sortable/sortable-context#sorting-strategies) — Optimizes drag calculations for vertically arranged task lists
 - [@dnd-kit/core — DragOverlay](https://docs.dndkit.com/api-documentation/draggable/drag-overlay) — Renders a floating visual clone of the dragged TaskCard under the cursor during drag operations
 
-**Standards**
+### Standards
 
 - [React — Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks) — Never call hooks inside loops or conditions; followed throughout all components and custom hooks
 - [React — Rules](https://react.dev/reference/rules) — Core React rules
@@ -534,7 +534,7 @@ Zero errors required before every commit.
 - [MDN — ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) — Accessibility roles spread onto TaskCard via `useSortable` attributes
 - [Smashing Magazine — Optimistic UI Updates](https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/) — Pattern used in TaskBoard to update task status instantly before API confirmation
 
-**Development Tools**
+ ### Development Tools
 
 - [REST Client — VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) — API testing via `server/requests.http`
 - [Morgan — HTTP Request Logger](https://github.com/expressjs/morgan) — Logs API requests to the terminal
@@ -547,20 +547,22 @@ Zero errors required before every commit.
 - [Shields.io — Badge Generator](https://shields.io/) — Generates README header badges and colored Task Status Values
 - [Kent C. Dodds — How to use React Context effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively) — Pattern followed for `AuthContext` provider and consumer design
 
-**Deployment**
+### Video References
+
+- [Traversy Media — Axios Crash Course](https://www.youtube.com/watch?v=6LyagkoRWYA) — HTTP requests, interceptors, and all Axios methods including PUT and DELETE
+- [Tom Is Loading — Advanced Sortable Drag and Drop with React & TailwindCSS](https://www.youtube.com/watch?v=O5lZqqy7VQE) — Advanced @dnd-kit sortable implementation patterns with React and Tailwind CSS
+
+### Deployment
 
 - [Render Documentation](https://render.com/docs) — Deployment platform for backend Web Service and frontend Static Site
 - [Render — Deploying a Node.js App](https://render.com/docs/node-express) — Deploying the Express backend as a Web Service
 - [Render — Static Site Deployment](https://render.com/docs/static-sites) — Deploying the Vite React frontend as a Static Site
 
-**Security**
+### Security
 
 - [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — Rate limiting middleware; limits each IP to 100 requests per 15-minute window
 
-**Video References**
 
-- [Traversy Media — Axios Crash Course](https://www.youtube.com/watch?v=6LyagkoRWYA) — HTTP requests, interceptors, and all Axios methods including PUT and DELETE
-- [Tom Is Loading — Advanced Sortable Drag and Drop with React & TailwindCSS](https://www.youtube.com/watch?v=O5lZqqy7VQE) — Advanced @dnd-kit sortable implementation patterns with React and Tailwind CSS
 
 ## License
 

@@ -90,7 +90,7 @@ router.post("/login", async (req, res) => {
 // GET all users — returns id, username, and email only (no passwords)
 router.get("/users", protect, async (req, res) => {
   try {
-    const users = await User.find({}, "username email");
+    const users = await User.find({}, "username email lastLogin");
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: "Server error" });

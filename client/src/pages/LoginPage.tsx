@@ -25,7 +25,8 @@ export default function LoginPage() {
       navigate("/");
     } catch (err: unknown) {
       const message =
-        err instanceof Error ? err.message : "Invalid email or password";
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message || "Invalid email or password";
       setError(message);
     } finally {
       setLoading(false);

@@ -15,6 +15,7 @@
 ![dotenv](https://img.shields.io/badge/dotenv-Config-yellow)
 ![Postman](https://img.shields.io/badge/Postman-Testing-orange)
 ![Framer Motion](https://img.shields.io/badge/Framer%20Motion-11.x-pink)
+![Lucide](https://img.shields.io/badge/Lucide-Icons-6366f1)
 ![dnd-kit](https://img.shields.io/badge/@dnd--kit-6.x-6366f1)
 
 Quantum is a modern, full-stack MERN project management application built for individuals and small teams. It features secure JWT-based authentication, ownership-based authorization, and a RESTful API for managing projects and tasks — deployed and production-ready. The interface is designed around a dark-first aesthetic inspired by quantum physics, with a fully responsive Kanban board, real-time drag-and-drop, and light/dark/system theme switching.
@@ -113,6 +114,7 @@ Quantum was built to explore what a modern, production-ready project management 
 - [Axios](https://axios-http.com/) — HTTP client for API requests
 - [Tailwind CSS](https://tailwindcss.com/) — utility-first styling
 - [Framer Motion](https://www.framer.com/motion/) — animations
+- [Lucide React](https://lucide.dev/guide/packages/lucide-react) — icon library
 - [@dnd-kit](https://dndkit.com/) — drag-and-drop task board
 
 **Backend**

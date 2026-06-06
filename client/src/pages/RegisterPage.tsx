@@ -37,7 +37,8 @@ export default function RegisterPage() {
       navigate("/");
     } catch (err: unknown) {
       const message =
-        err instanceof Error ? err.message : "Registration failed";
+        (err as { response?: { data?: { message?: string } } })?.response?.data
+          ?.message || "Registration failed";
       setError(message);
     } finally {
       setLoading(false);

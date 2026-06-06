@@ -411,22 +411,38 @@ All errors return a consistent JSON shape:
 
 ### Future Features
 
-- [ ] Task completion animation — quantum collapse effect when a task is moved to Complete
-- [ ] Quantum wave background — animated SVG wave function background on auth and dashboard pages
-- [ ] Quantum decoherence error animation — logo disperses on error states
-- [ ] Quantum brand text color spectrum animation on initial page load
-- [ ] Dashboard stat card filtering — click a stat to filter projects by task status
+**Polish & Bug Fixes**
+
+- [ ] Password visibility toggle — show/hide eye icon on password and confirm password fields
+- [ ] Inline validation hints — real-time helper text on username and password fields showing requirements before submission
 - [ ] Mobile theme switcher — accessible theme toggle for mobile viewports
 - [ ] Mobile Kanban board — optimized drag-and-drop experience for touch devices
+- [ ] Dashboard stat card filtering — click a stat to filter projects by task status
+
+**Security & Infrastructure**
+
+- [ ] Forgot password — account recovery flow for users who cannot remember their password
+- [ ] Refresh token rotation — enhanced JWT security
+- [ ] Rate limit configuration — make per-IP request thresholds configurable via environment variables for different deployment contexts
+- [ ] Email notifications — task assignments and project activity
+- [ ] Infrastructure migration — transition from managed hosting to a self-hosted containerized deployment
+
+**Features & Functionality**
+
 - [ ] Search and filter tasks — search by title or filter by assignee within a project
 - [ ] Task due dates — deadline tracking with overdue indicators
 - [ ] Project activity log — chronological history of changes to a project
 - [ ] User profile — view and edit profile details by clicking the avatar
+- [ ] User avatar selector — custom profile image upload and display
 - [ ] Admin role — platform management and user moderation
 - [ ] Real-time updates — WebSocket integration for live task changes
-- [ ] Email notifications — task assignments and project activity
-- [ ] Refresh token rotation — enhanced JWT security
-- [ ] User avatar selector — custom profile image upload and display
+
+**Creative & Visual**
+
+- [ ] Task completion animation — quantum collapse effect when a task is moved to Complete
+- [ ] Quantum wave background — animated SVG wave function background on auth and dashboard pages
+- [ ] Quantum decoherence error animation — logo disperses on error states
+- [ ] Quantum brand text color spectrum animation on initial page load
 
 ## Security Features
 
@@ -534,7 +550,7 @@ Zero errors required before every commit.
 - [MDN — ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) — Accessibility roles spread onto TaskCard via `useSortable` attributes
 - [Smashing Magazine — Optimistic UI Updates](https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/) — Pattern used in TaskBoard to update task status instantly before API confirmation
 
- ### Development Tools
+### Development Tools
 
 - [REST Client — VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) — API testing via `server/requests.http`
 - [Morgan — HTTP Request Logger](https://github.com/expressjs/morgan) — Logs API requests to the terminal
@@ -561,8 +577,6 @@ Zero errors required before every commit.
 ### Security
 
 - [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — Rate limiting middleware; limits each IP to 100 requests per 15-minute window
-
-
 
 ## License
 

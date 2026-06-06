@@ -72,6 +72,9 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
+    user.lastLogin = new Date();
+    await user.save();
+
     res.status(200).json({
       _id: user._id,
       name: user.name,

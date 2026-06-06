@@ -36,8 +36,13 @@ const userSchema = new Schema(
       // Stored as bcrypt hash — never returned in queries (select: false)
       type: String,
       required: [true, "Password is required"],
-      minlength: [6, "Password must be at least 6 characters"],
+      minlength: [8, "Password must be at least 8 characters"],
       select: false,
+    },
+    lastLogin: {
+      // Timestamp of most recent successful login
+      type: Date,
+      default: null,
     },
   },
   {

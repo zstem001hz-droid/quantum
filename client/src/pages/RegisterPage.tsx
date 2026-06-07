@@ -18,8 +18,34 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  const validateUsername = (value: string) => {
+    if (value.length < 5) {
+      setUsernameError("Username must be at least 5 characters");
+    } else if (!/^[a-zA-Z0-9-]+$/.test(value)) {
+      setUsernameError("Letters, numbers, and hyphens only");
+    } else {
+      setUsernameError("");
+    }
+  };
+
+  const validatePassword = (value: string) => {
+    if (value.length < 8) {
+      setPasswordError("Password must be at least 8 characters");
+    } else if (!/(?=.*[A-Z])/.test(value)) {
+      setPasswordError("Must include an uppercase letter");
+    } else if (!/(?=.*[0-9])/.test(value)) {
+      setPasswordError("Must include a number");
+    } else if (!/(?=.*[!@#$%^&*()\-_=+[\]{};:'",.<>/?\\|`~])/.test(value)) {
+      setPasswordError("Must include a special character");
+    } else {
+      setPasswordError("");
+    }
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -88,12 +114,18 @@ export default function RegisterPage() {
               <input
                 type="text"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  validateUsername(e.target.value);
+                }}
                 required
                 minLength={8}
                 maxLength={20}
                 className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
               />
+              {usernameError && (
+                <p className="text-red-400 text-xs mt-1">{usernameError}</p>
+              )}
             </div>
             <div className="flex flex-col gap-1">
               <label className="text-quantum-muted text-xs font-semibold uppercase tracking-wider">
@@ -115,7 +147,10 @@ export default function RegisterPage() {
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    validatePassword(e.target.value);
+                  }}
                   required
                   className="w-full bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 pr-10 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
                 />
@@ -127,6 +162,9 @@ export default function RegisterPage() {
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
+              {passwordError && (
+                <p className="text-red-400 text-xs mt-1">{passwordError}</p>
+              )}
             </div>
             <div className="flex flex-col gap-1">
               <label className="text-quantum-muted text-xs font-semibold uppercase tracking-wider">

@@ -28,9 +28,7 @@ const Navbar = () => {
           <QuantumLogo size={36} />
           <span className="text-quantum-text font-bold text-lg">Quantum</span>
         </Link>
-        <div className="hidden md:block">
-          <ThemeSwitcher />
-        </div>
+        <ThemeSwitcher />
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-quantum-accent to-purple-600 flex items-center justify-center text-white text-xs font-bold">
             {initials}

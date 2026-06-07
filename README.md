@@ -430,7 +430,7 @@ All errors return a consistent JSON shape:
 - [x] Password visibility toggle — show/hide eye icon on password and confirm password fields
 - [x] Inline validation hints — real-time helper text on username and password fields showing requirements before submission
 - [ ] Mobile layout optimization — full mobile-first redesign prioritizing app-like experience
-- [ ] Mobile theme switcher — compact icon-only toggle replacing the full label switcher on small viewports
+- [x] Mobile theme switcher — compact icon-only toggle replacing the full label switcher on small viewports
 - [ ] Mobile Kanban board — optimized drag-and-drop experience for touch devices
 - [ ] Dashboard stat card filtering — click a stat to filter projects by task status
 

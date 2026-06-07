@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import QuantumLogo from "../components/animations/QuantumLogo";
 import api from "../services/api";
 import useAuth from "../hooks/useAuth";
-import ThemeSwitcher from "../components/ThemeSwitcher";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -211,9 +210,7 @@ export default function RegisterPage() {
             Already have an account? Sign in →
           </Link>
         </div>
-        <div className="mt-4">
-          <ThemeSwitcher />
-        </div>
+        <div className="mt-4"></div>
       </motion.div>
     </div>
   );

@@ -30,6 +30,7 @@ Quantum is a modern, full-stack MERN project management application built for in
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
 - [Environment Variables](#environment-variables)
+- [Environments](#environments)
 - [API Endpoints](#api-endpoints)
   - [Auth](#auth)
   - [Projects](#projects)
@@ -297,6 +298,17 @@ Create a `.env` file inside `client/` using `.env.example` as a template:
 | -------------- | -------------------------------------------------- |
 | `VITE_API_URL` | Backend API URL (default: `http://localhost:3001`) |
 
+## Environments
+
+Quantum runs across two isolated environments backed by separate MongoDB databases:
+
+| Environment | Frontend                              | Backend                                 | Database       |
+| ----------- | ------------------------------------- | --------------------------------------- | -------------- |
+| Development | `http://localhost:5173`               | `http://localhost:3001`                 | `quantum-dev`  |
+| Production  | `https://quantum-client.onrender.com` | `https://quantum-api-j3qf.onrender.com` | `quantum-prod` |
+
+Local development uses `quantum-dev` — test data, registered users, and projects created locally never affect production. Switch environments by updating `MONGO_URI` in `server/.env`.
+
 ## Task Status Values
 
 | Status                                                                              | Description                      |
@@ -415,9 +427,10 @@ All errors return a consistent JSON shape:
 
 **Polish & Bug Fixes**
 
-- [ ] Password visibility toggle — show/hide eye icon on password and confirm password fields
+- [x] Password visibility toggle — show/hide eye icon on password and confirm password fields
 - [ ] Inline validation hints — real-time helper text on username and password fields showing requirements before submission
-- [ ] Mobile theme switcher — accessible theme toggle for mobile viewports
+- [ ] Mobile layout optimization — full mobile-first redesign prioritizing app-like experience
+- [ ] Mobile theme switcher — compact icon-only toggle replacing the full label switcher on small viewports
 - [ ] Mobile Kanban board — optimized drag-and-drop experience for touch devices
 - [ ] Dashboard stat card filtering — click a stat to filter projects by task status
 
@@ -454,6 +467,7 @@ All errors return a consistent JSON shape:
 - Generic error messages on failed login — does not reveal whether email or password was incorrect
 - CORS restricted to `CLIENT_ORIGIN` — blocks requests from unauthorized origins
 - Rate limiting — 100 requests per IP per 15-minute window via `express-rate-limit`
+- Passwords require minimum 8 characters with at least one uppercase letter, number, and special character
 
 ## Testing & Development Tools
 

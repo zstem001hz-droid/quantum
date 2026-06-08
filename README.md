@@ -6,9 +6,12 @@
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-green)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.x-38bdf8)
-![JWT](https://img.shields.io/badge/Auth-JWT-orange)
 ![License](https://img.shields.io/badge/License-Proprietary-red)
+![JWT](https://img.shields.io/badge/Auth-JWT-orange)
+![2FA](https://img.shields.io/badge/2FA-TOTP-red)
+![qrcode](https://img.shields.io/badge/qrcode-1.5.4-green)
 ![bcrypt](https://img.shields.io/badge/Security-bcrypt-red)
+![otplib](https://img.shields.io/badge/otplib-TOTP-6366f1)
 ![Vite](https://img.shields.io/badge/Vite-6.x-yellow)
 ![Morgan](https://img.shields.io/badge/Morgan-Logger-lightgrey)
 ![CORS](https://img.shields.io/badge/CORS-Enabled-blue)
@@ -50,7 +53,7 @@ Quantum is a modern, full-stack MERN project management application built for in
   - [Development Tools](#development-tools)
   - [Video References](#video-references)
   - [Deployment](#deployment)
-  - [Security](#security)
+- [Authentication & Security](#authentication--security)
 - [License](#license)
 
 ## Live Demo
@@ -128,6 +131,8 @@ Quantum was built to explore what a modern, production-ready project management 
 - [cors](https://github.com/expressjs/cors) — cross-origin resource sharing
 - [JSON Web Tokens](https://jwt.io/) — authentication
 - [bcryptjs](https://github.com/dcodeIO/bcrypt.js) — password hashing
+- [otplib](https://github.com/yeojz/otplib) — TOTP one-time password generation and verification
+- [qrcode](https://github.com/soldair/node-qrcode) — QR code generation for authenticator app setup
 - [morgan](https://github.com/expressjs/morgan) — HTTP request logger
 - [nodemon](https://nodemon.io/) — development server with auto-restart
 
@@ -436,6 +441,9 @@ All errors return a consistent JSON shape:
 
 **Security & Infrastructure**
 
+- [x] Two-factor authentication (TOTP) — time-based one-time password support via `otplib` with QR code setup and authenticator app integration
+- [ ] 2FA frontend — QR code setup modal, TOTP login step, enable/disable controls, and manual secret entry for users without camera access
+- [ ] 2FA authenticate endpoint — accept email or username instead of MongoDB ObjectId for user lookup
 - [ ] Forgot password — account recovery flow for users who cannot remember their password
 - [ ] Refresh token rotation — enhanced JWT security
 - [ ] Rate limit configuration — make per-IP request thresholds configurable via environment variables for different deployment contexts
@@ -447,8 +455,7 @@ All errors return a consistent JSON shape:
 - [ ] Search and filter tasks — search by title or filter by assignee within a project
 - [ ] Task due dates — deadline tracking with overdue indicators
 - [ ] Project activity log — chronological history of changes to a project
-- [ ] User profile — view and edit profile details by clicking the avatar
-- [ ] User avatar selector — custom profile image upload and display
+- [ ] User profile and avatar — view and edit profile details, upload custom avatar image by clicking the navbar avatar
 - [ ] Admin role — platform management and user moderation
 - [ ] Real-time updates — WebSocket integration for live task changes
 
@@ -456,11 +463,12 @@ All errors return a consistent JSON shape:
 
 - [ ] Task completion animation — quantum collapse effect when a task is moved to Complete
 - [ ] Quantum wave background — animated SVG wave function background on auth and dashboard pages
-- [ ] Quantum decoherence error animation — logo disperses on error states
+- [ ] Quantum decoherence error pages — logo disperses on 401/403/404 states with interactive animated error displays
 - [ ] Quantum brand text color spectrum animation on initial page load
 
 ## Security Features
 
+- Two-factor authentication (TOTP) — users can enable time-based one-time password authentication via any RFC 6238 compliant authenticator app.
 - Passwords hashed with bcrypt (cost factor 10) via pre-save hook — plain text never touches the database
 - Password field excluded from all queries by default (`select: false`)
 - JWT tokens expire after 30 days
@@ -513,6 +521,8 @@ Zero errors required before every commit.
 - [Express 5 Documentation](https://expressjs.com/) — Web framework; API Routing
 - [Node.js — CommonJS Modules](https://nodejs.org/api/modules.html) — `require()` module system used throughout the Express backend
 - [JSON Web Tokens — jwt.io](https://jwt.io/) — Secure token authentication
+- [otplib](https://github.com/yeojz/otplib) — TOTP one-time password generation and verification
+- [qrcode](https://github.com/soldair/node-qrcode) — QR code generation for authenticator app setup
 - [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) — `isOwnerOrMember` helper
 
 ### Core Stack — Frontend
@@ -566,6 +576,14 @@ Zero errors required before every commit.
 - [MDN — ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) — Accessibility roles spread onto TaskCard via `useSortable` attributes
 - [Smashing Magazine — Optimistic UI Updates](https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/) — Pattern used in TaskBoard to update task status instantly before API confirmation
 
+### Authentication & Security
+
+- [otplib](https://github.com/yeojz/otplib) — TOTP/HOTP one-time password library used for 2FA implementation
+- [qrcode](https://github.com/soldair/node-qrcode) — QR code generation for authenticator app setup flow
+- [RFC 6238 — TOTP Standard](https://datatracker.ietf.org/doc/html/rfc6238) — the open standard defining time-based one-time passwords
+- [RFC 4226 — HOTP Standard](https://datatracker.ietf.org/doc/html/rfc4226) — the HMAC-based OTP standard that TOTP builds upon
+- [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — rate limiting middleware; limits each IP to 100 requests per 15-minute window
+
 ### Development Tools
 
 - [REST Client — VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) — API testing via `server/requests.http`
@@ -589,10 +607,6 @@ Zero errors required before every commit.
 - [Render Documentation](https://render.com/docs) — Deployment platform for backend Web Service and frontend Static Site
 - [Render — Deploying a Node.js App](https://render.com/docs/node-express) — Deploying the Express backend as a Web Service
 - [Render — Static Site Deployment](https://render.com/docs/static-sites) — Deploying the Vite React frontend as a Static Site
-
-### Security
-
-- [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — Rate limiting middleware; limits each IP to 100 requests per 15-minute window
 
 ## License
 

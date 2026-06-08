@@ -8,14 +8,15 @@ const connectDB = require("./config/connection");
 const authRoutes = require("./routes/authRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const taskRoutes = require("./routes/taskRoutes");
-
+const twoFactorRoutes = require("./routes/twoFactorRoutes");
 const rateLimit = require("express-rate-limit");
 
-// Connect to MongoDB
+// Initialize database connection
 connectDB();
 
 const app = express();
 
+// Middleware
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // max 100 requests per IP per window
@@ -23,12 +24,10 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
-
-// Middleware
 app.use(
   cors({
     origin: process.env.CLIENT_ORIGIN,
-    credentails: true,
+    credentials: true,
   }),
 );
 app.use(express.json());
@@ -38,13 +37,14 @@ app.use(morgan("dev"));
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/projects/:projectId/tasks", taskRoutes);
+app.use("/api/2fa", twoFactorRoutes);
 
-// Health check endpoint
+// Health check
 app.get("/api/health", (req, res) => {
   res.status(200).json({ status: "ok", message: "Quantum API is running" });
 });
 
-// PORT and listen
+// Server
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {

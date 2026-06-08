@@ -44,7 +44,19 @@ const userSchema = new Schema(
       type: Date,
       default: null,
     },
+    twoFactorSecret: {
+      // TOTP secret key — generated during 2FA setup, never returned in queries
+      type: String,
+      default: null,
+      select: false,
+    },
+    twoFactorEnabled: {
+      // Whether the user has completed 2FA setup and enabled it
+      type: Boolean,
+      default: false,
+    },
   },
+
   {
     // Automatically adds createdAt and updatedAt fields to every document
     timestamps: true,

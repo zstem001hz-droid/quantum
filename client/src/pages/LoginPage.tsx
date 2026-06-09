@@ -21,12 +21,19 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const { data } = await api.post("/api/auth/login", { email, password });
+      // If user has 2FA enabled, redirect to verification step before issuing JWT
+      if (data.requiresTwoFactor) {
+        navigate("/verify-2fa", { state: { userId: data.userId } });
+        return;
+      }
+
+      // Standard login - store user and JWT, redirect to dashboard
       login(data);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err: unknown) {
       const message =
-        (err as { response?: { data?: { message?: string } } })?.response?.data
-          ?.message || "Invalid email or password";
+        (err as { response?: { data?: { message?: string } } })?.response?.data?.message ||
+        "Invalid email or password";
       setError(message);
     } finally {
       setLoading(false);
@@ -44,9 +51,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="flex flex-col items-center gap-3">
           <QuantumLogo size={120} />
-          <h1 className="text-3xl font-bold text-quantum-accent dark:text-quantum-text">
-            Quantum
-          </h1>
+          <h1 className="text-3xl font-bold text-quantum-accent dark:text-quantum-text">Quantum</h1>
           <p className="text-quantum-muted text-sm text-center">
             Project intelligence for modern teams
           </p>
@@ -92,10 +97,7 @@ export default function LoginPage() {
             <span className="text-quantum-muted text-xs">or</span>
             <div className="flex-1 h-px bg-quantum-border" />
           </div>
-          <Link
-            to="/register"
-            className="text-quantum-accent text-sm text-center hover:underline"
-          >
+          <Link to="/register" className="text-quantum-accent text-sm text-center hover:underline">
             Create a new account →
           </Link>
         </div>

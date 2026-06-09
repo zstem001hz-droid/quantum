@@ -124,9 +124,7 @@ router.put("/:id/invite", protect, async (req, res) => {
     }
 
     if (project.members.some((m) => m.toString() === invitee._id.toString())) {
-      return res
-        .status(400)
-        .json({ message: "User is already a collaborator" });
+      return res.status(400).json({ message: "User is already a collaborator" });
     }
 
     project.members.push(invitee._id);

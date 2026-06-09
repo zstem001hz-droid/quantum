@@ -59,7 +59,7 @@ export default function ProjectDetailPage() {
             onClick={() => navigate("/dashboard")}
             className="text-quantum-light-muted dark:text-quantum-muted hover:text-quantum-accent text-sm mb-2 transition-colors"
           >
-            ← Back to Dashboard
+            ← Back to Project Dashboard
           </button>
           <h1 className="text-quantum-light-text dark:text-quantum-text text-2xl font-bold">
             {project.name}

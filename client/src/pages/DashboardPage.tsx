@@ -58,9 +58,7 @@ export default function DashboardPage() {
           <p className="text-quantum-light-muted dark:text-quantum-muted text-xs font-semibold uppercase tracking-wider mb-1">
             In Progress
           </p>
-          <p className="text-status-progress text-2xl font-bold">
-            {inProgress}
-          </p>
+          <p className="text-status-progress text-2xl font-bold">{inProgress}</p>
         </div>
         <div className="bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-xl p-4">
           <p className="text-quantum-light-muted dark:text-quantum-muted text-xs font-semibold uppercase tracking-wider mb-1">
@@ -82,7 +80,7 @@ export default function DashboardPage() {
       {/* Projects header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-quantum-light-text dark:text-quantum-text text-lg font-bold">
-          My Projects
+          Project Dashboard
         </h2>
         <button
           onClick={() => setShowCreateModal(true)}

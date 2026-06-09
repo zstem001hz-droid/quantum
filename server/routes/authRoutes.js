@@ -19,13 +19,10 @@ router.post("/register", async (req, res) => {
 
   // Password strength validation
   if (password.length < 8) {
-    return res
-      .status(400)
-      .json({ message: "Password must be at least 8 characters" });
+    return res.status(400).json({ message: "Password must be at least 8 characters" });
   }
 
-  const passwordRegex =
-    /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()\-_=+\[\]{};:'",.<>/?\\|`~])/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()\-_=+\[\]{};:'",.<>/?\\|`~])/;
   if (!passwordRegex.test(password)) {
     return res.status(400).json({
       message:
@@ -75,11 +72,44 @@ router.post("/login", async (req, res) => {
     user.lastLogin = new Date();
     await user.save();
 
+    // If 2FA is enabled, return a flag instead of JWT — frontend redirects to /verify-2fa
+    if (user.twoFactorEnabled) {
+      return res.status(200).json({
+        requiresTwoFactor: true,
+        userId: user._id,
+      });
+    }
+
     res.status(200).json({
       _id: user._id,
       name: user.name,
       username: user.username,
       email: user.email,
+      twoFactorEnabled: user.twoFactorEnabled,
+      token: generateToken(user._id),
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// POST /api/auth/login-2fa — issue JWT after successful 2FA verification
+// Only called after /api/2fa/authenticate confirms the TOTP code is valid
+router.post("/login-2fa", async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      twoFactorEnabled: user.twoFactorEnabled,
       token: generateToken(user._id),
     });
   } catch (error) {

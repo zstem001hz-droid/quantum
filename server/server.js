@@ -16,6 +16,9 @@ connectDB();
 
 const app = express();
 
+// Trust Render's reverse proxy for accurate IP-based rate limiting
+app.set("trust proxy", 1);
+
 // Middleware
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes

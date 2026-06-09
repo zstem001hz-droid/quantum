@@ -12,12 +12,7 @@ interface EditProjectModalProps {
 }
 
 // Modal form for editing or deleting an existing project
-const EditProjectModal = ({
-  project,
-  onClose,
-  onUpdated,
-  onDeleted,
-}: EditProjectModalProps) => {
+const EditProjectModal = ({ project, onClose, onUpdated, onDeleted }: EditProjectModalProps) => {
   const [name, setName] = useState(project.name);
   const [description, setDescription] = useState(project.description ?? "");
   const [loading, setLoading] = useState(false);
@@ -68,9 +63,7 @@ const EditProjectModal = ({
           exit={{ opacity: 0, y: 24 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <h2 className="text-quantum-text font-bold text-lg mb-4">
-            Edit Project
-          </h2>
+          <h2 className="text-quantum-text font-bold text-lg mb-4">Edit Project</h2>
           {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">

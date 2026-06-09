@@ -10,10 +10,7 @@ interface CreateProjectModalProps {
 }
 
 // Modal form for creating a new project
-const CreateProjectModal = ({
-  onClose,
-  onCreated,
-}: CreateProjectModalProps) => {
+const CreateProjectModal = ({ onClose, onCreated }: CreateProjectModalProps) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -50,9 +47,7 @@ const CreateProjectModal = ({
           exit={{ opacity: 0, y: 24 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <h2 className="text-quantum-text font-bold text-lg mb-4">
-            New Project
-          </h2>
+          <h2 className="text-quantum-text font-bold text-lg mb-4">New Project</h2>
           {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">

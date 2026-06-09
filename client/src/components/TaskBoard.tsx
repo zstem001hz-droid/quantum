@@ -56,23 +56,16 @@ const TaskBoard = ({ tasks, setTasks }: TaskBoardProps) => {
       if (activeTask.status !== newStatus) {
         // Optimistic update — update UI immediately before API confirms
         setTasks((prev) =>
-          prev.map((t) =>
-            t._id === activeTask._id ? { ...t, status: newStatus } : t,
-          ),
+          prev.map((t) => (t._id === activeTask._id ? { ...t, status: newStatus } : t)),
         );
         try {
-          await api.put(
-            `/api/projects/${activeTask.project}/tasks/${activeTask._id}`,
-            { status: newStatus },
-          );
+          await api.put(`/api/projects/${activeTask.project}/tasks/${activeTask._id}`, {
+            status: newStatus,
+          });
         } catch {
           // Revert on failure
           setTasks((prev) =>
-            prev.map((t) =>
-              t._id === activeTask._id
-                ? { ...t, status: activeTask.status }
-                : t,
-            ),
+            prev.map((t) => (t._id === activeTask._id ? { ...t, status: activeTask.status } : t)),
           );
         }
       } else {
@@ -82,10 +75,7 @@ const TaskBoard = ({ tasks, setTasks }: TaskBoardProps) => {
         const newIndex = columnTasks.findIndex((t) => t._id === over.id);
         if (oldIndex !== newIndex) {
           const reordered = arrayMove(columnTasks, oldIndex, newIndex);
-          setTasks((prev) => [
-            ...prev.filter((t) => t.status !== newStatus),
-            ...reordered,
-          ]);
+          setTasks((prev) => [...prev.filter((t) => t.status !== newStatus), ...reordered]);
         }
       }
     },
@@ -94,9 +84,7 @@ const TaskBoard = ({ tasks, setTasks }: TaskBoardProps) => {
 
   const handleUpdated = useCallback(
     (updated: Task) => {
-      setTasks((prev) =>
-        prev.map((t) => (t._id === updated._id ? updated : t)),
-      );
+      setTasks((prev) => prev.map((t) => (t._id === updated._id ? updated : t)));
     },
     [setTasks],
   );
@@ -129,13 +117,9 @@ const TaskBoard = ({ tasks, setTasks }: TaskBoardProps) => {
       <DragOverlay>
         {activeTask ? (
           <div className="bg-quantum-surface border border-quantum-accent rounded-lg p-3 shadow-lg shadow-quantum-accent/20 rotate-2 cursor-grabbing">
-            <p className="text-quantum-text text-sm font-semibold">
-              {activeTask.title}
-            </p>
+            <p className="text-quantum-text text-sm font-semibold">{activeTask.title}</p>
             {activeTask.description && (
-              <p className="text-quantum-muted text-xs line-clamp-2">
-                {activeTask.description}
-              </p>
+              <p className="text-quantum-muted text-xs line-clamp-2">{activeTask.description}</p>
             )}
           </div>
         ) : null}

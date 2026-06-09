@@ -56,9 +56,7 @@ const InviteModal = ({ projectId, onClose, onInvited }: InviteModalProps) => {
             Enter the email address of a registered Quantum user
           </p>
           {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
-          {success && (
-            <p className="text-status-complete text-sm mb-3">{success}</p>
-          )}
+          {success && <p className="text-status-complete text-sm mb-3">{success}</p>}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
               <label className="text-quantum-light-muted dark:text-quantum-muted text-xs font-semibold uppercase tracking-wider">

@@ -4,6 +4,7 @@ export interface User {
   username: string;
   email: string;
   token: string;
+  twoFactorEnabled?: boolean;
 }
 
 export interface Project {

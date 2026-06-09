@@ -20,14 +20,9 @@ const statusColors: Record<Task["status"], string> = {
 const TaskCard = ({ task, onUpdated, onDeleted }: TaskCardProps) => {
   const [showEdit, setShowEdit] = useState(false);
 
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: task._id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: task._id,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),

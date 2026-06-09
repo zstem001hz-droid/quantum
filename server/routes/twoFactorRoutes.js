@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { generateSecret, generateURI, verify } = require("otplib");
+const { generateSecret, generateURI, verifySync } = require("otplib");
 const QRCode = require("qrcode");
 const User = require("../models/User");
 const { protect } = require("../middleware/auth");
@@ -52,11 +52,12 @@ router.post("/verify", protect, async (req, res) => {
     }
 
     // Verify the provided TOTP token against the stored secret
-    const isValid = verify({
+    const result = verifySync({
       token,
       secret: user.twoFactorSecret,
       type: "totp",
     });
+    const isValid = result?.valid === true;
 
     if (!isValid) {
       return res.status(400).json({ message: "Invalid verification code" });
@@ -83,11 +84,12 @@ router.post("/disable", protect, async (req, res) => {
     }
 
     // Require valid TOTP token to disable - prevents unauthorized disabling
-    const isValid = verify({
+    const result = verifySync({
       token,
       secret: user.twoFactorSecret,
       type: "totp",
     });
+    const isValid = result?.valid === true;
 
     if (!isValid) {
       return res.status(400).json({ message: "Invalid verification code" });
@@ -113,11 +115,12 @@ router.post("/authenticate", async (req, res) => {
       return res.status(400).json({ message: "2FA not enabled for this user" });
     }
 
-    const isValid = verify({
+    const result = verifySync({
       token,
       secret: user.twoFactorSecret,
       type: "totp",
     });
+    const isValid = result?.valid === true;
 
     if (!isValid) {
       return res.status(401).json({ message: "Invalid authentication code" });

@@ -19,10 +19,7 @@ const userSchema = new Schema(
       trim: true,
       minlength: [5, "Username must be at least 5 characters"],
       maxlength: [20, "Username cannot exceed 20 characters"],
-      match: [
-        /^[a-zA-Z0-9-]+$/,
-        "Username can only contain letters, numbers, and hyphens",
-      ],
+      match: [/^[a-zA-Z0-9-]+$/, "Username can only contain letters, numbers, and hyphens"],
     },
     email: {
       // Email address - unique primary login identifier

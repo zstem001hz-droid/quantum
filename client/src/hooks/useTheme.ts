@@ -12,9 +12,7 @@ const useTheme = () => {
     const root = document.documentElement;
 
     if (theme === "system") {
-      const systemDark = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       if (systemDark) {
         root.classList.add("dark");
       } else {

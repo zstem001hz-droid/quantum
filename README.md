@@ -1,4 +1,4 @@
-# <img src="./assets/quantum-logo-read.gif" width="32" alt="Quantum Logo" /> Quantum
+# <img src="./assets/quantum-logo-read.gif" width="28" alt="Quantum Logo" /> Quantum
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 ![Express](https://img.shields.io/badge/Express-5.x-lightgrey)
@@ -45,6 +45,7 @@ Quantum is a modern, full-stack MERN project management application built for in
 - [Error Responses](#error-responses)
 - [Roadmap](#roadmap)
 - [Security Features](#security-features)
+- [Two-Factor Authentication](#two-factor-authentication)
 - [Testing & Development Tools](#testing--development-tools)
 - [References](#references)
   - [Core Stack — Backend](#core-stack--backend)
@@ -168,10 +169,12 @@ quantum/
 │       │   │   ├── CreateTaskModal.tsx       ← animated modal for new task creation
 │       │   │   ├── EditTaskModal.tsx         ← edit status, title, description or delete task
 │       │   │   └── InviteModal.tsx           ← invite collaborator to project by email
+│       │   │   └── TwoFactorSetupModal.tsx   ← multi-step TOTP setup with QR code and verification
 │       │   ├── EmptyState.tsx         ← empty list state with optional action button
 │       │   ├── ErrorMessage.tsx       ← error display with optional retry callback
 │       │   ├── LoadingSpinner.tsx     ← full-screen loading state using QuantumLogo
 │       │   ├── Navbar.tsx             ← always-dark top bar with logo, theme switcher, avatar
+│       │   ├── OTPInput.tsx           ← reusable 6-box OTP input with auto-advance and paste support
 │       │   ├── ProjectCard.tsx        ← dashboard card showing project and task status counts
 │       │   ├── ProtectedRoute.tsx     ← redirects unauthenticated users to login
 │       │   ├── TaskBoard.tsx          ← DndContext root; manages drag-and-drop across columns
@@ -189,7 +192,9 @@ quantum/
 │       │   ├── DashboardPage.tsx      ← project grid with aggregate task stats
 │       │   ├── LoginPage.tsx          ← JWT login with animated logo entrance
 │       │   ├── ProjectDetailPage.tsx  ← full Kanban board with project controls
-│       │   └── RegisterPage.tsx       ← user registration with validation
+│       │   ├── RegisterPage.tsx       ← user registration with validation
+│       │   ├── SettingsPage.tsx       ← user settings hub — security and account preferences
+│       │   └── VerifyTwoFactorPage.tsx ← TOTP verification step after password authentication
 │       ├── services/
 │       │   └── api.ts                 ← axios instance with JWT interceptor
 │       ├── types/
@@ -353,11 +358,23 @@ Local development uses `quantum-dev` — test data, registered users, and projec
 | `PUT`    | `/api/projects/:projectId/tasks/:id` | Update task by ID           | Yes           |
 | `DELETE` | `/api/projects/:projectId/tasks/:id` | Delete task by ID           | Yes           |
 
+### Two-Factor Authentication
+
+| Method | Endpoint                | Description                      | Auth Required |
+| ------ | ----------------------- | -------------------------------- | ------------- |
+| `POST` | `/api/2fa/setup`        | Generate TOTP secret and QR code | Yes           |
+| `POST` | `/api/2fa/verify`       | Verify code and enable 2FA       | Yes           |
+| `POST` | `/api/2fa/disable`      | Disable 2FA with valid TOTP code | Yes           |
+| `POST` | `/api/2fa/authenticate` | Validate TOTP during login       | No            |
+
 ## Authentication Flow
 
 1. User registers via `POST /api/auth/register` — password is hashed by bcrypt pre-save hook before storing
 2. User logs in via `POST /api/auth/login` — bcrypt compares entered password against stored hash
 3. On success, server returns a signed JWT containing the user's ID
+   - If 2FA is enabled — server returns `requiresTwoFactor: true` instead of JWT
+   - Client redirects to `/verify-2fa` — user enters TOTP code from authenticator app
+   - On successful TOTP verification — JWT is issued via `/api/auth/login-2fa`
 4. Client stores the JWT and sends it in the `Authorization` header on every protected request: `Bearer <token>`
 5. Auth middleware verifies the token signature, decodes the user ID, and attaches the user to `req.user`
 6. If the token is missing, invalid, or expired — the request is rejected with a 401
@@ -442,12 +459,15 @@ All errors return a consistent JSON shape:
 **Security & Infrastructure**
 
 - [x] Two-factor authentication (TOTP) — time-based one-time password support via `otplib` with QR code setup and authenticator app integration
-- [ ] 2FA frontend — QR code setup modal, TOTP login step, enable/disable controls, and manual secret entry for users without camera access
+- [x] 2FA frontend — QR code setup modal, TOTP login step, enable/disable controls, and manual secret entry for users without camera access
+- [ ] Transactional email — Nodemailer integration for password reset, collaboration invitations, and task notifications
 - [ ] 2FA authenticate endpoint — accept email or username instead of MongoDB ObjectId for user lookup
+- [ ] WebAuthn/Passkeys — biometric and hardware key authentication via the WebAuthn API as a TOTP alternative
 - [ ] Forgot password — account recovery flow for users who cannot remember their password
+- [ ] Configurable session timeout — user-selectable idle timeout in Settings (5 min, 15 min, 30 min, 1 hour, 2 hours, never)
+- [ ] Default idle timeout — automatic session expiry after industry-standard inactivity period, implemented towards end of development to avoid disrupting testing
 - [ ] Refresh token rotation — enhanced JWT security
 - [ ] Rate limit configuration — make per-IP request thresholds configurable via environment variables for different deployment contexts
-- [ ] Email notifications — task assignments and project activity
 - [ ] Infrastructure migration — transition from managed hosting to a self-hosted containerized deployment
 
 **Features & Functionality**
@@ -476,6 +496,32 @@ All errors return a consistent JSON shape:
 - CORS restricted to `CLIENT_ORIGIN` — blocks requests from unauthorized origins
 - Rate limiting — 100 requests per IP per 15-minute window via `express-rate-limit`
 - Passwords require minimum 8 characters with at least one uppercase letter, number, and special character
+
+## Two-Factor Authentication
+
+> 🔐 **Quantum implements TOTP-based two-factor authentication** — the industry standard for time-based one-time password authentication, defined by RFC 6238.
+
+### How it works
+
+1. User enables 2FA from the Settings page — a QR code is generated using the **RFC 6238 TOTP standard**
+2. User scans the QR code with any compliant authenticator app, or enters the setup key manually
+3. On next login, after password verification, the user is directed to a dedicated verification page
+4. A time-based 6-digit code is required — codes expire every 30 seconds
+5. The verification page supports **authenticator app auto-fill** — codes populate automatically on supported devices without manual entry
+
+### Implementation highlights
+
+- **Zero external dependencies** beyond `otplib` — no third-party auth services, no SMS, no email required
+- **Authenticator app auto-fill** via the `autocomplete="one-time-code"` HTML attribute — codes load automatically from iOS, Android, and desktop password managers
+- **Auto-submit on completion** — the form submits the moment all 6 digits are entered
+- **Paste support** — copy a code from any source and paste it directly into the input
+- **Secure disable flow** — disabling 2FA requires a valid live TOTP code, preventing unauthorized deactivation
+- **State persistence** — 2FA status survives page refresh via the JWT payload
+- **RFC 6238 compliant** — works with Google Authenticator, Authy, 1Password, and any TOTP-compatible app
+
+### Supported authenticator apps
+
+Any RFC 6238 compliant authenticator app works with Quantum — no proprietary integration required.
 
 ## Testing & Development Tools
 
@@ -528,6 +574,7 @@ Zero errors required before every commit.
 ### Core Stack — Frontend
 
 - [React Documentation](https://react.dev/) — Core UI library
+- [React Router Documentation](https://reactrouter.com/) — Client-side routing; protected routes and navigation configured in `App.tsx`
 - [React Router — useParams](https://reactrouter.com/en/main/hooks/use-params) — Extracts dynamic URL segments; reads project ID from route in `ProjectDetailPage`
 - [React Router — useNavigate](https://reactrouter.com/en/main/hooks/use-navigate) — Programmatic navigation; used for back button and post-delete redirect
 - [TypeScript Documentation](https://www.typescriptlang.org/docs/) — Typed JavaScript; interfaces, generics, and type safety throughout the client
@@ -536,7 +583,6 @@ Zero errors required before every commit.
 - [TypeScript — Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) — `as Task['status']` cast on select onChange handler
 - [TypeScript — Indexed Access Types](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) — `Task['status']` pattern for accessing union type from interface
 - [Vite Documentation](https://vitejs.dev/) — Build tool and dev server
-- [React Router Documentation](https://reactrouter.com/) — Client-side routing; protected routes and navigation configured in `App.tsx`
 - [Axios Documentation](https://axios-http.com/docs/intro) — HTTP client; JWT interceptor in `src/services/api.ts` attaches token to every request
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs) — Utility-first styling
 - [Tailwind CSS — Customizing Colors](https://tailwindcss.com/docs/customizing-colors) — Define color object to generate branding utility classes
@@ -562,9 +608,10 @@ Zero errors required before every commit.
 
 - [React — Rules of Hooks](https://react.dev/reference/rules/rules-of-hooks) — Never call hooks inside loops or conditions; followed throughout all components and custom hooks
 - [React — Rules](https://react.dev/reference/rules) — Core React rules
+- [React — useRef](https://react.dev/reference/react/useRef) — stores references to all OTP input DOM elements for programmatic focus control
 - [React Router — Link](https://reactrouter.com/en/main/components/link) — Used in `Navbar` and `ProjectCard` for client-side navigation
-- [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) — API return status codes
 - [REST API — Nested Resources](https://restfulapi.net/resource-naming/) — Nested route pattern `/api/projects/:id/tasks/:id`
+- [MDN — HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) — API return status codes
 - [MDN — SVG ellipse](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/ellipse) — SVG orbital rings effect
 - [MDN — SVG feGaussianBlur](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/feGaussianBlur) — Creates blur effect used in ring and nucleus glow filters in `QuantumLogo`
 - [MDN — SVG viewBox](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox) — Centered coordinate system (`-100 -100 200 200`) enabling rotation around the SVG origin
@@ -574,6 +621,9 @@ Zero errors required before every commit.
 - [MDN — Promise.all()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) — Fires parallel API requests simultaneously; fetches project and tasks in one round trip in `ProjectDetailPage`
 - [MDN — ARIA — tabIndex](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) — Keyboard accessibility attribute spread onto TaskCard via `useSortable` attributes
 - [MDN — ARIA roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles) — Accessibility roles spread onto TaskCard via `useSortable` attributes
+- [MDN — ClipboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent) — paste event handling in OTPInput for multi-character code distribution
+- [MDN — HTMLElement.focus()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus) — programmatic focus management for auto-advancing between OTP input boxes
+- [MDN — autocomplete attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) — `one-time-code` value enables authenticator app auto-fill on the first OTP input
 - [Smashing Magazine — Optimistic UI Updates](https://www.smashingmagazine.com/2016/11/true-lies-of-optimistic-user-interfaces/) — Pattern used in TaskBoard to update task status instantly before API confirmation
 
 ### Authentication & Security

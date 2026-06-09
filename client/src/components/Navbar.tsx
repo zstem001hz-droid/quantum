@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { Settings } from "lucide-react";
 import QuantumLogo from "./animations/QuantumLogo";
 import ThemeSwitcher from "./ThemeSwitcher";
 import useAuth from "../hooks/useAuth";
@@ -8,11 +9,13 @@ const Navbar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
+  // Clear auth state and redirect to login on sign out
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
+  // Generate up to two initials from the user's display name
   const initials =
     user?.name
       .split(" ")
@@ -30,6 +33,12 @@ const Navbar = () => {
         </Link>
         <ThemeSwitcher />
         <div className="flex items-center gap-3">
+          <Link
+            to="/settings"
+            className="text-quantum-muted hover:text-quantum-accent transition-colors"
+          >
+            <Settings size={18} />
+          </Link>
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-quantum-accent to-purple-600 flex items-center justify-center text-white text-xs font-bold">
             {initials}
           </div>

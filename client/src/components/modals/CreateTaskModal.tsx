@@ -11,11 +11,7 @@ interface CreateTaskModalProps {
 }
 
 // Modal form for creating a new task within a project
-const CreateTaskModal = ({
-  projectId,
-  onClose,
-  onCreated,
-}: CreateTaskModalProps) => {
+const CreateTaskModal = ({ projectId, onClose, onCreated }: CreateTaskModalProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);

@@ -12,12 +12,7 @@ interface EditTaskModalProps {
 }
 
 // Modal form for editing or deleting an existing task
-const EditTaskModal = ({
-  task,
-  onClose,
-  onUpdated,
-  onDeleted,
-}: EditTaskModalProps) => {
+const EditTaskModal = ({ task, onClose, onUpdated, onDeleted }: EditTaskModalProps) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description ?? "");
   const [status, setStatus] = useState(task.status);
@@ -29,10 +24,11 @@ const EditTaskModal = ({
     setLoading(true);
     setError("");
     try {
-      const { data } = await api.put(
-        `/api/projects/${task.project}/tasks/${task._id}`,
-        { title, description, status },
-      );
+      const { data } = await api.put(`/api/projects/${task.project}/tasks/${task._id}`, {
+        title,
+        description,
+        status,
+      });
       onUpdated(data);
       onClose();
     } catch {

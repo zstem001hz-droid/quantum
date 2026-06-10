@@ -11,9 +11,9 @@ interface TaskCardProps {
 }
 
 const statusColors: Record<Task["status"], string> = {
-  "To Do": "border-l-status-todo",
-  "In Progress": "border-l-status-progress",
-  Complete: "border-l-status-complete",
+  "To Do": "!border-l-status-todo !border-t-status-todo",
+  "In Progress": "!border-l-status-progress !border-t-status-progress",
+  Complete: "!border-l-status-complete !border-t-status-complete",
 };
 
 // Draggable task card with status indicator and edit modal

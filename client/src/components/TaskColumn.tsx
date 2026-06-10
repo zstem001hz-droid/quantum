@@ -10,21 +10,22 @@ interface TaskColumnProps {
   onDeleted: (taskId: string) => void;
 }
 
+// Column header styles - border and label colors keyed by task status
 const columnStyles: Record<Task["status"], { border: string; label: string }> = {
-  "To Do": { border: "border-t-status-todo", label: "text-status-todo" },
+  "To Do": { border: "!border-t-status-todo", label: "text-status-todo" },
   "In Progress": {
-    border: "border-t-status-progress",
+    border: "!border-t-status-progress",
     label: "text-status-progress",
   },
   Complete: {
-    border: "border-t-status-complete",
+    border: "!border-t-status-complete",
     label: "text-status-complete",
   },
 };
 
-// Droppable column containing sortable task cards for one status lane
+// Droppable Kanban column — accepts drag-and-drop from any TaskCard within the board
 const TaskColumn = ({ status, tasks, onUpdated, onDeleted }: TaskColumnProps) => {
-  const { setNodeRef } = useDroppable({ id: status });
+  const { setNodeRef } = useDroppable({ id: status }); // register column as a drop target
   const style = columnStyles[status];
 
   return (
@@ -39,6 +40,7 @@ const TaskColumn = ({ status, tasks, onUpdated, onDeleted }: TaskColumnProps) =>
         </span>
       </div>
       <SortableContext items={tasks.map((t) => t._id)} strategy={verticalListSortingStrategy}>
+        {/* Render each task as a sortable draggable card */}
         {tasks.map((task) => (
           <TaskCard key={task._id} task={task} onUpdated={onUpdated} onDeleted={onDeleted} />
         ))}

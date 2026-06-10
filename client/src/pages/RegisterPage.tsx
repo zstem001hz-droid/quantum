@@ -65,8 +65,8 @@ export default function RegisterPage() {
       navigate("/");
     } catch (err: unknown) {
       const message =
-        (err as { response?: { data?: { message?: string } } })?.response?.data
-          ?.message || "Registration failed";
+        (err as { response?: { data?: { message?: string } } })?.response?.data?.message ||
+        "Registration failed";
       setError(message);
     } finally {
       setLoading(false);
@@ -85,9 +85,7 @@ export default function RegisterPage() {
         <div className="flex flex-col items-center gap-3">
           <QuantumLogo size={80} />
           <h1 className="text-3xl font-bold text-quantum-text">Quantum</h1>
-          <p className="text-quantum-muted text-sm text-center">
-            Create your account
-          </p>
+          <p className="text-quantum-muted text-sm text-center">Create your account</p>
         </div>
 
         {/* Form */}
@@ -118,13 +116,11 @@ export default function RegisterPage() {
                   validateUsername(e.target.value);
                 }}
                 required
-                minLength={8}
+                minLength={5}
                 maxLength={20}
                 className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
               />
-              {usernameError && (
-                <p className="text-red-400 text-xs mt-1">{usernameError}</p>
-              )}
+              {usernameError && <p className="text-red-400 text-xs mt-1">{usernameError}</p>}
             </div>
             <div className="flex flex-col gap-1">
               <label className="text-quantum-muted text-xs font-semibold uppercase tracking-wider">
@@ -161,9 +157,7 @@ export default function RegisterPage() {
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
-              {passwordError && (
-                <p className="text-red-400 text-xs mt-1">{passwordError}</p>
-              )}
+              {passwordError && <p className="text-red-400 text-xs mt-1">{passwordError}</p>}
             </div>
             <div className="flex flex-col gap-1">
               <label className="text-quantum-muted text-xs font-semibold uppercase tracking-wider">
@@ -182,11 +176,7 @@ export default function RegisterPage() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-quantum-muted hover:text-quantum-accent transition-colors"
                 >
-                  {showConfirmPassword ? (
-                    <EyeOff size={16} />
-                  ) : (
-                    <Eye size={16} />
-                  )}
+                  {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
             </div>
@@ -203,10 +193,7 @@ export default function RegisterPage() {
             <span className="text-quantum-muted text-xs">or</span>
             <div className="flex-1 h-px bg-quantum-border" />
           </div>
-          <Link
-            to="/login"
-            className="text-quantum-accent text-sm text-center hover:underline"
-          >
+          <Link to="/login" className="text-quantum-accent text-sm text-center hover:underline">
             Already have an account? Sign in →
           </Link>
         </div>

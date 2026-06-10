@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import TwoFactorSetupModal from "../components/modals/TwoFactorSetupModal";
 import api from "../services/api";
@@ -46,6 +47,12 @@ export default function SettingsPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
+      <Link
+        to="/dashboard"
+        className="inline-flex items-center gap-1 text-quantum-light-muted dark:text-quantum-muted hover:text-quantum-accent text-sm transition-colors mb-6"
+      >
+        ← Back to Dashboard
+      </Link>
       <h1 className="text-quantum-light-text dark:text-quantum-text text-2xl font-bold mb-8">
         Settings
       </h1>

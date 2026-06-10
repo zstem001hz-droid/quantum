@@ -211,6 +211,8 @@ quantum/
 │   │   ├── Project.js         ← project schema with owner and members
 │   │   └── Task.js            ← task schema with project and owner refs
 │   ├── routes/
+│       ├── services/
+│       │   └── emailService.js    ← Nodemailer transporter, password reset and collaboration invite email senders
 │   │   ├── authRoutes.js      ← register and login endpoints
 │   │   ├── projectRoutes.js   ← full CRUD + invite collaborator
 │   │   └── taskRoutes.js      ← full CRUD with nested routing
@@ -451,8 +453,8 @@ All errors return a consistent JSON shape:
 
 - [x] Password visibility toggle — show/hide eye icon on password and confirm password fields
 - [x] Inline validation hints — real-time helper text on username and password fields showing requirements before submission
-- [ ] Mobile layout optimization — full mobile-first redesign prioritizing app-like experience
 - [x] Mobile theme switcher — compact icon-only toggle replacing the full label switcher on small viewports
+- [ ] Mobile layout optimization — full mobile-first redesign prioritizing app-like experience
 - [ ] Mobile Kanban board — optimized drag-and-drop experience for touch devices
 - [ ] Dashboard stat card filtering — click a stat to filter projects by task status
 
@@ -461,6 +463,7 @@ All errors return a consistent JSON shape:
 - [x] Two-factor authentication (TOTP) — time-based one-time password support via `otplib` with QR code setup and authenticator app integration
 - [x] 2FA frontend — QR code setup modal, TOTP login step, enable/disable controls, and manual secret entry for users without camera access
 - [ ] Transactional email — Nodemailer integration for password reset, collaboration invitations, and task notifications
+- [ ] Email verification on registration — send confirmation link on signup; account remains pending until email is verified
 - [ ] 2FA authenticate endpoint — accept email or username instead of MongoDB ObjectId for user lookup
 - [ ] WebAuthn/Passkeys — biometric and hardware key authentication via the WebAuthn API as a TOTP alternative
 - [ ] Forgot password — account recovery flow for users who cannot remember their password
@@ -469,6 +472,7 @@ All errors return a consistent JSON shape:
 - [ ] Refresh token rotation — enhanced JWT security
 - [ ] Rate limit configuration — make per-IP request thresholds configurable via environment variables for different deployment contexts
 - [ ] Infrastructure migration — transition from managed hosting to a self-hosted containerized deployment
+- [ ] Custom domain transactional email — migrate from Gmail SMTP to a dedicated sending domain for production deliverability
 
 **Features & Functionality**
 
@@ -489,7 +493,7 @@ All errors return a consistent JSON shape:
 ## Security Features
 
 - Two-factor authentication (TOTP) — users can enable time-based one-time password authentication via any RFC 6238 compliant authenticator app.
-- Passwords hashed with bcrypt (cost factor 10) via pre-save hook — plain text never touches the database
+- Password hashing — all passwords hashed and salted with `bcryptjs` before storage; plaintext passwords are never persisted
 - Password field excluded from all queries by default (`select: false`)
 - JWT tokens expire after 30 days
 - Generic error messages on failed login — does not reveal whether email or password was incorrect

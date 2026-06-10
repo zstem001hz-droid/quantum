@@ -2,6 +2,7 @@ const express = require("express");
 const Project = require("../models/Project");
 const User = require("../models/User");
 const { protect } = require("../middleware/auth");
+const { sendCollaborationInviteEmail } = require("../services/emailService");
 
 const router = express.Router();
 
@@ -129,6 +130,13 @@ router.put("/:id/invite", protect, async (req, res) => {
 
     project.members.push(invitee._id);
     await project.save();
+
+    // Send collaboration invite email — non-blocking, failure doesn't affect invite
+    try {
+      await sendCollaborationInviteEmail(invitee.email, project.name, req.user.name);
+    } catch (emailError) {
+      console.error("Invite email failed:", emailError.message);
+    }
 
     res.status(200).json(project);
   } catch (error) {

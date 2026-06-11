@@ -20,6 +20,7 @@
 ![Framer Motion](https://img.shields.io/badge/Framer%20Motion-11.x-pink)
 ![Lucide](https://img.shields.io/badge/Lucide-Icons-6366f1)
 ![dnd-kit](https://img.shields.io/badge/@dnd--kit-6.x-6366f1)
+![Resend](https://img.shields.io/badge/Resend-Email%20API-000000?logo=resend)
 
 Quantum is a modern, full-stack MERN project management application built for individuals and small teams. It features secure JWT-based authentication, ownership-based authorization, and a RESTful API for managing projects and tasks — deployed and production-ready. The interface is designed around a dark-first aesthetic inspired by quantum physics, with a fully responsive Kanban board, real-time drag-and-drop, and light/dark/system theme switching.
 
@@ -136,6 +137,7 @@ Quantum was built to explore what a modern, production-ready project management 
 - [qrcode](https://github.com/soldair/node-qrcode) — QR code generation for authenticator app setup
 - [morgan](https://github.com/expressjs/morgan) — HTTP request logger
 - [nodemon](https://nodemon.io/) — development server with auto-restart
+- [Resend](https://resend.com) — transactional email API for collaboration invitations and password reset emails
 
 ## Key Technical Decisions
 
@@ -212,7 +214,7 @@ quantum/
 │   │   └── Task.js            ← task schema with project and owner refs
 │   ├── routes/
 │       ├── services/
-│       │   └── emailService.js    ← Nodemailer transporter, password reset and collaboration invite email senders
+│       │   └── emailService.js    ← Resend API client, collaboration invite and password reset email senders
 │   │   ├── authRoutes.js      ← register and login endpoints
 │   │   ├── projectRoutes.js   ← full CRUD + invite collaborator
 │   │   └── taskRoutes.js      ← full CRUD with nested routing
@@ -637,6 +639,7 @@ Zero errors required before every commit.
 - [RFC 6238 — TOTP Standard](https://datatracker.ietf.org/doc/html/rfc6238) — the open standard defining time-based one-time passwords
 - [RFC 4226 — HOTP Standard](https://datatracker.ietf.org/doc/html/rfc4226) — the HMAC-based OTP standard that TOTP builds upon
 - [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — rate limiting middleware; limits each IP to 100 requests per 15-minute window
+- [Resend](https://resend.com/docs) — transactional email API; used for collaboration invites and password reset delivery
 
 ### Development Tools
 

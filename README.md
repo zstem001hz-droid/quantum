@@ -192,9 +192,11 @@ quantum/
 │       │   └── useTheme.ts            ← manages Light/System/Dark with localStorage persistence
 │       ├── pages/
 │       │   ├── DashboardPage.tsx      ← project grid with aggregate task stats
+│       │   ├── ForgotPasswordPage.tsx  ← email submission form for password reset requests
 │       │   ├── LoginPage.tsx          ← JWT login with animated logo entrance
 │       │   ├── ProjectDetailPage.tsx  ← full Kanban board with project controls
 │       │   ├── RegisterPage.tsx       ← user registration with validation
+│       │   └── ResetPasswordPage.tsx   ← tokenized reset link handler with new password form
 │       │   ├── SettingsPage.tsx       ← user settings hub — security and account preferences
 │       │   └── VerifyTwoFactorPage.tsx ← TOTP verification step after password authentication
 │       ├── services/
@@ -335,11 +337,13 @@ Local development uses `quantum-dev` — test data, registered users, and projec
 
 ### Auth
 
-| Method | Endpoint             | Description              | Auth Required |
-| ------ | -------------------- | ------------------------ | ------------- |
-| `POST` | `/api/auth/register` | Register a new user      | No            |
-| `POST` | `/api/auth/login`    | Login and receive JWT    | No            |
-| `GET`  | `/api/auth/users`    | Get all registered users | Yes           |
+| Method | Endpoint                    | Description                             | Auth Required |
+| ------ | --------------------------- | --------------------------------------- | ------------- |
+| `POST` | `/api/auth/register`        | Register a new user                     | No            |
+| `POST` | `/api/auth/login`           | Login and receive JWT                   | No            |
+| `GET`  | `/api/auth/users`           | Get all registered users                | Yes           |
+| `POST` | `/api/auth/forgot-password` | Generate and email password reset token | No            |
+| `POST` | `/api/auth/reset-password`  | Validate token and update password      | No            |
 
 ### Projects
 
@@ -464,11 +468,12 @@ All errors return a consistent JSON shape:
 
 - [x] Two-factor authentication (TOTP) — time-based one-time password support via `otplib` with QR code setup and authenticator app integration
 - [x] 2FA frontend — QR code setup modal, TOTP login step, enable/disable controls, and manual secret entry for users without camera access
-- [ ] Transactional email — Nodemailer integration for password reset, collaboration invitations, and task notifications
+- [x] Transactional email — Resend email API for password reset and collaboration invitation emails
+- [x] Forgot password — account recovery flow for users who cannot remember their password
 - [ ] Email verification on registration — send confirmation link on signup; account remains pending until email is verified
+- [ ] Collaboration invite acceptance flow — invited users receive accept/decline option before being added to a project
 - [ ] 2FA authenticate endpoint — accept email or username instead of MongoDB ObjectId for user lookup
 - [ ] WebAuthn/Passkeys — biometric and hardware key authentication via the WebAuthn API as a TOTP alternative
-- [ ] Forgot password — account recovery flow for users who cannot remember their password
 - [ ] Configurable session timeout — user-selectable idle timeout in Settings (5 min, 15 min, 30 min, 1 hour, 2 hours, never)
 - [ ] Default idle timeout — automatic session expiry after industry-standard inactivity period, implemented towards end of development to avoid disrupting testing
 - [ ] Refresh token rotation — enhanced JWT security
@@ -482,7 +487,7 @@ All errors return a consistent JSON shape:
 - [ ] Task due dates — deadline tracking with overdue indicators
 - [ ] Project activity log — chronological history of changes to a project
 - [ ] User profile and avatar — view and edit profile details, upload custom avatar image by clicking the navbar avatar
-- [ ] Admin role — platform management and user moderation
+- [ ] Collaboration invite acceptance flow — invited users receive accept/decline option before being added to a project
 - [ ] Real-time updates — WebSocket integration for live task changes
 
 **Creative & Visual**

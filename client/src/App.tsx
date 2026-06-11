@@ -8,6 +8,8 @@ import DashboardPage from "./pages/DashboardPage";
 import ProjectDetailPage from "./pages/ProjectDetailPage";
 import VerifyTwoFactorPage from "./pages/VerifyTwoFactorPage";
 import SettingsPage from "./pages/SettingsPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 function App() {
   return (
@@ -18,8 +20,12 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
-          {/* 2FA verification - reached after password auth when 2FA is enabled */}
+          {/* 2FA verification step — reached after password auth when 2FA is enabled */}
           <Route path="/verify-2fa" element={<VerifyTwoFactorPage />} />
+
+          {/* Password reset flow — public routes */}
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* Protected routes - require valid JWT  */}
           <Route

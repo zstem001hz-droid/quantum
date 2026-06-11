@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { protect } = require("../middleware/auth");
+const { sendPasswordResetEmail } = require("../services/emailService");
 
 const router = express.Router();
 
@@ -112,6 +113,86 @@ router.post("/login-2fa", async (req, res) => {
       twoFactorEnabled: user.twoFactorEnabled,
       token: generateToken(user._id),
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// POST /api/auth/forgot-password — generate and email a password reset token
+router.post("/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    // Always return success to prevent email enumeration attacks
+    if (!user) {
+      return res.status(200).json({ message: "If that email exists, a reset link has been sent" });
+    }
+
+    // Generate a secure random reset token
+    const crypto = require("crypto");
+    const resetToken = crypto.randomBytes(32).toString("hex");
+
+    // Hash the token before storing — raw token is sent via email only
+    user.passwordResetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+    user.passwordResetExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+    await user.save();
+
+    // Send reset email — if it fails, clear the token
+    try {
+      await sendPasswordResetEmail(email, resetToken);
+    } catch (emailError) {
+      user.passwordResetToken = null;
+      user.passwordResetExpires = null;
+      await user.save();
+      return res.status(500).json({ message: "Failed to send reset email" });
+    }
+
+    res.status(200).json({ message: "If that email exists, a reset link has been sent" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// POST /api/auth/reset-password — validate token and update password
+router.post("/reset-password", async (req, res) => {
+  try {
+    const { token, password } = req.body;
+    const crypto = require("crypto");
+
+    // Hash the incoming token to compare against stored hash
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    // Find user with valid unexpired token
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    }).select("+passwordResetToken +passwordResetExpires");
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired reset token" });
+    }
+
+    // Password strength validation
+    if (password.length < 8) {
+      return res.status(400).json({ message: "Password must be at least 8 characters" });
+    }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()\-_=+\[\]{};:'",.<>/?\\|`~])/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message:
+          "Password must contain at least one uppercase letter, one number, and one special character",
+      });
+    }
+
+    // Update password and clear reset token fields
+    user.password = password;
+    user.passwordResetToken = null;
+    user.passwordResetExpires = null;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successful" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

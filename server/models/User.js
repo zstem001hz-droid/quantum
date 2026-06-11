@@ -52,6 +52,17 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    passwordResetToken: {
+      // Hashed reset token — generated on forgot password request
+      type: String,
+      default: null,
+      select: false,
+    },
+    passwordResetExpires: {
+      // Reset token expiry — token invalid after this timestamp
+      type: Date,
+      default: null,
+    },
   },
 
   {

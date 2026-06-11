@@ -91,6 +91,12 @@ export default function LoginPage() {
             >
               {loading ? "Signing in..." : "Sign in to workspace"}
             </button>
+            <Link
+              to="/forgot-password"
+              className="text-center text-quantum-light-muted dark:text-quantum-muted hover:text-quantum-accent text-xs transition-colors"
+            >
+              Forgot your password?
+            </Link>
           </form>
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px bg-quantum-border" />

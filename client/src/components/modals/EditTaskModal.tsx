@@ -16,6 +16,7 @@ const EditTaskModal = ({ task, onClose, onUpdated, onDeleted }: EditTaskModalPro
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description ?? "");
   const [status, setStatus] = useState(task.status);
+  const [dueDate, setDueDate] = useState(task.dueDate ? task.dueDate.slice(0, 10) : "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,6 +29,7 @@ const EditTaskModal = ({ task, onClose, onUpdated, onDeleted }: EditTaskModalPro
         title,
         description,
         status,
+        dueDate: dueDate || null,
       });
       onUpdated(data);
       onClose();
@@ -108,6 +110,18 @@ const EditTaskModal = ({ task, onClose, onUpdated, onDeleted }: EditTaskModalPro
                 <option value="In Progress">In Progress</option>
                 <option value="Complete">Complete</option>
               </select>
+            </div>
+            {/* Due date — optional deadline for task completion */}
+            <div className="flex flex-col gap-1">
+              <label className="text-quantum-light-muted dark:text-quantum-muted text-xs font-semibold uppercase tracking-wider">
+                Due Date
+              </label>
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-light-text dark:text-quantum-text text-sm outline-none focus:border-quantum-accent transition-colors"
+              />
             </div>
             <div className="flex items-center justify-between">
               <button

@@ -44,10 +44,54 @@ const TaskCard = ({ task, onUpdated, onDeleted }: TaskCardProps) => {
           {task.title}
         </p>
         {task.description && (
-          <p className="text-quantum-light-muted dark:text-quantum-muted text-xs line-clamp-2">
+          <p className="text-quantum-light-muted dark:text-quantum-muted text-xs line-clamp-2 mb-1">
             {task.description}
           </p>
         )}
+        {/* Due date indicator — color and pulse dot shift based on urgency */}
+        {task.dueDate &&
+          (() => {
+            const due = new Date(task.dueDate);
+            const now = new Date();
+            const daysRemaining = (due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+            const isComplete = task.status === "Complete";
+            const isOverdue = !isComplete && due < now;
+            const isDueSoon = !isOverdue && !isComplete && daysRemaining <= 3;
+
+            return (
+              <div className="flex items-center gap-1 mt-1">
+                {/* Status dot — green complete, pulsing crimson overdue, gold due soon, blue upcoming */}
+                <span
+                  className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                    isComplete
+                      ? "bg-status-complete"
+                      : isOverdue
+                        ? "bg-quantum-crimson animate-pulse"
+                        : isDueSoon
+                          ? "bg-quantum-gold"
+                          : "bg-status-todo"
+                  }`}
+                />
+                <p
+                  className={`text-xs ${
+                    isComplete
+                      ? "text-status-complete"
+                      : isOverdue
+                        ? "text-quantum-crimson"
+                        : isDueSoon
+                          ? "text-quantum-gold"
+                          : "text-status-todo"
+                  }`}
+                >
+                  {isComplete
+                    ? `Completed · ${due.toLocaleDateString()}`
+                    : isOverdue
+                      ? `Overdue · ${due.toLocaleDateString()}`
+                      : `Due ${due.toLocaleDateString()}`}
+                </p>
+              </div>
+            );
+          })()}
       </div>
       {showEdit && (
         <EditTaskModal

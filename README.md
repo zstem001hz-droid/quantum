@@ -484,7 +484,9 @@ All errors return a consistent JSON shape:
 **Features & Functionality**
 
 - [ ] Search and filter tasks — search by title or filter by assignee within a project
-- [ ] Task due dates — deadline tracking with overdue indicators
+- [x] Task due dates — deadline tracking with overdue indicators
+- [ ] Calendar view — dedicated page showing tasks plotted by due date across all projects
+- [ ] Calendar export — iCal (.ics) export of tasks with due dates for import into external calendar apps
 - [ ] Project activity log — chronological history of changes to a project
 - [ ] User profile and avatar — view and edit profile details, upload custom avatar image by clicking the navbar avatar
 - [ ] Collaboration invite acceptance flow — invited users receive accept/decline option before being added to a project

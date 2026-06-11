@@ -60,8 +60,6 @@ router.get("/:id", protect, async (req, res) => {
 
 // POST /api/projects/:projectId/tasks — create new task
 router.post("/", protect, async (req, res) => {
-  const { title, description, status } = req.body;
-
   try {
     const project = await Project.findById(req.params.projectId);
 
@@ -73,10 +71,14 @@ router.post("/", protect, async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
+    const { title, description, status, assignedTo, dueDate } = req.body;
+
     const task = await Task.create({
       title,
       description,
       status,
+      assignedTo: assignedTo || null,
+      dueDate: dueDate || null,
       project: req.params.projectId,
       owner: req.user._id,
     });
@@ -107,7 +109,7 @@ router.put("/:id", protect, async (req, res) => {
     }
 
     const updated = await Task.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+      returnDocument: "after",
       runValidators: true,
     });
 

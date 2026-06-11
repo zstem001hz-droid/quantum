@@ -10,10 +10,11 @@ interface CreateTaskModalProps {
   onCreated: (task: Task) => void;
 }
 
-// Modal form for creating a new task within a project
+// Modal form for creating a new task — title and description required, due date optional
 const CreateTaskModal = ({ projectId, onClose, onCreated }: CreateTaskModalProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -26,6 +27,7 @@ const CreateTaskModal = ({ projectId, onClose, onCreated }: CreateTaskModalProps
         title,
         description,
         status: "To Do",
+        dueDate: dueDate || null,
       });
       onCreated(data);
       onClose();
@@ -76,6 +78,17 @@ const CreateTaskModal = ({ projectId, onClose, onCreated }: CreateTaskModalProps
                 onChange={(e) => setDescription(e.target.value)}
                 rows={3}
                 className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label className="text-quantum-muted text-xs font-semibold uppercase tracking-wider">
+                Due Date
+              </label>
+              <input
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-light-text dark:text-quantum-text text-sm outline-none focus:border-quantum-accent transition-colors"
               />
             </div>
             <div className="flex gap-3 justify-end">

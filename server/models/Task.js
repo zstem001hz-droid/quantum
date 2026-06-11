@@ -31,7 +31,19 @@ const taskSchema = new Schema(
       ref: "User",
       required: true,
     },
+    assignedTo: {
+      //References the User this task is assigned to - optional
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    dueDate: {
+      // Optional deadline for task completion
+      type: Date,
+      default: null,
+    },
   },
+
   {
     timestamps: true,
   },

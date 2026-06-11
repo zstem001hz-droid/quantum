@@ -25,6 +25,8 @@ export interface Task {
   status: "To Do" | "In Progress" | "Complete";
   project: string;
   owner: string;
+  assignedTo?: string;
+  dueDate?: string;
   createdAt: string;
   updatedAt: string;
 }

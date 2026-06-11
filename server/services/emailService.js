@@ -1,36 +1,13 @@
-const dns = require("dns");
-dns.setDefaultResultOrder("ipv4first");
+const { Resend } = require("resend");
 
-const nodemailer = require("nodemailer");
-
-// Configure SMTP transporter using environment variables
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-});
-
-// Verify transporter connection on startup
-transporter.verify((error) => {
-  if (error) {
-    console.error("EMail service error:", error.message);
-  } else {
-    console.log("Email service ready");
-  }
-});
+// Initialize Resend client with API key
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Send a password reset email with a tokenized reset link
 const sendPasswordResetEmail = async (toEmail, resetToken) => {
   const resetUrl = `${process.env.CLIENT_ORIGIN}/reset-password?token=${resetToken}`;
 
-  await transporter.sendMail({
+  await resend.emails.send({
     from: process.env.EMAIL_FROM,
     to: toEmail,
     subject: "Reset your Quantum password",
@@ -51,7 +28,7 @@ const sendPasswordResetEmail = async (toEmail, resetToken) => {
 const sendCollaborationInviteEmail = async (toEmail, projectName, inviterName) => {
   const loginUrl = `${process.env.CLIENT_ORIGIN}/login`;
 
-  await transporter.sendMail({
+  await resend.emails.send({
     from: process.env.EMAIL_FROM,
     to: toEmail,
     subject: `${inviterName} invited you to collaborate on ${projectName}`,

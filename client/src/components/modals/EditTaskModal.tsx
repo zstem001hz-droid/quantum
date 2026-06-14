@@ -2,21 +2,23 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import api from "../../services/api";
-import type { Task } from "../../types";
+import type { Task, UserIdentity } from "../../types";
 
 interface EditTaskModalProps {
   task: Task;
+  members: UserIdentity[];
   onClose: () => void;
   onUpdated: (task: Task) => void;
   onDeleted: (taskId: string) => void;
 }
 
 // Modal form for editing or deleting an existing task
-const EditTaskModal = ({ task, onClose, onUpdated, onDeleted }: EditTaskModalProps) => {
+const EditTaskModal = ({ task, members, onClose, onUpdated, onDeleted }: EditTaskModalProps) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description ?? "");
   const [status, setStatus] = useState(task.status);
   const [dueDate, setDueDate] = useState(task.dueDate ? task.dueDate.slice(0, 10) : "");
+  const [assignedTo, setAssignedTo] = useState(task.assignedTo?._id ?? "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,6 +32,7 @@ const EditTaskModal = ({ task, onClose, onUpdated, onDeleted }: EditTaskModalPro
         description,
         status,
         dueDate: dueDate || null,
+        assignedTo: assignedTo || null,
       });
       onUpdated(data);
       onClose();
@@ -59,7 +62,9 @@ const EditTaskModal = ({ task, onClose, onUpdated, onDeleted }: EditTaskModalPro
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        onClick={onClose}
+        onMouseDown={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
       >
         <motion.div
           className="bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-2xl p-6 w-full max-w-md"
@@ -123,15 +128,28 @@ const EditTaskModal = ({ task, onClose, onUpdated, onDeleted }: EditTaskModalPro
                 className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-light-text dark:text-quantum-text text-sm outline-none focus:border-quantum-accent transition-colors"
               />
             </div>
-            <div className="flex items-center justify-between">
-              <button
-                type="button"
-                onClick={handleDelete}
-                className="text-quantum-crimson hover:text-red-400 text-sm transition-colors"
+            {/* Assigned to — select a collaborator to assign this task to */}
+            <div className="flex flex-col gap-1">
+              <label className="text-quantum-light-muted dark:text-quantum-muted text-xs font-semibold uppercase tracking-wider">
+                Assign To
+              </label>
+              <select
+                value={assignedTo}
+                onChange={(e) => setAssignedTo(e.target.value)}
+                className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
               >
-                Delete Task
-              </button>
-              <div className="flex gap-3">
+                <option value="">Unassigned</option>
+                {members.map((member) => (
+                  <option key={member._id} value={member._id}>
+                    {member.name} (@{member.username})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Action buttons — Cancel/Save on left, Delete on right */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={onClose}
@@ -142,11 +160,18 @@ const EditTaskModal = ({ task, onClose, onUpdated, onDeleted }: EditTaskModalPro
                 <button
                   type="submit"
                   disabled={loading}
-                  className="bg-quantum-accent hover:bg-quantum-accent-hover text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
+                  className="bg-status-complete hover:bg-status-complete/80 text-quantum-bg text-sm font-semibold px-4 py-2 rounded-lg transition-colors disabled:opacity-50"
                 >
                   {loading ? "Saving..." : "Save Changes"}
                 </button>
               </div>
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="text-quantum-crimson hover:text-red-400 text-sm transition-colors"
+              >
+                Delete Task
+              </button>
             </div>
           </form>
         </motion.div>

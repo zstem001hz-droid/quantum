@@ -1,8 +1,13 @@
-export interface User {
+// Base user identity - returned when populating owner/member/assignedTo fields
+export interface UserIdentity {
   _id: string;
   name: string;
   username: string;
   email: string;
+}
+
+// Full user — includes auth token and account fields, stored in AuthContext
+export interface User extends UserIdentity {
   token: string;
   twoFactorEnabled?: boolean;
 }
@@ -12,8 +17,8 @@ export interface Project {
   name: string;
   description?: string;
   status: "active" | "archived";
-  owner: string;
-  members: string[];
+  owner: UserIdentity;
+  members: UserIdentity[];
   createdAt: string;
   updatedAt: string;
 }
@@ -24,8 +29,8 @@ export interface Task {
   description?: string;
   status: "To Do" | "In Progress" | "Complete";
   project: string;
-  owner: string;
-  assignedTo?: string;
+  owner: UserIdentity;
+  assignedTo?: UserIdentity | null;
   dueDate?: string;
   createdAt: string;
   updatedAt: string;

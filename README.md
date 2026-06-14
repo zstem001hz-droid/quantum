@@ -366,6 +366,8 @@ Local development uses `quantum-dev` — test data, registered users, and projec
 | `PUT`    | `/api/projects/:projectId/tasks/:id` | Update task by ID           | Yes           |
 | `DELETE` | `/api/projects/:projectId/tasks/:id` | Delete task by ID           | Yes           |
 
+`POST` and `PUT` accept `title`, `description`, `status`, `dueDate`, and `assignedTo` (user ID) in the request body. Responses populate `owner` and `assignedTo` with user identity (`name`, `username`, `email`).
+
 ### Two-Factor Authentication
 
 | Method | Endpoint                | Description                      | Auth Required |
@@ -483,8 +485,9 @@ All errors return a consistent JSON shape:
 
 **Features & Functionality**
 
-- [ ] Search and filter tasks — search by title or filter by assignee within a project
 - [x] Task due dates — deadline tracking with overdue indicators
+- [x] Task assignments — assign collaborators to tasks, displayed with avatar and name on task cards
+- [ ] Search and filter tasks — search by title or filter by assignee within a project
 - [ ] Calendar view — dedicated page showing tasks plotted by due date across all projects
 - [ ] Calendar export — iCal (.ics) export of tasks with due dates for import into external calendar apps
 - [ ] Project activity log — chronological history of changes to a project

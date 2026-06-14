@@ -8,29 +8,24 @@ const router = express.Router();
 
 // Helper — returns true if user is project owner or member
 const isOwnerOrMember = (project, userId) => {
+  const ownerId = project.owner?._id ? project.owner._id.toString() : project.owner.toString();
   return (
-    project.owner.toString() === userId.toString() ||
-    project.members.some((m) => m.toString() === userId.toString())
+    ownerId === userId.toString() ||
+    project.members.some((m) => {
+      const memberId = m?._id ? m._id.toString() : m.toString();
+      return memberId === userId.toString();
+    })
   );
 };
 
-// GET /api/projects — get all projects for logged-in user
+// GET /api/projects — get all projects for logged-in user with populated member identities
 router.get("/", protect, async (req, res) => {
   try {
     const projects = await Project.find({
       $or: [{ owner: req.user._id }, { members: req.user._id }],
-    });
-
-    res.status(200).json(projects);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-}); // GET /api/projects — get all projects for logged-in user
-router.get("/", protect, async (req, res) => {
-  try {
-    const projects = await Project.find({
-      $or: [{ owner: req.user._id }, { members: req.user._id }],
-    });
+    })
+      .populate("owner", "name username email")
+      .populate("members", "name username email");
 
     res.status(200).json(projects);
   } catch (error) {
@@ -38,10 +33,12 @@ router.get("/", protect, async (req, res) => {
   }
 });
 
-// GET /api/projects/:id — get single project by ID
+// GET /api/projects/:id — get single project by ID with populated member identities
 router.get("/:id", protect, async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findById(req.params.id)
+      .populate("owner", "name username email")
+      .populate("members", "name username email");
 
     if (!project) {
       return res.status(404).json({ message: "Project not found" });

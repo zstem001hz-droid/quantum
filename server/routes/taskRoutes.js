@@ -7,9 +7,13 @@ const router = express.Router({ mergeParams: true });
 
 // Helper - returns true if user is project owner or member
 const isOwnerOrMember = (project, userId) => {
+  const ownerId = project.owner?._id ? project.owner._id.toString() : project.owner.toString();
   return (
-    project.owner.toString() === userId.toString() ||
-    project.members.some((m) => m.toString() === userId.toString())
+    ownerId === userId.toString() ||
+    project.members.some((m) => {
+      const memberId = m?._id ? m._id.toString() : m.toString();
+      return memberId === userId.toString();
+    })
   );
 };
 
@@ -26,7 +30,9 @@ router.get("/", protect, async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    const tasks = await Task.find({ project: req.params.projectId });
+    const tasks = await Task.find({ project: req.params.projectId })
+      .populate("owner", "name username email")
+      .populate("assignedTo", "name username eamil");
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -46,7 +52,9 @@ router.get("/:id", protect, async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    const task = await Task.findById(req.params.id);
+    const task = await Task.findById(req.params.id)
+      .populate("owner", "name usernam email")
+      .poppulate("assignedTo", "name username email");
 
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
@@ -83,7 +91,11 @@ router.post("/", protect, async (req, res) => {
       owner: req.user._id,
     });
 
-    res.status(201).json(task);
+    const populatedTask = await Task.findById(task._id)
+      .populate("owner", "name username email")
+      .populate("assignedTo", "name username email");
+
+    res.status(201).json(populatedTask);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -111,7 +123,9 @@ router.put("/:id", protect, async (req, res) => {
     const updated = await Task.findByIdAndUpdate(req.params.id, req.body, {
       returnDocument: "after",
       runValidators: true,
-    });
+    })
+      .populate("owner", "name username email")
+      .populate("assignedTo", "name username email");
 
     res.status(200).json(updated);
   } catch (error) {

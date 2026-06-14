@@ -69,6 +69,41 @@ export default function ProjectDetailPage() {
               {project.description}
             </p>
           )}
+
+          {/* Project owner and collaborators */}
+          <div className="flex flex-wrap items-center gap-3 mt-3">
+            {/* Owner identity */}
+            <div className="flex items-center gap-1.5">
+              <div className="w-6 h-6 rounded-full bg-quantum-accent flex items-center justify-center text-white text-xs font-bold">
+                {project.owner.name.charAt(0).toUpperCase()}
+              </div>
+              <span className="text-quantum-light-text dark:text-quantum-text text-xs font-medium">
+                {project.owner.name}
+              </span>
+              <span className="text-quantum-light-muted dark:text-quantum-muted text-xs">
+                @{project.owner.username}
+              </span>
+            </div>
+
+            {/* Collaborators */}
+            {project.members.length > 0 && (
+              <>
+                <span className="text-quantum-light-muted dark:text-quantum-muted text-xs">·</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  {project.members.map((member) => (
+                    <div key={member._id} className="flex items-center gap-1.5">
+                      <div className="w-6 h-6 rounded-full bg-quantum-surface2 border border-quantum-border flex items-center justify-center text-quantum-muted text-xs font-bold">
+                        {member.name.charAt(0).toUpperCase()}
+                      </div>
+                      <span className="text-quantum-light-muted dark:text-quantum-muted text-xs">
+                        {member.name} @{member.username}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
         <div className="flex gap-2 flex-wrap">
           <button
@@ -93,12 +128,13 @@ export default function ProjectDetailPage() {
       </div>
 
       {/* Kanban board */}
-      <TaskBoard tasks={tasks} setTasks={setTasks} />
+      <TaskBoard tasks={tasks} setTasks={setTasks} members={[project.owner, ...project.members]} />
 
       {/* Modals */}
       {showCreateTask && (
         <CreateTaskModal
           projectId={project._id}
+          members={[project.owner, ...project.members]}
           onClose={() => setShowCreateTask(false)}
           onCreated={(task) => {
             setTasks((prev) => [...prev, task]);

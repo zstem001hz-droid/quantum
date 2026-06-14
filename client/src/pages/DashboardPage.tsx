@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import useProjects from "../hooks/useProjects";
+import useAuth from "../hooks/useAuth";
 import type { Task } from "../types";
 import api from "../services/api";
 import ProjectCard from "../components/ProjectCard";
@@ -11,6 +12,7 @@ import CreateProjectModal from "../components/modals/CreateProjectModal";
 // Dashboard page — project list with aggregate task stats
 export default function DashboardPage() {
   const { projects, setProjects, loading, error } = useProjects();
+  const { user } = useAuth();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [allTasks, setAllTasks] = useState<Task[]>([]);
 
@@ -38,6 +40,16 @@ export default function DashboardPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
+      {/* User greeting */}
+      <div className="mb-6">
+        <h1 className="text-quantum-light-text dark:text-quantum-text text-2xl font-bold">
+          Welcome back, {user?.name?.split(" ")[0]}
+        </h1>
+        <p className="text-quantum-light-muted dark:text-quantum-muted text-sm mt-0.5">
+          @{user?.username}
+        </p>
+      </div>
+
       {/* Stats grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-xl p-4">

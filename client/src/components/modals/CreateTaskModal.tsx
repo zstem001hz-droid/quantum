@@ -2,19 +2,21 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import api from "../../services/api";
-import type { Task } from "../../types";
+import type { Task, UserIdentity } from "../../types";
 
 interface CreateTaskModalProps {
   projectId: string;
+  members: UserIdentity[];
   onClose: () => void;
   onCreated: (task: Task) => void;
 }
 
 // Modal form for creating a new task — title and description required, due date optional
-const CreateTaskModal = ({ projectId, onClose, onCreated }: CreateTaskModalProps) => {
+const CreateTaskModal = ({ projectId, members, onClose, onCreated }: CreateTaskModalProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [assignedTo, setAssignedTo] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,6 +30,7 @@ const CreateTaskModal = ({ projectId, onClose, onCreated }: CreateTaskModalProps
         description,
         status: "To Do",
         dueDate: dueDate || null,
+        assignedTo: assignedTo || null,
       });
       onCreated(data);
       onClose();
@@ -45,7 +48,9 @@ const CreateTaskModal = ({ projectId, onClose, onCreated }: CreateTaskModalProps
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        onClick={onClose}
+        onMouseDown={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
       >
         <motion.div
           className="bg-quantum-light-surface dark:bg-quantum-surface border border-quantum-light-border dark:border-quantum-border rounded-2xl p-6 w-full max-w-md"
@@ -91,7 +96,27 @@ const CreateTaskModal = ({ projectId, onClose, onCreated }: CreateTaskModalProps
                 className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-light-text dark:text-quantum-text text-sm outline-none focus:border-quantum-accent transition-colors"
               />
             </div>
-            <div className="flex gap-3 justify-end">
+            {/* Assigned to — select a collaborator to assign this task to */}
+            <div className="flex flex-col gap-1">
+              <label className="text-quantum-muted text-xs font-semibold uppercase tracking-wider">
+                Assign To
+              </label>
+              <select
+                value={assignedTo}
+                onChange={(e) => setAssignedTo(e.target.value)}
+                className="bg-quantum-light-input dark:bg-quantum-input border border-quantum-light-border dark:border-quantum-border rounded-lg px-3 py-2 text-quantum-gold text-sm outline-none focus:border-quantum-accent transition-colors"
+              >
+                <option value="">Unassigned</option>
+                {members.map((member) => (
+                  <option key={member._id} value={member._id}>
+                    {member.name} (@{member.username})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Action buttons — Cancel/Create on left */}
+            <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={onClose}

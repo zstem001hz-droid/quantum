@@ -10,18 +10,19 @@ import {
 import type { DragEndEvent, DragStartEvent } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import api from "../services/api";
-import type { Task } from "../types";
+import type { Task, UserIdentity } from "../types";
 import TaskColumn from "./TaskColumn";
 
 interface TaskBoardProps {
   tasks: Task[];
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  members: UserIdentity[];
 }
 
 const STATUSES: Task["status"][] = ["To Do", "In Progress", "Complete"];
 
 // Kanban board — manages drag-and-drop across three status columns
-const TaskBoard = ({ tasks, setTasks }: TaskBoardProps) => {
+const TaskBoard = ({ tasks, setTasks, members }: TaskBoardProps) => {
   const [activeTask, setActiveTask] = useState<Task | null>(null);
 
   const sensors = useSensors(
@@ -109,6 +110,7 @@ const TaskBoard = ({ tasks, setTasks }: TaskBoardProps) => {
             key={status}
             status={status}
             tasks={tasks.filter((t) => t.status === status)}
+            members={members}
             onUpdated={handleUpdated}
             onDeleted={handleDeleted}
           />

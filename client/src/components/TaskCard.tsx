@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import type { Task } from "../types";
+import type { Task, UserIdentity } from "../types";
 import EditTaskModal from "./modals/EditTaskModal";
 
 interface TaskCardProps {
   task: Task;
+  members: UserIdentity[];
   onUpdated: (task: Task) => void;
   onDeleted: (taskId: string) => void;
 }
@@ -17,7 +18,7 @@ const statusColors: Record<Task["status"], string> = {
 };
 
 // Draggable task card with status indicator and edit modal
-const TaskCard = ({ task, onUpdated, onDeleted }: TaskCardProps) => {
+const TaskCard = ({ task, members, onUpdated, onDeleted }: TaskCardProps) => {
   const [showEdit, setShowEdit] = useState(false);
 
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
@@ -47,6 +48,17 @@ const TaskCard = ({ task, onUpdated, onDeleted }: TaskCardProps) => {
           <p className="text-quantum-light-muted dark:text-quantum-muted text-xs line-clamp-2 mb-1">
             {task.description}
           </p>
+        )}
+        {/* Assigned user — avatar initial and name */}
+        {task.assignedTo && (
+          <div className="flex items-center gap-1.5 mb-1">
+            <div className="w-4 h-4 rounded-full bg-quantum-accent flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">
+              {task.assignedTo.name.charAt(0).toUpperCase()}
+            </div>
+            <span className="text-quantum-light-muted dark:text-quantum-muted text-xs">
+              {task.assignedTo.name}
+            </span>
+          </div>
         )}
         {/* Due date indicator — color and pulse dot shift based on urgency */}
         {task.dueDate &&
@@ -96,6 +108,7 @@ const TaskCard = ({ task, onUpdated, onDeleted }: TaskCardProps) => {
       {showEdit && (
         <EditTaskModal
           task={task}
+          members={members}
           onClose={() => setShowEdit(false)}
           onUpdated={(updated) => {
             onUpdated(updated);

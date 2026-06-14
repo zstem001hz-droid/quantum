@@ -38,6 +38,9 @@ const CreateProjectModal = ({ onClose, onCreated }: CreateProjectModalProps) => 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        onMouseDown={(e) => {
+          if (e.target === e.currentTarget) onClose();
+        }}
         onClick={onClose}
       >
         <motion.div

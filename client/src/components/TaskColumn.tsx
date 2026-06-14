@@ -1,11 +1,12 @@
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import type { Task } from "../types";
+import type { Task, UserIdentity } from "../types";
 import TaskCard from "./TaskCard";
 
 interface TaskColumnProps {
   status: Task["status"];
   tasks: Task[];
+  members: UserIdentity[];
   onUpdated: (task: Task) => void;
   onDeleted: (taskId: string) => void;
 }
@@ -24,7 +25,7 @@ const columnStyles: Record<Task["status"], { border: string; label: string }> = 
 };
 
 // Droppable Kanban column — accepts drag-and-drop from any TaskCard within the board
-const TaskColumn = ({ status, tasks, onUpdated, onDeleted }: TaskColumnProps) => {
+const TaskColumn = ({ status, tasks, members, onUpdated, onDeleted }: TaskColumnProps) => {
   const { setNodeRef } = useDroppable({ id: status }); // register column as a drop target
   const style = columnStyles[status];
 
@@ -42,7 +43,13 @@ const TaskColumn = ({ status, tasks, onUpdated, onDeleted }: TaskColumnProps) =>
       <SortableContext items={tasks.map((t) => t._id)} strategy={verticalListSortingStrategy}>
         {/* Render each task as a sortable draggable card */}
         {tasks.map((task) => (
-          <TaskCard key={task._id} task={task} onUpdated={onUpdated} onDeleted={onDeleted} />
+          <TaskCard
+            key={task._id}
+            task={task}
+            members={members}
+            onUpdated={onUpdated}
+            onDeleted={onDeleted}
+          />
         ))}
       </SortableContext>
     </div>

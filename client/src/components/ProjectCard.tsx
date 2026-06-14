@@ -23,6 +23,37 @@ const ProjectCard = ({ project, tasks }: ProjectCardProps) => {
             {project.status}
           </span>
         </div>
+
+        {/* Project owner and members */}
+        <div className="flex items-center gap-2 mb-3">
+          {/* Member avatar stack */}
+          {project.members.length > 0 && (
+            <div className="flex -space-x-2">
+              {project.members.slice(0, 3).map((member) => (
+                <div
+                  key={member._id}
+                  title={`${member.name} (@${member.username})`}
+                  className="w-6 h-6 rounded-full bg-quantum-accent flex items-center justify-center text-white text-xs font-bold border-2 border-quantum-light-surface dark:border-quantum-surface"
+                >
+                  {member.name.charAt(0).toUpperCase()}
+                </div>
+              ))}
+              {project.members.length > 3 && (
+                <div className="w-6 h-6 rounded-full bg-quantum-surface2 flex items-center justify-center text-quantum-muted text-xs font-bold border-2 border-quantum-light-surface dark:border-quantum-surface">
+                  +{project.members.length - 3}
+                </div>
+              )}
+            </div>
+          )}
+          <p className="text-quantum-light-muted dark:text-quantum-muted text-xs">
+            <span className="text-quantum-light-text dark:text-quantum-text font-medium">
+              {project.owner.name}
+            </span>
+            <span className="ml-1">@{project.owner.username}</span>
+          </p>
+
+          {/* Project Description and status details */}
+        </div>
         {project.description && (
           <p className="text-quantum-light-muted dark:text-quantum-muted text-xs mb-3 line-clamp-2">
             {project.description}

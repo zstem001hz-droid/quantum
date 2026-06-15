@@ -10,7 +10,18 @@ const router = express.Router();
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "30d",
+    expiresIn: "7d",
+  });
+};
+
+// Sets the JWT as an httpOnly cookie — inaccessible to JavaScript (XSS mitigation)
+// secure: HTTPS only in production; sameSite: "none" required for cross-origin cookies in production
+const setTokenCookie = (res, token) => {
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days, matches JWT expiry
   });
 };
 
@@ -46,12 +57,14 @@ router.post("/register", async (req, res) => {
       password,
     });
 
+    const token = generateToken(user._id);
+    setTokenCookie(res, token);
+
     res.status(201).json({
       _id: user._id,
       name: user.name,
       username: user.username,
       email: user.email,
-      token: generateToken(user._id),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -81,13 +94,15 @@ router.post("/login", async (req, res) => {
       });
     }
 
+    const token = generateToken(user._id);
+    setTokenCookie(res, token);
+
     res.status(200).json({
       _id: user._id,
       name: user.name,
       username: user.username,
       email: user.email,
       twoFactorEnabled: user.twoFactorEnabled,
-      token: generateToken(user._id),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -105,13 +120,15 @@ router.post("/login-2fa", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    const token = generateToken(user._id);
+    setTokenCookie(res, token);
+
     res.status(200).json({
       _id: user._id,
       name: user.name,
       username: user.username,
       email: user.email,
       twoFactorEnabled: user.twoFactorEnabled,
-      token: generateToken(user._id),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -206,6 +223,16 @@ router.get("/users", protect, async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
+});
+
+// POST /api/auth/logout — clears the auth cookie
+router.post("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  });
+  res.status(200).json({ message: "Logged out successfully" });
 });
 
 module.exports = router;

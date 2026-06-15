@@ -1,17 +1,30 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMTdiZjVkOWFkN2U1YzQyODUxODgwMCIsImlhdCI6MTc4MDI1Nzc2NiwiZXhwIjoxNzgyODQ5NzY2fQ.rPpxGBsiVdvbXVct4Pkks3PDL5PW_jxXrkqOHl-Rjbk
+### ============================================
+### AUTH
+### ============================================
 
 ### Health Check
 GET http://localhost:3001/api/health
 
-### Register User
+### Register - Owner Account
 POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "Albert Camus",
-  "username": "acamus2026",
-  "email": "sisyphus@uphill-struggles.com",
-  "password": "password11x"
+  "name": "Test Owner",
+  "username": "testowner1",
+  "email": "testowner1@example.com",
+  "password": "TestPass123!"
+}
+
+### Register - Collaborator Account
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test Collaborator",
+  "username": "testcollab1",
+  "email": "testcollab1@example.com",
+  "password": "TestPass123!"
 }
 
 ### Register - Username Too Short (should fail)
@@ -19,10 +32,10 @@ POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "Test User",
+  "name": "Validation Test",
   "username": "abc",
-  "email": "failtest1@test.com",
-  "password": "Password1!"
+  "email": "validation1@example.com",
+  "password": "TestPass123!"
 }
 
 ### Register - Invalid Username Characters (should fail)
@@ -30,10 +43,10 @@ POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "Test User",
+  "name": "Validation Test",
   "username": "bad user!",
-  "email": "failtest2@test.com",
-  "password": "Password1!"
+  "email": "validation2@example.com",
+  "password": "TestPass123!"
 }
 
 ### Register - Weak Password No Uppercase (should fail)
@@ -41,10 +54,10 @@ POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "Test User",
-  "username": "validuser1",
-  "email": "failtest3@test.com",
-  "password": "password1!"
+  "name": "Validation Test",
+  "username": "validation3",
+  "email": "validation3@example.com",
+  "password": "testpass123!"
 }
 
 ### Register - Weak Password No Number (should fail)
@@ -52,10 +65,10 @@ POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "Test User",
-  "username": "validuser2",
-  "email": "failtest4@test.com",
-  "password": "Password!!"
+  "name": "Validation Test",
+  "username": "validation4",
+  "email": "validation4@example.com",
+  "password": "TestPass!!"
 }
 
 ### Register - Weak Password No Special Char (should fail)
@@ -63,134 +76,150 @@ POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-  "name": "Test User",
-  "username": "validuser3",
-  "email": "failtest5@test.com",
-  "password": "Password11"
+  "name": "Validation Test",
+  "username": "validation5",
+  "email": "validation5@example.com",
+  "password": "TestPass123"
 }
 
-### Register - Valid Strong Credentials (should succeed)
-POST http://localhost:3001/api/auth/register
-Content-Type: application/json
-
-{
-  "name": "Fyodor Dostoevsky",
-  "username": "dostoevsky",
-  "email": "raskolnikov@crimeandpunishment.com",
-  "password": "Ax!mkov99"
-}
-
-### Login User
+### Login - Owner
 POST http://localhost:3001/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "narcissus@goldmund.com",
-  "password": "password888"
+  "email": "testowner1@example.com",
+  "password": "TestPass123!"
 }
+
+### Login - Collaborator
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "testcollab1@example.com",
+  "password": "TestPass123!"
+}
+
+### Login - Wrong Password (should fail)
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "testowner1@example.com",
+  "password": "WrongPassword1!"
+}
+
+### Logout
+POST http://localhost:3001/api/auth/logout
+
+
+### ============================================
+### PROJECTS
+### Run "Login - Owner" above first to establish session cookie
+### ============================================
 
 ### Get All Projects
 GET http://localhost:3001/api/projects
-Authorization: Bearer {{token}}
 
 ### Create Project
 POST http://localhost:3001/api/projects
-Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "name": "MicroCell Hardware",
-  "description": "Portable micro-battery unit with embedded display and call routing"
+  "name": "Test Project",
+  "description": "A project for manual API testing"
 }
 
 ### Get Single Project
-GET http://localhost:3001/api/projects/6a18d3514e26b7c194eb6205
-Authorization: Bearer {{token}}
+# Replace :id with an actual project ID from Create Project response
+GET http://localhost:3001/api/projects/:id
 
 ### Update Project
-PUT http://localhost:3001/api/projects/6a18d3514e26b7c194eb6205
-Authorization: Bearer {{token}}
+# Replace :id with an actual project ID
+PUT http://localhost:3001/api/projects/:id
 Content-Type: application/json
 
 {
-  "name": "MicroCell Hardware",
-  "description": "Portable micro-battery unit with embedded display, call routing, and thermal management",
+  "name": "Test Project",
+  "description": "Updated description for manual API testing",
   "status": "active"
 }
 
-### Delete Project
-DELETE http://localhost:3001/api/projects/6a18d3514e26b7c194eb6205
-Authorization: Bearer {{token}}
-
 ### Invite Collaborator
-PUT http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/invite
-Authorization: Bearer {{token}}
+# Replace :id with an actual project ID
+PUT http://localhost:3001/api/projects/:id/invite
 Content-Type: application/json
 
 {
-  "email": "sisyphus@uphill-struggles.com"
+  "email": "testcollab1@example.com"
 }
 
-### Login - Albert Camus (collaborator test)
-POST http://localhost:3001/api/auth/login
-Content-Type: application/json
+### Delete Project
+# Replace :id with an actual project ID
+DELETE http://localhost:3001/api/projects/:id
 
-{
-  "email": "sisyphus@uphill-struggles.com",
-  "password": "password11x"
-}
 
-### Get All Projects - Camus (should include Hesse's project)
-GET http://localhost:3001/api/projects
-Authorization: Bearer {{token}}
-
-### Get All Tasks - Camus as Collaborator (should succeed)
-GET http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks
-Authorization: Bearer {{token}}
-
-### Update Task - Camus as Collaborator (should succeed)
-PUT http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks/6a1c969576679624e9a125c0
-Authorization: Bearer {{token}}
-Content-Type: application/json
-
-{
-  "status": "In Progress"
-}
-
-### Delete Task - Camus as Collaborator (should fail with 403)
-DELETE http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks/6a1c969576679624e9a125c0
-Authorization: Bearer {{token}}
+### ============================================
+### TASKS
+### Run "Login - Owner" above first to establish session cookie
+### ============================================
 
 ### Get All Tasks
-GET http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks
-Authorization: Bearer {{token}}
-
-### Get Single Task
-GET http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks/6a18dee941f867c819d56857
-Authorization: Bearer {{token}}
+# Replace :projectId with an actual project ID
+GET http://localhost:3001/api/projects/:projectId/tasks
 
 ### Create Task
-POST http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks
-Authorization: Bearer {{token}}
+# Replace :projectId with an actual project ID
+POST http://localhost:3001/api/projects/:projectId/tasks
 Content-Type: application/json
 
 {
-  "title": "Thermal regulation spec",
-  "description": "Define safe operating temp range",
+  "title": "Test Task",
+  "description": "A task for manual API testing",
   "status": "To Do"
 }
 
+### Get Single Task
+# Replace :projectId and :id with actual IDs
+GET http://localhost:3001/api/projects/:projectId/tasks/:id
+
 ### Update Task
-PUT http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks/6a18dee941f867c819d56857
-Authorization: Bearer {{token}}
+# Replace :projectId and :id with actual IDs
+PUT http://localhost:3001/api/projects/:projectId/tasks/:id
 Content-Type: application/json
 
 {
-  "title": "Thermal regulation spec",
-  "description": "Define safe operating temp range and thermal cutoff thresholds",
+  "title": "Test Task",
+  "description": "Updated description for manual API testing",
   "status": "In Progress"
 }
 
 ### Delete Task
-DELETE http://localhost:3001/api/projects/6a18dac62fb55c8c2c10f280/tasks/6a18dee941f867c819d56857
-Authorization: Bearer {{token}}
+# Replace :projectId and :id with actual IDs
+DELETE http://localhost:3001/api/projects/:projectId/tasks/:id
+
+
+### ============================================
+### COLLABORATOR PERMISSION CHECKS
+### Run "Login - Collaborator" above first to establish session cookie
+### ============================================
+
+### Get All Projects - Collaborator (should include owner's project)
+GET http://localhost:3001/api/projects
+
+### Get All Tasks - Collaborator (should succeed)
+# Replace :projectId with the project the collaborator was invited to
+GET http://localhost:3001/api/projects/:projectId/tasks
+
+### Update Task - Collaborator (should succeed)
+# Replace :projectId and :id with actual IDs
+PUT http://localhost:3001/api/projects/:projectId/tasks/:id
+Content-Type: application/json
+
+{
+  "status": "In Progress"
+}
+
+### Delete Task - Collaborator (should fail with 403)
+# Replace :projectId and :id with actual IDs
+DELETE http://localhost:3001/api/projects/:projectId/tasks/:id

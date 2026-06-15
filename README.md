@@ -377,6 +377,8 @@ Local development uses `quantum-dev` — test data, registered users, and projec
 | `POST` | `/api/2fa/disable`      | Disable 2FA with valid TOTP code | Yes           |
 | `POST` | `/api/2fa/authenticate` | Validate TOTP during login       | No            |
 
+> ⚠️ **In progress:** Authentication is being migrated from localStorage-based JWT storage to httpOnly cookies. The flow described below reflects the previous implementation and will be updated once the migration is complete.
+
 ## Authentication Flow
 
 1. User registers via `POST /api/auth/register` — password is hashed by bcrypt pre-save hook before storing
@@ -468,10 +470,14 @@ All errors return a consistent JSON shape:
 
 **Security & Infrastructure**
 
+- [ ] httpOnly cookie-based JWT storage — migrate authentication tokens from localStorage to httpOnly, Secure, SameSite cookies to prevent XSS-based token theft
+- [ ] CSRF protection — double-submit cookie pattern with custom header validation for all state-changing requests
+- [ ] Account lockout after failed login attempts — temporary lockout following repeated failed authentication
 - [x] Two-factor authentication (TOTP) — time-based one-time password support via `otplib` with QR code setup and authenticator app integration
 - [x] 2FA frontend — QR code setup modal, TOTP login step, enable/disable controls, and manual secret entry for users without camera access
 - [x] Transactional email — Resend email API for password reset and collaboration invitation emails
 - [x] Forgot password — account recovery flow for users who cannot remember their password
+- [ ] Restrict GET /api/auth/users to project-scoped collaborators or admin role
 - [ ] Email verification on registration — send confirmation link on signup; account remains pending until email is verified
 - [ ] Collaboration invite acceptance flow — invited users receive accept/decline option before being added to a project
 - [ ] 2FA authenticate endpoint — accept email or username instead of MongoDB ObjectId for user lookup
@@ -507,7 +513,7 @@ All errors return a consistent JSON shape:
 - Two-factor authentication (TOTP) — users can enable time-based one-time password authentication via any RFC 6238 compliant authenticator app.
 - Password hashing — all passwords hashed and salted with `bcryptjs` before storage; plaintext passwords are never persisted
 - Password field excluded from all queries by default (`select: false`)
-- JWT tokens expire after 30 days
+- JWT tokens expire after 7 days
 - Generic error messages on failed login — does not reveal whether email or password was incorrect
 - CORS restricted to `CLIENT_ORIGIN` — blocks requests from unauthorized origins
 - Rate limiting — 100 requests per IP per 15-minute window via `express-rate-limit`
@@ -650,6 +656,11 @@ Zero errors required before every commit.
 - [RFC 4226 — HOTP Standard](https://datatracker.ietf.org/doc/html/rfc4226) — the HMAC-based OTP standard that TOTP builds upon
 - [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — rate limiting middleware; limits each IP to 100 requests per 15-minute window
 - [Resend](https://resend.com/docs) — transactional email API; used for collaboration invites and password reset delivery
+- [OWASP — Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) — Industry-standard reference for CSRF defense patterns, including the double-submit cookie pattern implemented here
+- [OWASP — HttpOnly](https://owasp.org/www-community/HttpOnly) — Explains the HttpOnly cookie attribute and its role in mitigating XSS-based session hijacking
+- [MDN — Set-Cookie: HttpOnly, Secure, SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) — Cookie attribute reference; `httpOnly`, `secure`, and `sameSite` flags used in cookie configuration
+- [MDN — SameSite cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) — `SameSite=None; Secure` requirement for cross-domain cookies (Render frontend/backend on different subdomains)
+- [OWASP — Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) — Broader session security context, including cookie attributes and session fixation
 
 ### Development Tools
 

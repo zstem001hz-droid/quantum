@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import type { ReactNode } from "react";
 import type { User, AuthContextType } from "../types";
+import api from "../services/api";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -18,7 +19,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(userData);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await api.post("/api/auth/logout");
     localStorage.removeItem("user");
     setUser(null);
   };

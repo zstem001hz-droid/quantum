@@ -6,9 +6,8 @@ export interface UserIdentity {
   email: string;
 }
 
-// Full user — includes auth token and account fields, stored in AuthContext
+// Full user — account fields stored in AuthContext; auth token lives in an httpOnly cookie, never exposed to JS
 export interface User extends UserIdentity {
-  token: string;
   twoFactorEnabled?: boolean;
 }
 

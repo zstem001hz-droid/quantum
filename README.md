@@ -161,6 +161,8 @@ Quantum was built to explore what a modern, production-ready project management 
 
 **httpOnly cookies over localStorage for JWT storage** — storing JWTs in localStorage exposes them to theft via XSS attacks; any injected script can read `localStorage` and exfiltrate the token. httpOnly cookies are inaccessible to JavaScript entirely, eliminating this attack vector. The tradeoff — cookies require CSRF protection for state-changing requests — is addressed via the double-submit cookie pattern, implemented without additional dependencies using Node.js's built-in `crypto` module.
 
+**Cross-subdomain cookie scoping** — deploying the frontend and backend on separate subdomains (`quantum.vitaldosage.com` and `api.quantum.vitaldosage.com`) initially broke cookie-based auth — cookies set by the backend weren't visible to frontend JavaScript despite both sharing `vitaldosage.com`. The fix was scoping cookies to the shared parent domain via the `domain` cookie attribute, making them valid across all `vitaldosage.com` subdomains rather than the exact host that set them.
+
 ## Project Structure
 
 ```
@@ -396,6 +398,7 @@ Local development uses `quantum-dev` — test data, registered users, and projec
    - If 2FA is enabled — server returns `requiresTwoFactor: true` instead of issuing cookies
    - Client redirects to `/verify-2fa` — user enters TOTP code from authenticator app
    - On successful TOTP verification — cookies are issued via `/api/auth/login-2fa`
+   - In production, both cookies are scoped to the parent domain (`vitaldosage.com`) rather than the specific subdomain that sets them, since the frontend (`quantum.vitaldosage.com`) and backend (`api.quantum.vitaldosage.com`) are separate hosts. Without this, cookies set by the backend would be invisible to frontend JavaScript and excluded from Chrome's first-party cookie treatment, despite sharing a registrable domain
 4. The `token` cookie is sent automatically by the browser on every request to the API (`withCredentials: true`)
 5. Auth middleware (`protect`) reads the JWT from `req.cookies.token`, verifies its signature, decodes the user ID, and attaches the user to `req.user`
 6. If the token is missing, invalid, or expired — the request is rejected with a 401

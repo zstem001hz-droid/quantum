@@ -1,4 +1,4 @@
-# <img src="./assets/quantum-logo-read.gif" width="28" alt="Quantum Logo" /> Quantum
+# <img src="./assets/quantum-logo-read.gif" width="26" alt="Quantum Logo" /> Quantum
 
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 ![Express](https://img.shields.io/badge/Express-5.x-lightgrey)
@@ -6,12 +6,13 @@
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-green)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.x-38bdf8)
-![License](https://img.shields.io/badge/License-Proprietary-red)
 ![JWT](https://img.shields.io/badge/Auth-JWT-orange)
+![httpOnly Cookies](https://img.shields.io/badge/Auth-httpOnly%20Cookies-orange)
+![CSRF Protection](https://img.shields.io/badge/CSRF-Protected-orange)
 ![2FA](https://img.shields.io/badge/2FA-TOTP-red)
-![qrcode](https://img.shields.io/badge/qrcode-1.5.4-green)
 ![bcrypt](https://img.shields.io/badge/Security-bcrypt-red)
 ![otplib](https://img.shields.io/badge/otplib-TOTP-6366f1)
+![qrcode](https://img.shields.io/badge/qrcode-1.5.4-green)
 ![Vite](https://img.shields.io/badge/Vite-6.x-yellow)
 ![Morgan](https://img.shields.io/badge/Morgan-Logger-lightgrey)
 ![CORS](https://img.shields.io/badge/CORS-Enabled-blue)
@@ -21,8 +22,11 @@
 ![Lucide](https://img.shields.io/badge/Lucide-Icons-6366f1)
 ![dnd-kit](https://img.shields.io/badge/@dnd--kit-6.x-6366f1)
 ![Resend](https://img.shields.io/badge/Resend-Email%20API-000000?logo=resend)
+![License](https://img.shields.io/badge/License-Proprietary-red)
 
-Quantum is a modern, full-stack MERN project management application built for individuals and small teams. It features secure JWT-based authentication, ownership-based authorization, and a RESTful API for managing projects and tasks — deployed and production-ready. The interface is designed around a dark-first aesthetic inspired by quantum physics, with a fully responsive Kanban board, real-time drag-and-drop, and light/dark/system theme switching.
+Quantum is a production-deployed, full-stack MERN project management application built for individuals and small teams. Designed around a dark-first aesthetic inspired by quantum physics, it features a responsive Kanban board with real-time drag-and-drop, light/dark/system theme switching, and a polished component library built with React 19, TypeScript, Tailwind CSS, and Framer Motion.
+
+Security is treated as a first-class concern throughout: authentication uses httpOnly, Secure, SameSite cookies rather than localStorage (XSS mitigation), all state-changing requests are CSRF-protected via the double-submit cookie pattern, and two-factor authentication (TOTP) is fully implemented on both frontend and backend. The RESTful API is built on Express 5 with ownership-based authorization, rate limiting, and transactional email via Resend.
 
 ## Table of Contents
 
@@ -40,6 +44,7 @@ Quantum is a modern, full-stack MERN project management application built for in
   - [Projects](#projects)
   - [Tasks](#tasks)
 - [Authentication Flow](#authentication-flow)
+- [CSRF Protection](#csrf-protection)
 - [Authorization Flow](#authorization-flow)
 - [Task Authorization Chain](#task-authorization-chain)
 - [Data Model Relationships](#data-model-relationships)
@@ -55,7 +60,7 @@ Quantum is a modern, full-stack MERN project management application built for in
   - [Development Tools](#development-tools)
   - [Video References](#video-references)
   - [Deployment](#deployment)
-- [Authentication & Security](#authentication--security)
+  - [Authentication & Security](#authentication--security)
 - [License](#license)
 
 ## Live Demo
@@ -131,6 +136,7 @@ Quantum was built to explore what a modern, production-ready project management 
 - [Mongoose](https://mongoosejs.com/) — MongoDB object modeling
 - [dotenv](https://github.com/motdotla/dotenv) — environment variable management
 - [cors](https://github.com/expressjs/cors) — cross-origin resource sharing
+- [cookie-parser](https://github.com/expressjs/cookie-parser) — cookie parsing middleware; reads httpOnly auth and CSRF cookies from incoming requests
 - [JSON Web Tokens](https://jwt.io/) — authentication
 - [bcryptjs](https://github.com/dcodeIO/bcrypt.js) — password hashing
 - [otplib](https://github.com/yeojz/otplib) — TOTP one-time password generation and verification
@@ -152,6 +158,8 @@ Quantum was built to explore what a modern, production-ready project management 
 **Optimistic updates for drag-and-drop** — Task status updates apply immediately to the UI before the API confirms, reverting on failure. This makes the Kanban board feel instant rather than dependent on network latency.
 
 **Custom Tailwind quantum palette** — All brand colors are defined once in `tailwind.config.js` and generate utility classes automatically, enabling consistent theming and instant global color updates across every component.
+
+**httpOnly cookies over localStorage for JWT storage** — storing JWTs in localStorage exposes them to theft via XSS attacks; any injected script can read `localStorage` and exfiltrate the token. httpOnly cookies are inaccessible to JavaScript entirely, eliminating this attack vector. The tradeoff — cookies require CSRF protection for state-changing requests — is addressed via the double-submit cookie pattern, implemented without additional dependencies using Node.js's built-in `crypto` module.
 
 ## Project Structure
 
@@ -184,7 +192,7 @@ quantum/
 │       │   ├── TaskColumn.tsx         ← droppable Kanban column for one status lane
 │       │   └── ThemeSwitcher.tsx      ← Light / System / Dark theme toggle
 │       ├── context/
-│       │   └── AuthContext.tsx        ← JWT auth state, login, logout, localStorage persistence
+│       │   └── AuthContext.tsx        ← auth state, login, logout, httpOnly cookie session management
 │       ├── hooks/
 │       │   ├── useAuth.ts             ← consumes AuthContext; throws if outside provider
 │       │   ├── useProjects.ts         ← fetches and manages all projects for logged-in user
@@ -200,7 +208,7 @@ quantum/
 │       │   ├── SettingsPage.tsx       ← user settings hub — security and account preferences
 │       │   └── VerifyTwoFactorPage.tsx ← TOTP verification step after password authentication
 │       ├── services/
-│       │   └── api.ts                 ← axios instance with JWT interceptor
+│       │   └── api.ts                 ← axios instance with CSRF header interceptor and cookie credentials
 │       ├── types/
 │       │   └── index.ts               ← User, Project, Task, AuthContext TypeScript interfaces
 │       ├── App.tsx                    ← router, AuthProvider, protected route wrappers
@@ -344,6 +352,7 @@ Local development uses `quantum-dev` — test data, registered users, and projec
 | `GET`  | `/api/auth/users`           | Get all registered users                | Yes           |
 | `POST` | `/api/auth/forgot-password` | Generate and email password reset token | No            |
 | `POST` | `/api/auth/reset-password`  | Validate token and update password      | No            |
+| `POST` | `/api/auth/logout`          | Clear auth cookies and end session      | No            |
 
 ### Projects
 
@@ -377,19 +386,32 @@ Local development uses `quantum-dev` — test data, registered users, and projec
 | `POST` | `/api/2fa/disable`      | Disable 2FA with valid TOTP code | Yes           |
 | `POST` | `/api/2fa/authenticate` | Validate TOTP during login       | No            |
 
-> ⚠️ **In progress:** Authentication is being migrated from localStorage-based JWT storage to httpOnly cookies. The flow described below reflects the previous implementation and will be updated once the migration is complete.
-
 ## Authentication Flow
 
 1. User registers via `POST /api/auth/register` — password is hashed by bcrypt pre-save hook before storing
 2. User logs in via `POST /api/auth/login` — bcrypt compares entered password against stored hash
-3. On success, server returns a signed JWT containing the user's ID
-   - If 2FA is enabled — server returns `requiresTwoFactor: true` instead of JWT
+3. On success, the server issues two cookies:
+   - `token` — an httpOnly, Secure (production), SameSite cookie containing a signed JWT. Inaccessible to JavaScript, mitigating XSS-based token theft
+   - `csrfToken` — a non-httpOnly cookie containing a random token, used for CSRF protection
+   - If 2FA is enabled — server returns `requiresTwoFactor: true` instead of issuing cookies
    - Client redirects to `/verify-2fa` — user enters TOTP code from authenticator app
-   - On successful TOTP verification — JWT is issued via `/api/auth/login-2fa`
-4. Client stores the JWT and sends it in the `Authorization` header on every protected request: `Bearer <token>`
-5. Auth middleware verifies the token signature, decodes the user ID, and attaches the user to `req.user`
+   - On successful TOTP verification — cookies are issued via `/api/auth/login-2fa`
+4. The `token` cookie is sent automatically by the browser on every request to the API (`withCredentials: true`)
+5. Auth middleware (`protect`) reads the JWT from `req.cookies.token`, verifies its signature, decodes the user ID, and attaches the user to `req.user`
 6. If the token is missing, invalid, or expired — the request is rejected with a 401
+7. For state-changing requests (POST/PUT/DELETE), CSRF middleware (`verifyCsrf`) compares the `csrfToken` cookie against the `X-CSRF-Token` request header — see [CSRF Protection](#csrf-protection)
+8. Logout via `POST /api/auth/logout` clears both cookies server-side
+
+## CSRF Protection
+
+Quantum implements the **double-submit cookie pattern** to prevent Cross-Site Request Forgery on all state-changing requests.
+
+1. On login/register, the server issues a `csrfToken` cookie — random, non-httpOnly (readable by frontend JavaScript)
+2. The frontend reads this cookie and attaches its value as an `X-CSRF-Token` header on every outgoing request
+3. The server compares the `csrfToken` cookie against the `X-CSRF-Token` header on all POST/PUT/DELETE routes
+4. If the values are missing or don't match, the request is rejected with `403 Forbidden`
+
+This works because a malicious site can trigger requests that include a user's cookies automatically, but cannot read the `csrfToken` cookie's value to replicate it in the header — same-origin policy blocks cross-site cookie reads, while still allowing cross-site cookie _sends_.
 
 ## Authorization Flow
 
@@ -464,19 +486,23 @@ All errors return a consistent JSON shape:
 - [x] Password visibility toggle — show/hide eye icon on password and confirm password fields
 - [x] Inline validation hints — real-time helper text on username and password fields showing requirements before submission
 - [x] Mobile theme switcher — compact icon-only toggle replacing the full label switcher on small viewports
+- [ ] Modal click-outside behavior — form modals currently close on outside click, discarding unsaved input; needs confirm-before-close or disabled backdrop click when form is dirty
+- [ ] Autocomplete attributes — add `current-password` and `new-password` autocomplete attributes to password fields for password manager compatibility
+- [ ] Navbar avatar dropdown — clicking the initials circle opens a profile card showing name/username/email
+- [ ] Draggable modals — allow users to reposition modal dialogs by dragging, improving usability on smaller viewports
 - [ ] Mobile layout optimization — full mobile-first redesign prioritizing app-like experience
 - [ ] Mobile Kanban board — optimized drag-and-drop experience for touch devices
 - [ ] Dashboard stat card filtering — click a stat to filter projects by task status
 
 **Security & Infrastructure**
 
-- [ ] httpOnly cookie-based JWT storage — migrate authentication tokens from localStorage to httpOnly, Secure, SameSite cookies to prevent XSS-based token theft
-- [ ] CSRF protection — double-submit cookie pattern with custom header validation for all state-changing requests
-- [ ] Account lockout after failed login attempts — temporary lockout following repeated failed authentication
 - [x] Two-factor authentication (TOTP) — time-based one-time password support via `otplib` with QR code setup and authenticator app integration
 - [x] 2FA frontend — QR code setup modal, TOTP login step, enable/disable controls, and manual secret entry for users without camera access
 - [x] Transactional email — Resend email API for password reset and collaboration invitation emails
 - [x] Forgot password — account recovery flow for users who cannot remember their password
+- [x] httpOnly cookie-based JWT storage — migrate authentication tokens from localStorage to httpOnly, Secure, SameSite cookies to prevent XSS-based token theft
+- [x] CSRF protection — double-submit cookie pattern with custom header validation for all state-changing requests
+- [ ] Account lockout after failed login attempts — temporary lockout following repeated failed authentication
 - [ ] Restrict GET /api/auth/users to project-scoped collaborators or admin role
 - [ ] Email verification on registration — send confirmation link on signup; account remains pending until email is verified
 - [ ] Collaboration invite acceptance flow — invited users receive accept/decline option before being added to a project
@@ -498,7 +524,6 @@ All errors return a consistent JSON shape:
 - [ ] Calendar export — iCal (.ics) export of tasks with due dates for import into external calendar apps
 - [ ] Project activity log — chronological history of changes to a project
 - [ ] User profile and avatar — view and edit profile details, upload custom avatar image by clicking the navbar avatar
-- [ ] Collaboration invite acceptance flow — invited users receive accept/decline option before being added to a project
 - [ ] Real-time updates — WebSocket integration for live task changes
 
 **Creative & Visual**
@@ -510,14 +535,17 @@ All errors return a consistent JSON shape:
 
 ## Security Features
 
-- Two-factor authentication (TOTP) — users can enable time-based one-time password authentication via any RFC 6238 compliant authenticator app.
-- Password hashing — all passwords hashed and salted with `bcryptjs` before storage; plaintext passwords are never persisted
-- Password field excluded from all queries by default (`select: false`)
-- JWT tokens expire after 7 days
-- Generic error messages on failed login — does not reveal whether email or password was incorrect
-- CORS restricted to `CLIENT_ORIGIN` — blocks requests from unauthorized origins
-- Rate limiting — 100 requests per IP per 15-minute window via `express-rate-limit`
-- Passwords require minimum 8 characters with at least one uppercase letter, number, and special character
+- **httpOnly cookie-based JWT storage** — authentication tokens are stored in httpOnly, Secure (production), SameSite cookies rather than localStorage, preventing JavaScript from reading or exfiltrating the token (XSS mitigation)
+- **CSRF protection** — double-submit cookie pattern; a non-httpOnly `csrfToken` cookie is issued alongside the auth cookie, and the frontend echoes its value as an `X-CSRF-Token` header on all state-changing requests. The server rejects any request where the header is missing or doesn't match the cookie
+- **Two-factor authentication (TOTP)** — users can enable time-based one-time password authentication via any RFC 6238 compliant authenticator app
+- **Password hashing** — all passwords hashed and salted with `bcryptjs` before storage; plaintext passwords are never persisted
+- **Password field excluded from all queries** by default (`select: false`)
+- **JWT tokens expire after 7 days**
+- **Generic error messages on failed login** — does not reveal whether email or password was incorrect
+- **CORS restricted to `CLIENT_ORIGIN`** — blocks requests from unauthorized origins
+- **Rate limiting** — 100 requests per IP per 15-minute window via `express-rate-limit`
+- **Passwords require** minimum 8 characters with at least one uppercase letter, number, and special character
+- **Secure password reset** — reset tokens are hashed before storage; only the raw token is sent via email and never persisted
 
 ## Two-Factor Authentication
 
@@ -582,16 +610,24 @@ Zero errors required before every commit.
 
 ### Core Stack — Backend
 
-- [MongoDB Atlas](https://www.mongodb.com/atlas) — Cloud-hosted NoSQL database
+- [MongoDB Atlas](https://www.mongodb.com/atlas) — cloud-hosted NoSQL database
 - [Mongoose Documentation](https://mongoosejs.com/docs/) — MongoDB object modeling library for Node.js
 - [Mongoose — Arrays](https://mongoosejs.com/docs/schematypes.html#arrays) — Array schema type; used for `project.members` collaborator references
-- [Mongoose — Document.save()](<https://mongoosejs.com/docs/api/document.html#Document.prototype.save()>) — Push collaborators to `project.members`
-- [Express 5 Documentation](https://expressjs.com/) — Web framework; API Routing
+- [Mongoose — Document.save()](<https://mongoosejs.com/docs/api/document.html#Document.prototype.save()>) — push collaborators to `project.members`
+- [Express 5 Documentation](https://expressjs.com/) — web framework; API routing
 - [Node.js — CommonJS Modules](https://nodejs.org/api/modules.html) — `require()` module system used throughout the Express backend
-- [JSON Web Tokens — jwt.io](https://jwt.io/) — Secure token authentication
+- [cors](https://github.com/expressjs/cors) — cross-origin resource sharing; restricts API access to `CLIENT_ORIGIN`
+- [cookie-parser](https://github.com/expressjs/cookie-parser) — cookie parsing middleware; populates `req.cookies` for httpOnly JWT and CSRF token verification
+- [JSON Web Tokens — jwt.io](https://jwt.io/) — signed JWT authentication; issued on login and verified on every protected request
+- [bcryptjs](https://github.com/dcodeIO/bcrypt.js) — password hashing and salting; plaintext passwords are never stored
 - [otplib](https://github.com/yeojz/otplib) — TOTP one-time password generation and verification
 - [qrcode](https://github.com/soldair/node-qrcode) — QR code generation for authenticator app setup
-- [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) — `isOwnerOrMember` helper
+- [morgan](https://github.com/expressjs/morgan) — HTTP request logger; dev-format logging for API request monitoring
+- [nodemon](https://nodemon.io/) — development server with auto-restart on file changes
+- [Resend](https://resend.com/docs) — transactional email API; collaboration invites and password reset delivery
+- [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — rate limiting middleware; 100 requests per IP per 15-minute window
+- [dotenv](https://github.com/motdotla/dotenv) — environment variable management; separates config from code
+- [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) — `isOwnerOrMember` helper; checks project ownership and membership
 
 ### Core Stack — Frontend
 
@@ -605,7 +641,7 @@ Zero errors required before every commit.
 - [TypeScript — Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) — `as Task['status']` cast on select onChange handler
 - [TypeScript — Indexed Access Types](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) — `Task['status']` pattern for accessing union type from interface
 - [Vite Documentation](https://vitejs.dev/) — Build tool and dev server
-- [Axios Documentation](https://axios-http.com/docs/intro) — HTTP client; JWT interceptor in `src/services/api.ts` attaches token to every request
+- [Axios Documentation](https://axios-http.com/docs/intro) — HTTP client; configured with `withCredentials: true` and a CSRF header interceptor in `src/services/api.ts`
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs) — Utility-first styling
 - [Tailwind CSS — Customizing Colors](https://tailwindcss.com/docs/customizing-colors) — Define color object to generate branding utility classes
 - [Tailwind CSS — Dark Mode](https://tailwindcss.com/docs/dark-mode) — `darkMode: 'class'` strategy; `useTheme` hook manages the `dark` class on `<html>`
@@ -656,19 +692,19 @@ Zero errors required before every commit.
 - [RFC 4226 — HOTP Standard](https://datatracker.ietf.org/doc/html/rfc4226) — the HMAC-based OTP standard that TOTP builds upon
 - [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — rate limiting middleware; limits each IP to 100 requests per 15-minute window
 - [Resend](https://resend.com/docs) — transactional email API; used for collaboration invites and password reset delivery
-- [OWASP — Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) — Industry-standard reference for CSRF defense patterns, including the double-submit cookie pattern implemented here
-- [OWASP — HttpOnly](https://owasp.org/www-community/HttpOnly) — Explains the HttpOnly cookie attribute and its role in mitigating XSS-based session hijacking
-- [MDN — Set-Cookie: HttpOnly, Secure, SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) — Cookie attribute reference; `httpOnly`, `secure`, and `sameSite` flags used in cookie configuration
+- [OWASP — Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) — industry-standard reference for CSRF defense patterns, including the double-submit cookie pattern implemented here
+- [OWASP — HttpOnly](https://owasp.org/www-community/HttpOnly) — explains the HttpOnly cookie attribute and its role in mitigating XSS-based session hijacking
+- [OWASP — Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) — broader session security context, including cookie attributes and session fixation
+- [MDN — Set-Cookie: HttpOnly, Secure, SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) — cookie attribute reference; `httpOnly`, `secure`, and `sameSite` flags used in cookie configuration
 - [MDN — SameSite cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) — `SameSite=None; Secure` requirement for cross-domain cookies (Render frontend/backend on different subdomains)
-- [OWASP — Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) — Broader session security context, including cookie attributes and session fixation
 
 ### Development Tools
 
 - [REST Client — VS Code Extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) — API testing via `server/requests.http`
 - [Morgan — HTTP Request Logger](https://github.com/expressjs/morgan) — Logs API requests to the terminal
-- [Chrome DevTools Documentation](https://developer.chrome.com/docs/devtools/) — Network tab for API inspection, Application tab for localStorage, Console for runtime errors
+- [Chrome DevTools Documentation](https://developer.chrome.com/docs/devtools/) — Network tab for API inspection, Application tab for cookie verification, Console for runtime errors
 - [ExplainShell — Unix Command Reference](https://explainshell.com/) — Reference for terminal commands used throughout development
-- [Postman Documentation](https://learning.postman.com/docs/getting-started/overview/) — Quantum workspace with Quantum Local environment; login request auto-saves JWT token
+- [Postman Documentation](https://learning.postman.com/docs/getting-started/overview/) — Quantum workspace with Quantum Local environment; organized by resource for regression testing
 - [MongoDB Compass](https://www.mongodb.com/products/compass) — Visual database inspection; used to verify documents, relationships, and collaborator arrays
 - [Vite Plugin React — react-refresh/only-export-components](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react) — ESLint rule requiring `eslint-disable-next-line` comment in `AuthContext.tsx`
 - [ESLint — Disabling Rules with Comments](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments) — Used in `AuthContext.tsx` to disable fast refresh rule for context files

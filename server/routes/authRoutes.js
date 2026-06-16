@@ -25,6 +25,18 @@ const setTokenCookie = (res, token) => {
   });
 };
 
+// Generates a random CSRF token and sets it as a non-httpOnly cookie
+// Readable by frontend JS so it can be echoed back in a request header (double-submit pattern)
+const setCsrfCookie = (res) => {
+  const csrfToken = require("crypto").randomBytes(32).toString("hex");
+  res.cookie("csrfToken", csrfToken, {
+    httpOnly: false,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+};
+
 // POST /api/auth/register
 router.post("/register", async (req, res) => {
   const { name, username, email, password } = req.body;
@@ -59,6 +71,7 @@ router.post("/register", async (req, res) => {
 
     const token = generateToken(user._id);
     setTokenCookie(res, token);
+    setCsrfCookie(res);
 
     res.status(201).json({
       _id: user._id,
@@ -96,6 +109,7 @@ router.post("/login", async (req, res) => {
 
     const token = generateToken(user._id);
     setTokenCookie(res, token);
+    setCsrfCookie(res);
 
     res.status(200).json({
       _id: user._id,
@@ -122,6 +136,7 @@ router.post("/login-2fa", async (req, res) => {
 
     const token = generateToken(user._id);
     setTokenCookie(res, token);
+    setCsrfCookie(res);
 
     res.status(200).json({
       _id: user._id,

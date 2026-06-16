@@ -2,11 +2,12 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import api from "../../services/api";
+import type { Project } from "../../types";
 
 interface InviteModalProps {
   projectId: string;
   onClose: () => void;
-  onInvited: () => void;
+  onInvited: (updated: Project) => void;
 }
 
 // Modal form for inviting a collaborator to a project by email
@@ -22,10 +23,10 @@ const InviteModal = ({ projectId, onClose, onInvited }: InviteModalProps) => {
     setError("");
     setSuccess("");
     try {
-      await api.put(`/api/projects/${projectId}/invite`, { email });
+      const res = await api.put(`/api/projects/${projectId}/invite`, { email });
       setSuccess(`${email} has been added as a collaborator`);
       setEmail("");
-      onInvited();
+      onInvited(res.data);
     } catch {
       setError("User not found or already a collaborator");
     } finally {

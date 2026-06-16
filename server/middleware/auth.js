@@ -19,4 +19,17 @@ const protect = async (req, res, next) => {
   }
 };
 
-module.exports = { protect };
+// Verifies the CSRF token header matches the CSRF cookie (double-submit pattern)
+// Required on all state-changing requests (POST/PUT/DELETE) once a session exists
+const verifyCsrf = (req, res, next) => {
+  const cookieToken = req.cookies.csrfToken;
+  const headerToken = req.headers["x-csrf-token"];
+
+  if (!cookieToken || !headerToken || cookieToken !== headerToken) {
+    return res.status(403).json({ message: "Invalid CSRF token" });
+  }
+
+  next();
+};
+
+module.exports = { protect, verifyCsrf };

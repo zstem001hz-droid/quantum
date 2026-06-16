@@ -1,7 +1,7 @@
 const express = require("express");
 const Project = require("../models/Project");
 const User = require("../models/User");
-const { protect } = require("../middleware/auth");
+const { protect, verifyCsrf } = require("../middleware/auth");
 const { sendCollaborationInviteEmail } = require("../services/emailService");
 
 const router = express.Router();
@@ -56,7 +56,7 @@ router.get("/:id", protect, async (req, res) => {
 });
 
 // POST /api/projects — create new project
-router.post("/", protect, async (req, res) => {
+router.post("/", protect, verifyCsrf, async (req, res) => {
   const { name, description } = req.body;
 
   try {
@@ -73,7 +73,7 @@ router.post("/", protect, async (req, res) => {
 });
 
 // PUT /api/projects/:id — update project
-router.put("/:id", protect, async (req, res) => {
+router.put("/:id", protect, verifyCsrf, async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
@@ -89,7 +89,9 @@ router.put("/:id", protect, async (req, res) => {
     const updated = await Project.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
-    });
+    })
+      .populate("owner", "name username email")
+      .populate("members", "name username email");
 
     res.status(200).json(updated);
   } catch (error) {
@@ -98,7 +100,7 @@ router.put("/:id", protect, async (req, res) => {
 });
 
 // PUT /api/projects/:id/invite — invite a collaborator by email (owner only)
-router.put("/:id/invite", protect, async (req, res) => {
+router.put("/:id/invite", protect, verifyCsrf, async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -135,14 +137,18 @@ router.put("/:id/invite", protect, async (req, res) => {
       console.error("Invite email failed:", emailError.message);
     }
 
-    res.status(200).json(project);
+    const populatedProject = await Project.findById(project._id)
+      .populate("owner", "name username email")
+      .populate("members", "name username email");
+
+    res.status(200).json(populatedProject);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
 // DELETE /api/projects/:id — delete project
-router.delete("/:id", protect, async (req, res) => {
+router.delete("/:id", protect, verifyCsrf, async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 

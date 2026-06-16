@@ -157,7 +157,10 @@ export default function ProjectDetailPage() {
         <InviteModal
           projectId={project._id}
           onClose={() => setShowInvite(false)}
-          onInvited={() => setShowInvite(false)}
+          onInvited={(updated) => {
+            setProject(updated);
+            setShowInvite(false);
+          }}
         />
       )}
     </motion.div>

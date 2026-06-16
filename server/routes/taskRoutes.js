@@ -1,7 +1,7 @@
 const express = require("express");
 const Task = require("../models/Task");
 const Project = require("../models/Project");
-const { protect } = require("../middleware/auth");
+const { protect, verifyCsrf } = require("../middleware/auth");
 
 const router = express.Router({ mergeParams: true });
 
@@ -67,7 +67,7 @@ router.get("/:id", protect, async (req, res) => {
 });
 
 // POST /api/projects/:projectId/tasks — create new task
-router.post("/", protect, async (req, res) => {
+router.post("/", protect, verifyCsrf, async (req, res) => {
   try {
     const project = await Project.findById(req.params.projectId);
 
@@ -102,7 +102,7 @@ router.post("/", protect, async (req, res) => {
 });
 
 // PUT /api/projects/:projectId/tasks/:id — update task
-router.put("/:id", protect, async (req, res) => {
+router.put("/:id", protect, verifyCsrf, async (req, res) => {
   try {
     const project = await Project.findById(req.params.projectId);
 
@@ -134,7 +134,7 @@ router.put("/:id", protect, async (req, res) => {
 });
 
 // DELETE /api/projects/:projectId/tasks/:id — delete task
-router.delete("/:id", protect, async (req, res) => {
+router.delete("/:id", protect, verifyCsrf, async (req, res) => {
   try {
     const project = await Project.findById(req.params.projectId);
 

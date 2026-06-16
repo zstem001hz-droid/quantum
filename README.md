@@ -65,7 +65,7 @@ Security is treated as a first-class concern throughout: authentication uses htt
 
 ## Live Demo
 
-🚀 **[Launch Quantum](https://quantum-client.onrender.com)**
+🚀 **[Launch Quantum](https://quantum.vitaldosage.com)**
 
 > The backend runs on Render's free tier and may take 30–60 seconds to wake up on first request.
 
@@ -326,10 +326,10 @@ Create a `.env` file inside `client/` using `.env.example` as a template:
 
 Quantum runs across two isolated environments backed by separate MongoDB databases:
 
-| Environment | Frontend                              | Backend                                 | Database       |
-| ----------- | ------------------------------------- | --------------------------------------- | -------------- |
-| Development | `http://localhost:5173`               | `http://localhost:3001`                 | `quantum-dev`  |
-| Production  | `https://quantum-client.onrender.com` | `https://quantum-api-j3qf.onrender.com` | `quantum-prod` |
+| Environment | Frontend                          | Backend                               | Database       |
+| ----------- | --------------------------------- | ------------------------------------- | -------------- |
+| Development | `http://localhost:5173`           | `http://localhost:3001`               | `quantum-dev`  |
+| Production  | `https://quantum.vitaldosage.com` | `https://api.quantum.vitaldosage.com` | `quantum-prod` |
 
 Local development uses `quantum-dev` — test data, registered users, and projects created locally never affect production. Switch environments by updating `MONGO_URI` in `server/.env`.
 

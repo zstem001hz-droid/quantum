@@ -1,28 +1,28 @@
 # <img src="./assets/quantum-logo-read.gif" width="26" alt="Quantum Logo" /> Quantum
 
-![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
-![Express](https://img.shields.io/badge/Express-5.x-lightgrey)
-![React](https://img.shields.io/badge/React-19.x-blue)
-![Node.js](https://img.shields.io/badge/Node.js-20.x-green)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.x-38bdf8)
-![JWT](https://img.shields.io/badge/Auth-JWT-orange)
-![httpOnly Cookies](https://img.shields.io/badge/Auth-httpOnly%20Cookies-orange)
-![CSRF Protection](https://img.shields.io/badge/CSRF-Protected-orange)
-![2FA](https://img.shields.io/badge/2FA-TOTP-red)
-![bcrypt](https://img.shields.io/badge/Security-bcrypt-red)
-![otplib](https://img.shields.io/badge/otplib-TOTP-6366f1)
-![qrcode](https://img.shields.io/badge/qrcode-1.5.4-green)
-![Vite](https://img.shields.io/badge/Vite-6.x-yellow)
-![Morgan](https://img.shields.io/badge/Morgan-Logger-lightgrey)
-![CORS](https://img.shields.io/badge/CORS-Enabled-blue)
-![dotenv](https://img.shields.io/badge/dotenv-Config-yellow)
-![Postman](https://img.shields.io/badge/Postman-Testing-orange)
-![Framer Motion](https://img.shields.io/badge/Framer%20Motion-11.x-pink)
-![Lucide](https://img.shields.io/badge/Lucide-Icons-6366f1)
-![dnd-kit](https://img.shields.io/badge/@dnd--kit-6.x-6366f1)
-![Resend](https://img.shields.io/badge/Resend-Email%20API-000000?logo=resend)
-![License](https://img.shields.io/badge/License-Proprietary-red)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)](https://www.mongodb.com/atlas)
+[![Express](https://img.shields.io/badge/Express-5.x-lightgrey)](https://expressjs.com/)
+[![React](https://img.shields.io/badge/React-19.x-blue)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-20.x-green)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/docs/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.x-38bdf8)](https://tailwindcss.com/docs)
+[![JWT](https://img.shields.io/badge/Auth-JWT-orange)](https://jwt.io/)
+[![httpOnly Cookies](https://img.shields.io/badge/Auth-httpOnly%20Cookies-orange)](https://owasp.org/www-community/HttpOnly)
+[![CSRF Protection](https://img.shields.io/badge/CSRF-Protected-orange)](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
+[![2FA](https://img.shields.io/badge/2FA-TOTP-red)](https://datatracker.ietf.org/doc/html/rfc6238)
+[![bcrypt](https://img.shields.io/badge/Security-bcrypt-red)](https://github.com/dcodeIO/bcrypt.js)
+[![otplib](https://img.shields.io/badge/otplib-TOTP-6366f1)](https://github.com/yeojz/otplib)
+[![qrcode](https://img.shields.io/badge/qrcode-1.5.4-green)](https://github.com/soldair/node-qrcode)
+[![Vite](https://img.shields.io/badge/Vite-6.x-yellow)](https://vitejs.dev/)
+[![Morgan](https://img.shields.io/badge/Morgan-Logger-lightgrey)](https://github.com/expressjs/morgan)
+[![CORS](https://img.shields.io/badge/CORS-Enabled-blue)](https://github.com/expressjs/cors)
+[![dotenv](https://img.shields.io/badge/dotenv-Config-yellow)](https://github.com/motdotla/dotenv)
+[![Postman](https://img.shields.io/badge/Postman-Testing-orange)](https://learning.postman.com/docs/getting-started/overview/)
+[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-11.x-pink)](https://www.framer.com/motion/)
+[![Lucide](https://img.shields.io/badge/Lucide-Icons-6366f1)](https://lucide.dev/)
+[![dnd-kit](https://img.shields.io/badge/@dnd--kit-6.x-6366f1)](https://dndkit.com/)
+[![Resend](https://img.shields.io/badge/Resend-Email%20API-000000?logo=resend)](https://resend.com/docs)
+[![License](https://img.shields.io/badge/License-Proprietary-red)](https://github.com/zstem001hz-droid/quantum/blob/main/LICENSE)
 
 Quantum is a production-deployed, full-stack MERN project management application built for individuals and small teams. Designed around a dark-first aesthetic inspired by quantum physics, it features a responsive Kanban board with real-time drag-and-drop, light/dark/system theme switching, and a polished component library built with React 19, TypeScript, Tailwind CSS, and Framer Motion.
 
@@ -613,49 +613,33 @@ Zero errors required before every commit.
 
 ### Core Stack — Backend
 
-- [MongoDB Atlas](https://www.mongodb.com/atlas) — cloud-hosted NoSQL database
 - [Mongoose Documentation](https://mongoosejs.com/docs/) — MongoDB object modeling library for Node.js
 - [Mongoose — Arrays](https://mongoosejs.com/docs/schematypes.html#arrays) — Array schema type; used for `project.members` collaborator references
 - [Mongoose — Document.save()](<https://mongoosejs.com/docs/api/document.html#Document.prototype.save()>) — push collaborators to `project.members`
-- [Express 5 Documentation](https://expressjs.com/) — web framework; API routing
 - [Node.js — CommonJS Modules](https://nodejs.org/api/modules.html) — `require()` module system used throughout the Express backend
-- [cors](https://github.com/expressjs/cors) — cross-origin resource sharing; restricts API access to `CLIENT_ORIGIN`
 - [cookie-parser](https://github.com/expressjs/cookie-parser) — cookie parsing middleware; populates `req.cookies` for httpOnly JWT and CSRF token verification
-- [JSON Web Tokens — jwt.io](https://jwt.io/) — signed JWT authentication; issued on login and verified on every protected request
-- [bcryptjs](https://github.com/dcodeIO/bcrypt.js) — password hashing and salting; plaintext passwords are never stored
-- [otplib](https://github.com/yeojz/otplib) — TOTP one-time password generation and verification
-- [qrcode](https://github.com/soldair/node-qrcode) — QR code generation for authenticator app setup
-- [morgan](https://github.com/expressjs/morgan) — HTTP request logger; dev-format logging for API request monitoring
 - [nodemon](https://nodemon.io/) — development server with auto-restart on file changes
-- [Resend](https://resend.com/docs) — transactional email API; collaboration invites and password reset delivery
-- [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — rate limiting middleware; 100 requests per IP per 15-minute window
-- [dotenv](https://github.com/motdotla/dotenv) — environment variable management; separates config from code
 - [MDN — Array.prototype.some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) — `isOwnerOrMember` helper; checks project ownership and membership
 
 ### Core Stack — Frontend
 
-- [React Documentation](https://react.dev/) — Core UI library
 - [React Router Documentation](https://reactrouter.com/) — Client-side routing; protected routes and navigation configured in `App.tsx`
 - [React Router — useParams](https://reactrouter.com/en/main/hooks/use-params) — Extracts dynamic URL segments; reads project ID from route in `ProjectDetailPage`
 - [React Router — useNavigate](https://reactrouter.com/en/main/hooks/use-navigate) — Programmatic navigation; used for back button and post-delete redirect
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/) — Typed JavaScript; interfaces, generics, and type safety throughout the client
 - [TypeScript Compiler Options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) — `npx tsc --noEmit` type verification
 - [TypeScript — Narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) — `err instanceof Error` for catch blocks
 - [TypeScript — Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) — `as Task['status']` cast on select onChange handler
 - [TypeScript — Indexed Access Types](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) — `Task['status']` pattern for accessing union type from interface
-- [Vite Documentation](https://vitejs.dev/) — Build tool and dev server
 - [Axios Documentation](https://axios-http.com/docs/intro) — HTTP client; configured with `withCredentials: true` and a CSRF header interceptor in `src/services/api.ts`
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs) — Utility-first styling
 - [Tailwind CSS — Customizing Colors](https://tailwindcss.com/docs/customizing-colors) — Define color object to generate branding utility classes
 - [Tailwind CSS — Dark Mode](https://tailwindcss.com/docs/dark-mode) — `darkMode: 'class'` strategy; `useTheme` hook manages the `dark` class on `<html>`
 - [Tailwind CSS — Line Clamp](https://tailwindcss.com/docs/line-clamp) — Truncate long descriptions
 - [Tailwind CSS — Grid Template Columns](https://tailwindcss.com/docs/grid-template-columns) — Statistics grid columns
-- [Framer Motion Documentation](https://www.framer.com/motion/) — Animation library
 - [Framer Motion — Animation](https://www.framer.com/motion/animation/) — `animate` prop
 - [Framer Motion — Transition Options](https://www.framer.com/motion/transition/) — `duration`, `repeat`, `ease` options
+- [Lucide](https://lucide.dev/) — Icon library; used throughout the UI for navigation, action buttons, and status indicators
 - [React — useCallback](https://react.dev/reference/react/useCallback) — Memoizes drag and task update handlers to prevent unnecessary child re-renders
 - [DEV Community — Beginner's Guide to dnd-kit in React](https://dev.to/kelseyroche/a-beginners-guide-to-drag-and-drop-with-dnd-kit-in-react-5hfe) — Practical walkthrough of `DndContext`, `useDroppable`, and `onDragEnd` patterns
-- [@dnd-kit Documentation](https://dndkit.com/) — Drag-and-drop library; Kanban board task reordering
 - [@dnd-kit/core Documentation](https://docs.dndkit.com/) — Drag-and-drop primitives; DndContext and collision detection for the Kanban board
 - [@dnd-kit/core — GitHub Source](https://github.com/clauderic/dnd-kit/tree/master/packages/core/src) — TypeScript type definitions including `DragEndEvent`; source of truth when docs don't cover specific types
 - [@dnd-kit/sortable Documentation](https://docs.dndkit.com/presets/sortable) — Sortable preset; `useSortable` hook used in `TaskCard` for drag handles and position tracking
@@ -694,12 +678,12 @@ Zero errors required before every commit.
 - [RFC 6238 — TOTP Standard](https://datatracker.ietf.org/doc/html/rfc6238) — the open standard defining time-based one-time passwords
 - [RFC 4226 — HOTP Standard](https://datatracker.ietf.org/doc/html/rfc4226) — the HMAC-based OTP standard that TOTP builds upon
 - [express-rate-limit](https://www.npmjs.com/package/express-rate-limit) — rate limiting middleware; limits each IP to 100 requests per 15-minute window
-- [Resend](https://resend.com/docs) — transactional email API; used for collaboration invites and password reset delivery
 - [OWASP — Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) — industry-standard reference for CSRF defense patterns, including the double-submit cookie pattern implemented here
 - [OWASP — HttpOnly](https://owasp.org/www-community/HttpOnly) — explains the HttpOnly cookie attribute and its role in mitigating XSS-based session hijacking
 - [OWASP — Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html) — broader session security context, including cookie attributes and session fixation
 - [MDN — Set-Cookie: HttpOnly, Secure, SameSite](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) — cookie attribute reference; `httpOnly`, `secure`, and `sameSite` flags used in cookie configuration
 - [MDN — SameSite cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite) — `SameSite=None; Secure` requirement for cross-domain cookies (Render frontend/backend on different subdomains)
+- [Resend](https://resend.com/docs) — transactional email API; collaboration invites and password reset delivery
 
 ### Development Tools
 
@@ -711,7 +695,6 @@ Zero errors required before every commit.
 - [MongoDB Compass](https://www.mongodb.com/products/compass) — Visual database inspection; used to verify documents, relationships, and collaborator arrays
 - [Vite Plugin React — react-refresh/only-export-components](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react) — ESLint rule requiring `eslint-disable-next-line` comment in `AuthContext.tsx`
 - [ESLint — Disabling Rules with Comments](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments) — Used in `AuthContext.tsx` to disable fast refresh rule for context files
-- [Shields.io — Badge Generator](https://shields.io/) — Generates README header badges and colored Task Status Values
 - [Kent C. Dodds — How to use React Context effectively](https://kentcdodds.com/blog/how-to-use-react-context-effectively) — Pattern followed for `AuthContext` provider and consumer design
 
 ### Video References
